@@ -6,6 +6,10 @@ note personali/
 00_Inbox/
 Tools/
 
+# Immagini e GIF usati dalle note: restano su disco (Obsidian le mostra) ma non si pubblicano,
+# perché possono contenere schermate o diagrammi del corso di cui non ho verificato i diritti.
+allegati/
+
 # Impostazioni locali di Obsidian e di Claude Code (cronologia dei file aperti, scorciatoie, permessi).
 .obsidian/
 .claude/

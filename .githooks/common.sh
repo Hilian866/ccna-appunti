@@ -11,11 +11,11 @@
 # PERCHÉ: l'email personale sta in .git/config e non in questo file, che viene pubblicato.
 
 # Percorsi che non devono mai entrare nel repository (espressione regolare estesa, per grep -E).
-FORBIDDEN_PATH_REGEX='^note personali/|^00_Inbox/|^Tools/|^\.obsidian/|^\.claude/|^CLAUDE\.md$|\.(apkg|colpkg|pta)$|(^|/)[^/]*\.local\.[^/]*$|(^|/)\.env$|200-301-CCNA[^/]*\.pdf$'
+FORBIDDEN_PATH_REGEX='^note personali/|^00_Inbox/|^Tools/|^allegati/|^\.obsidian/|^\.claude/|^CLAUDE\.md$|\.(apkg|colpkg|pta)$|(^|/)[^/]*\.local\.[^/]*$|(^|/)\.env$|200-301-CCNA[^/]*\.pdf$'
 
 # Lista dei percorsi consentiti: tutto il resto è bloccato finché non lo aggiungi qui di proposito.
 # PERCHÉ: il repository è pubblico, quindi un file in un posto nuovo deve essere una scelta consapevole.
-ALLOWED_PATH_REGEX='^(10_Fondamenti|20_Routing_Switching|30_Servizi|40_Sicurezza|50_Wireless_Wan|60_CCNA Exam|Labs|allegati|\.githooks)/|^(_Index_CCNA\.md|\.gitignore)$'
+ALLOWED_PATH_REGEX='^(10_Fondamenti|20_Routing_Switching|30_Servizi|40_Sicurezza|50_Wireless_Wan|60_CCNA Exam|Labs|\.githooks)/|^(_Index_CCNA\.md|\.gitignore)$'
 
 # Note segnate come private nel frontmatter: tag "personale" o "privato", "draft: true", "publish: false".
 PRIVATE_MARKER_REGEX='^(tags:.*(personale|privato|private)|draft:[[:space:]]*true|publish:[[:space:]]*false)'
