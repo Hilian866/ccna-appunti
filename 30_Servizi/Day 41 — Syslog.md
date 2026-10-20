@@ -1,6 +1,3 @@
-
-
----
 ### 🧠 Core Logic
 Analisi del protocollo **Syslog**, standard di settore per la messaggistica di log nei dispositivi di rete. La nota approfondisce la struttura dei messaggi, la classificazione per **Severity Levels** e la configurazione su sistemi **Cisco IOS** per il monitoraggio e il troubleshooting.
 

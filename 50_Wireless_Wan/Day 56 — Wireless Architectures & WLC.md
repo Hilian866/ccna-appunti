@@ -1,7 +1,3 @@
-
-
----
-
 ## 802.11 Frames – Overview (livello CCNA)
 
 - **802.11 ≠ 802.3**: frame wireless più complessi di Ethernet

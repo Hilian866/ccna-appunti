@@ -1,9 +1,3 @@
-
-
----
-
-
-
 > [!ABSTRACT]
 > La tecnologia **VRF** permette di segmentare un singolo router fisico in molteplici istanze di routing virtuali indipendenti. Questo isolamento consente la coesistenza di tabelle di instradamento separate e l'utilizzo di **overlapping IP addresses** sullo stesso hardware.
 

@@ -1,6 +1,3 @@
-
----
-
 > [!ABSTRACT] Core Logic
 > L'obiettivo di questa sessione è comprendere, configurare e verificare il protocollo **NTP** per garantire la sincronizzazione temporale accurata tra i dispositivi di rete. Questo è fondamentale per la coerenza dei log di **Syslog**, il troubleshooting e il corretto funzionamento dei certificati digitali.
 

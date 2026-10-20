@@ -1,6 +1,3 @@
-
----
-
 > [!ABSTRACT] Core Logic
 > Il video analizza l'evoluzione dai server fisici tradizionali alle infrastrutture **virtualizzate** e ai servizi **Cloud**. L'obiettivo è comprendere come gli **Hypervisor** permettano l'astrazione dell'hardware e come il framework **NIST SP 800-145** definisca l'architettura moderna del Cloud Computing.
 

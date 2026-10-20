@@ -1,6 +1,3 @@
-
----
-
 # 📡 CCNA Wireless: Dashboard Strategica
 
 > [!abstract] **Focus Esame**

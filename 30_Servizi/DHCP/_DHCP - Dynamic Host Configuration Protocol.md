@@ -1,7 +1,3 @@
-
----
-
-
 ### Core Concept
 
 Il DHCP automatizza l'assegnazione dei parametri IP. Senza di esso, ogni host richiederebbe una configurazione manuale (**Static IP**), aumentando drasticamente il rischio di errori umani e conflitti.

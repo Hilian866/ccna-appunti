@@ -1,6 +1,3 @@
-
----
-
  >[!ABSTRACT]  Core Logic
 Il video introduce i concetti fondamentali di **Quality of Service (QoS)**, **Power over Ethernet (PoE)** e **Voice VLAN**. L'obiettivo è comprendere come gestire reti convergenti dove traffico voce, video e dati devono coesistere sullo stesso medium fisico senza degradazione delle performance.
 

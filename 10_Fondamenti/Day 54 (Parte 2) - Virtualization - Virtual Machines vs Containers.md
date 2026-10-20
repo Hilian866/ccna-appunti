@@ -1,8 +1,3 @@
-
-
----
-
-
 > [!ABSTRACT] Core Logic
 > Analisi dell'evoluzione della server virtualization: dal consolidamento hardware tramite **Hypervisor** alla scalabilità agile dei **Containers**, fondamentali per l'architettura a **Microservices** e le pratiche **DevOps**.
 

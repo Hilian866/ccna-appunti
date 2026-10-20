@@ -1,6 +1,3 @@
-
----
-
 ### 1. Il Perimetro: Indirizzi Privati (RFC 1918)
 
 Gli IP privati sono **variabili interne** non instradabili. Gli ISP scartano questi pacchetti per prevenire la collisione di nodi globali.
