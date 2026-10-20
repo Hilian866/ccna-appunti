@@ -42,7 +42,7 @@ Il **Trust Boundary** definisce il punto della rete in cui i dispositivi inizian
 ---
 
 ### 🚦 Congestion Management: Queuing
-Quando il traffico eccede la capacità di un'interfaccia, i pacchetti vengono messi in coda (**Queuing**) [15:26](https://www.youtube.com/watch?t=926s). Se la coda è piena, avviene il **Tail Drop** (scarto degli ultimi pacchetti).
+Quando il traffico eccede la capacità di un'interfaccia, i pacchetti vengono messi in coda (**Queuing**) [15:26](https://youtu.be/4vurfhVjcMM?t=926s). Se la coda è piena, avviene il **Tail Drop** (scarto degli ultimi pacchetti).
 
 #### Meccanismi di Scheduling:
 1. **Weighted Round Robin (WRR)**: Cicla tra le code prelevando più dati da quelle ad alta priorità [18:02](https://youtu.be/4vurfhVjcMM&t=1082s).

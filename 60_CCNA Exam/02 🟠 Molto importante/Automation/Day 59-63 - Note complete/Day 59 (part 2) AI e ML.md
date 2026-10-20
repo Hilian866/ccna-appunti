@@ -33,7 +33,7 @@ stato: da-ripassare
 ## 📊 Predictive AI vs Generative AI nel Networking
 
 ## 🔮 Predictive AI
-Analizza i dati storici per prevedere eventi futuri. [20:48](https://www.youtube.com/watch?v=Fn_kAv35W5A&t?t=1248)
+Analizza i dati storici per prevedere eventi futuri. [20:48](https://www.youtube.com/watch?v=Fn_kAv35W5A&t=1248)
 - **Traffic Forecasting:** Ottimizzazione della banda e prevenzione della congestione.
 - **Security Threat Detection:** Identificazione proattiva di anomalie e attacchi.
 - **Predictive Maintenance:** Sostituzione hardware prima del guasto critico.
@@ -87,7 +87,7 @@ def enable_interface(device_ip, interface):
 > - Comprendere la differenza tra **Supervised** (etichettato) e **Unsupervised** (non etichettato).
 > - Sapere che le **Neural Networks** sono alla base del Deep Learning.
 > - Riconoscere **MRE** e **AI Network Analytics** come pilastri del Cisco Catalyst Center.
-> - Ricordare che l'AI nelle reti serve a creare **Baselines**, ottimizzare il **Wi-Fi (RRM)** e accelerare la **Root-cause analysis**. [35:54](https://www.youtube.com/watch?v=Fn_kAv35W5A&t==2154s)
+> - Ricordare che l'AI nelle reti serve a creare **Baselines**, ottimizzare il **Wi-Fi (RRM)** e accelerare la **Root-cause analysis**. [35:54](https://www.youtube.com/watch?v=Fn_kAv35W5A&t=2154s)
 
 ---
 
