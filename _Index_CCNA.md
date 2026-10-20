@@ -28,8 +28,5 @@ Punto di partenza del vault. Priorità e pesi: [[Rilevanza Argomenti]] · Copert
 ## 🧪 Lab
 File Packet Tracer in `Labs/` (Day 11–58), collegati dalle note di ripasso.
 
-## 📥 Da smistare
-`00_Inbox` contiene ancora appunti di studio non catalogati.
-
 ## Template
 `99_Templates/Nota_CCNA` — What is it · How it works · CLI Core · Links · Common Mistakes · Synthesis.

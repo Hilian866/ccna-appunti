@@ -4,7 +4,7 @@ tipo: mappa
 ---
 
 > [!ABSTRACT] A cosa serve
-> Mappa gli obiettivi ufficiali del **CCNA 200-301 v1.1** (PDF in `00_Inbox`) sulle note di ripasso. ✅ = coperto · ⚠️ = coperto in parte.
+> Mappa gli obiettivi ufficiali del **CCNA 200-301 v1.1** (blueprint ufficiale Cisco) sulle note di ripasso. ✅ = coperto · ⚠️ = coperto in parte.
 
 ## 1.0 Network Fundamentals (20%)
 | Obiettivo | Nota |

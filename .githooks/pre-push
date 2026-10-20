@@ -17,9 +17,21 @@ email=$(personal_email)
 status=0
 
 # git passa una riga per ogni riferimento: <ref locale> <sha locale> <ref remoto> <sha remoto>.
-while read -r _local_ref local_sha _remote_ref remote_sha; do
-    # Ramo che si sta cancellando: non c'è nulla da pubblicare.
-    [ "$local_sha" = "$ZERO_SHA" ] && continue
+while read -r _local_ref local_sha remote_ref remote_sha; do
+    # Si pubblica soltanto il ramo main: altri rami e tag restano in locale.
+    # PERCHÉ: un ramo di lavoro o di archivio creato per errore non deve finire online.
+    if [ "$remote_ref" != "$PUBLISHED_REF" ]; then
+        echo "hook: si può pubblicare solo $PUBLISHED_REF (richiesto: $remote_ref), push bloccato." >&2
+        status=1
+        continue
+    fi
+
+    # Cancellazione del ramo pubblicato: si fa a mano da GitHub, mai da un push.
+    if [ "$local_sha" = "$ZERO_SHA" ]; then
+        echo "hook: la cancellazione di $remote_ref dal remote è bloccata." >&2
+        status=1
+        continue
+    fi
 
     # Ramo nuovo: tutti i commit non ancora presenti su questo remote; altrimenti solo i nuovi.
     if [ "$remote_sha" = "$ZERO_SHA" ]; then
@@ -41,7 +53,8 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
         esac
 
         # Percorsi vietati o fuori dalla lista consentita toccati dal commit.
-        touched=$(git -c core.quotepath=off diff-tree --root --no-commit-id --name-only -r "$commit")
+        # PERCHÉ: --diff-filter=ACMR ignora le cancellazioni; togliere un file vietato dal repository è lecito.
+        touched=$(git -c core.quotepath=off diff-tree --root --no-commit-id --name-only --diff-filter=ACMR -r "$commit")
         paths=$(echo "$touched" | grep -E "$FORBIDDEN_PATH_REGEX" || true)
         if [ -n "$paths" ]; then
             echo "hook: $(git show -s --format='%h %s' "$commit") contiene file personali o locali." >&2
