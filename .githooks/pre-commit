@@ -1,0 +1,71 @@
+#!/bin/sh
+# Hook pre-commit: impedisce di committare contenuto personale o segreti.
+#
+# Responsabilità: controllare i file in stage (percorsi vietati, email personale, segreti).
+# Non si occupa di: controllare i commit già esistenti (lo fa pre-push).
+# Dipendenze: common.sh, git, grep.
+
+. "$(dirname "$0")/common.sh"
+require_personal_email
+
+status=0
+
+# 1) Percorsi vietati tra i file in stage (aggiunti, modificati o rinominati).
+# PERCHÉ: core.quotepath=off evita che i nomi con emoji vengano riscritti in ottale.
+forbidden=$(git -c core.quotepath=off diff --cached --name-only --diff-filter=ACMR | grep -E "$FORBIDDEN_PATH_REGEX" || true)
+if [ -n "$forbidden" ]; then
+    echo "hook: file personali o locali in stage, commit bloccato:" >&2
+    echo "$forbidden" | sed 's/^/   /' >&2
+    echo "      Toglili con: git restore --staged <file>  (e aggiungili a .gitignore)" >&2
+    status=1
+fi
+
+# 1b) Percorsi fuori dalla lista consentita (file nuovi in posti non previsti).
+unlisted=$(git -c core.quotepath=off diff --cached --name-only --diff-filter=ACMR | grep -v -E "$ALLOWED_PATH_REGEX" || true)
+if [ -n "$unlisted" ]; then
+    echo "hook: percorsi non previsti per un repository pubblico, commit bloccato:" >&2
+    echo "$unlisted" | sed 's/^/   /' >&2
+    echo "      Se vuoi pubblicarli, aggiungi la cartella a ALLOWED_PATH_REGEX in .githooks/common.sh." >&2
+    status=1
+fi
+
+# 1c) Note segnate come private nel frontmatter.
+marked=$(git grep --cached -I -l -i -E "$PRIVATE_MARKER_REGEX" -- '*.md' || true)
+if [ -n "$marked" ]; then
+    echo "hook: note segnate come private (tag personale/privato, draft, publish: false), commit bloccato:" >&2
+    echo "$marked" | sed 's/^/   /' >&2
+    status=1
+fi
+
+# 1d) Parole vietate configurate in locale (si stampano solo i nomi dei file, mai la parola).
+words=$(private_words)
+if [ -n "$words" ]; then
+    echo "$words" | while IFS= read -r word; do
+        [ -z "$word" ] && continue
+        git grep --cached -I -l -i -F -e "$word" || true
+    done | sort -u > "$(git rev-parse --git-dir)/hook-word-hits"
+    if [ -s "$(git rev-parse --git-dir)/hook-word-hits" ]; then
+        echo "hook: una parola vietata (hook.privateWord) compare in questi file, commit bloccato:" >&2
+        sed 's/^/   /' "$(git rev-parse --git-dir)/hook-word-hits" >&2
+        status=1
+    fi
+    rm -f "$(git rev-parse --git-dir)/hook-word-hits"
+fi
+
+# 2) Email personale nel contenuto dei file tracciati (si stampano solo i nomi dei file).
+leaks=$(git grep --cached -I -l -i -F "$(personal_email)" || true)
+if [ -n "$leaks" ]; then
+    echo "hook: l'email personale compare in questi file, commit bloccato:" >&2
+    echo "$leaks" | sed 's/^/   /' >&2
+    status=1
+fi
+
+# 3) Segreti riconoscibili dal formato (token, chiavi private).
+secrets=$(git grep --cached -I -l -E "$SECRET_REGEX" || true)
+if [ -n "$secrets" ]; then
+    echo "hook: possibili segreti in questi file, commit bloccato:" >&2
+    echo "$secrets" | sed 's/^/   /' >&2
+    status=1
+fi
+
+exit $status

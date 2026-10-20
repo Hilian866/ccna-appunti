@@ -1,0 +1,22 @@
+# --- Contenuto personale: mai pubblicare ---------------------------------------------
+# Piano di studio, portfolio, carriera, prompt, mazzo Anki e backup (con cronologia di studio).
+note personali/
+
+# Impostazioni locali di Obsidian e di Claude Code (cronologia dei file aperti, scorciatoie, permessi).
+.obsidian/
+.claude/
+CLAUDE.md
+
+# Backup di Anki e file con segreti o credenziali.
+*.apkg
+*.colpkg
+*.pta
+*.local.*
+.env
+
+# --- Strumenti Packet Tracer (vedi Tools/packet-tracer/README.md) ---------------------
+Tools/packet-tracer/output/
+Tools/packet-tracer/__pycache__/
+
+# Documentazione estratta dal Java Framework di Packet Tracer (temporanea)
+_pt_ipc_tmp/
