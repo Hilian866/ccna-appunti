@@ -3,14 +3,11 @@
 
 - **NON core (rimossi dalla blueprint 200-301)**, ma **possibili domande** (concetti + comportamento default)
     
-- Focus: **cosa fanno**, **mode principali**, **revision number (VTP)**, **best practice (disabilitare)**
-    
-
----
+- Focus: cosa fanno, mode principali, revision number (VTP), best practice (disabilitare)
 
 # DTP (Dynamic Trunking Protocol)
 
-- **DTP**: protocollo Cisco per **negoziare** automaticamente se una porta è **access** o **trunk** tra switch Cisco.
+- **DTP**: protocollo Cisco per negoziare automaticamente se una porta è **access** o **trunk** tra switch Cisco.
     
 - **Default**: DTP **enabled** sulle porte switch (dipende dal modello: vecchi “desirable”, nuovi “auto”).
     
@@ -32,18 +29,18 @@
 
 ## Regole di formazione trunk (sintesi)
 
-### Se una porta è **dynamic desirable**
+### Se una porta è dynamic desirable
 
-- Forma **TRUNK** con: `trunk` / `dynamic desirable` / `dynamic auto`
+- Forma TRUNK con: `trunk` / `dynamic desirable` / `dynamic auto`
     
-- Diventa **ACCESS** con: `access`
+- Diventa ACCESS con: `access`
     
 
-### Se una porta è **dynamic auto**
+### Se una porta è dynamic auto
 
-- Forma **TRUNK** con: `trunk` / `dynamic desirable`
+- Forma TRUNK con: `trunk` / `dynamic desirable`
     
-- Diventa **ACCESS** con: `access` / `dynamic auto`
+- Diventa ACCESS con: `access` / `dynamic auto`
     
 
 ### Misconfig da riconoscere
@@ -79,10 +76,7 @@ interface g0/0
 
 ## Confini concettuali
 
-- **DTP non negozia trunk con router/PC** → per **ROAS** devi configurare trunk **manuale** (sullo switch).
-    
-
----
+- **DTP non negozia trunk con router/PC** → per **ROAS** devi configurare trunk manuale (sullo switch).
 
 # Trunk encapsulation negotiation (ISL vs 802.1Q)
 
@@ -102,9 +96,6 @@ interface g0/0
 📌 Confine concettuale
 
 - **Encapsulation negotiation ≠ VLAN allowed/native**: sono cose diverse.
-    
-
----
 
 # VTP (VLAN Trunking Protocol)
 
@@ -123,7 +114,7 @@ interface g0/0
     
 - **VTP advertisement**: annunci VTP inviati **solo su trunk**.
     
-- **VLAN database**: elenco VLAN (id + name ecc.), **non** assegnazioni porte.
+- **VLAN database**: elenco VLAN (id + name ecc.), non assegnazioni porte.
     
 
 ## VTP modes (CORE concettuale)
@@ -134,7 +125,7 @@ interface g0/0
     
 - VLAN database salvato in **NVRAM**
     
-- Incrementa **revision number** a ogni cambio VLAN
+- Incrementa revision number a ogni cambio VLAN
     
 - **Server si comporta anche da client**: se vede un server con revision più alta, **si aggiorna**
     
@@ -164,18 +155,12 @@ interface g0/0
 📌 Confine concettuale
 
 - **VTP propaga VLANs, non le assegnazioni porte** → devi comunque fare `switchport access vlan X` ecc.
-    
-
----
 
 ## Pericolo principale (motivo per cui si evita)
 
 - Se colleghi uno switch “vecchio” con **revision number più alta** e **domain uguale**:
     
     - tutta la rete può **sincronizzarsi** al suo DB → VLAN “spariscono” → outage immediato.
-        
-
----
 
 ## Reset VTP revision number a 0 (quiz)
 
@@ -185,9 +170,6 @@ Metodi mostrati:
     
 - Mettere in **vtp mode transparent**  
     _(entrambi resettano revision a 0)_
-    
-
----
 
 ## Comandi visti
 

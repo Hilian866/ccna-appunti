@@ -13,8 +13,6 @@
 > **Encryption** → Chi può leggere  
 > **Integrity** → Il messaggio è stato alterato?
 
----
-
 ## 1️⃣ Authentication — _Chi sei_
 
 ### Concetto chiave
@@ -25,17 +23,12 @@ Idealmente:
 - l’AP autentica il client
     
 - **il client autentica anche l’AP** (anti rogue AP)
-    
-
----
 
 ### Metodi di autenticazione (panoramica)
 
 ⚠️ **Non tutti sono ugualmente rilevanti o sicuri**
 
----
-
-### 🔓 Open Authentication
+### Open Authentication
 
 - Nessuna credenziale richiesta
     
@@ -44,9 +37,6 @@ Idealmente:
 - **Non sicuro**
     
 - Ancora usato come _primo passo_ (es. WiFi pubblico + captive portal)
-    
-
----
 
 ### ❌ WEP Authentication (Wired Equivalent Privacy)
 
@@ -60,17 +50,15 @@ Idealmente:
 
     ![[Screenshot_1 19.png]]
 
----
-
-## 🔐 Enterprise Authentication — 802.1X + EAP
+## Enterprise Authentication — 802.1X + EAP
 
 ### Architettura 802.1X (fondamentale CCNA)
 
 |Ruolo|Descrizione|
 |---|---|
-|**Supplicant**|Client (laptop, telefono)|
-|**Authenticator**|AP o WLC|
-|**Authentication Server**|Server RADIUS|
+|Supplicant|Client (laptop, telefono)|
+|Authenticator|AP o WLC|
+|Authentication Server|Server RADIUS|
 
 📌 In WLAN:
 
@@ -82,13 +70,9 @@ Idealmente:
 
     ![[Screenshot_2 19.png]]
 
----
-
 ### EAP: Extensible Authentication Protocol
 
 EAP = **contenitore di metodi**
-
----
 
 ### Metodi EAP da conoscere
 
@@ -101,9 +85,6 @@ EAP = **contenitore di metodi**
 - Dynamic WEP keys
     
 - **Vulnerabile → obsoleto**
-    
-
----
 
 #### 🟡 EAP-FAST (EAP Flexible Authentication via Secure Tunneling)
 
@@ -114,9 +95,6 @@ EAP = **contenitore di metodi**
 - Autenticazione _dentro_ il tunnel
     
 - Più sicuro di LEAP, ma poco diffuso
-    
-
----
 
 #### ✅ PEAP (Protected EAP)
 
@@ -127,11 +105,8 @@ EAP = **contenitore di metodi**
 - Client autenticato _dentro_ il tunnel (es. MS-CHAP)
     
 - **Buon compromesso sicurezza / complessità**
-    
 
----
-
-#### 🔐 EAP-TLS (EAP Transport Layer Security)
+#### EAP-TLS (EAP Transport Layer Security)
 
 - Certificato **su server e client**
     
@@ -147,9 +122,6 @@ EAP = **contenitore di metodi**
 📌 **Per l’esame**:
 
 - **PEAP vs EAP-TLS** → differenza sui certificati
-    
-
----
 
 ## 2️⃣ Encryption — _Chi può leggere_
 
@@ -160,9 +132,6 @@ EAP = **contenitore di metodi**
 - Ogni client ha **una chiave unica**
     
 - Esiste una **group key** per traffico broadcast
-    
-
----
 
 ### Linea temporale dell’encryption (IMPORTANTISSIMA)
 
@@ -170,12 +139,10 @@ EAP = **contenitore di metodi**
 
 |Protocollo|Usato in|Algoritmo|Stato|
 |---|---|---|---|
-|**WEP**|—|RC4|Rotto|
-|**TKIP**|WPA|RC4+|Transitorio|
-|**CCMP**|WPA2|AES|Standard|
-|**GCMP**|WPA3|AES|Migliore|
-
----
+|WEP|—|RC4|Rotto|
+|TKIP|WPA|RC4+|Transitorio|
+|CCMP|WPA2|AES|Standard|
+|GCMP|WPA3|AES|Migliore|
 
 ### TKIP (Temporal Key Integrity Protocol)
 
@@ -188,9 +155,6 @@ EAP = **contenitore di metodi**
 - Anti replay
     
 - **Non più consigliato**
-    
-
----
 
 ### CCMP (Counter/CBC-MAC Protocol)
 
@@ -201,9 +165,6 @@ EAP = **contenitore di metodi**
 - **Sicuro**
     
 - Richiede hardware compatibile
-    
-
----
 
 ### GCMP (Galois/Counter Mode Protocol)
 
@@ -212,9 +173,6 @@ EAP = **contenitore di metodi**
 - GMAC per integrità
     
 - Più efficiente e sicuro di CCMP
-    
-
----
 
 ## 3️⃣ Integrity — _Il messaggio è stato modificato?_
 
@@ -233,8 +191,6 @@ EAP = **contenitore di metodi**
 
 📌 Cambia il nome, **la funzione è la stessa**
 
----
-
 ## 4️⃣ WPA — _Il contenitore_
 
 WPA **non è un protocollo singolo**, ma una **certificazione** che combina:
@@ -244,28 +200,21 @@ WPA **non è un protocollo singolo**, ma una **certificazione** che combina:
 - encryption
     
 - integrità
-    
-
----
 
 ### Modalità WPA
 
 |Modalità|Uso|
 |---|---|
-|**Personal**|PSK (password)|
-|**Enterprise**|802.1X + EAP|
-
----
+|Personal|PSK (password)|
+|Enterprise|802.1X + EAP|
 
 ### WPA versions (da ricordare a memoria)
 
 |WPA|Encryption|
 |---|---|
-|**WPA**|TKIP|
-|**WPA2**|CCMP|
-|**WPA3**|GCMP|
-
----
+|WPA|TKIP|
+|WPA2|CCMP|
+|WPA3|GCMP|
 
 ### Extra WPA3 (solo i principali)
 
@@ -274,9 +223,6 @@ WPA **non è un protocollo singolo**, ma una **certificazione** che combina:
 - **SAE** (Simultaneous Authentication of Equals) → protegge 4-way handshake (personal)
     
 - **Forward Secrecy** → traffico passato non decifrabile
-    
-
----
 
 ## Sintesi finale (mentale)
 

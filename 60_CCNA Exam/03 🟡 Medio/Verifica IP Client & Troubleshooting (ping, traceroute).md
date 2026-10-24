@@ -12,7 +12,7 @@ stato: da-ripassare
 ## 1. Parametri da controllare
 **IP address · subnet mask · default gateway · DNS server · MAC address · DHCP attivo/lease**.
 
-| Azione | **Windows** | **macOS** | **Linux** |
+| Azione | Windows | macOS | Linux |
 |---|---|---|---|
 | Mostra IP, mask, gateway, DNS, MAC | `ipconfig /all` | `ifconfig` · `networksetup -getinfo Wi-Fi` | `ip a` (o `ip addr`) |
 | Tabella di routing | `route print` · `netstat -rn` | `netstat -rn` | `ip route` |
@@ -54,10 +54,10 @@ ping 10.0.0.1 source g0/0
 Se il passo 4 funziona e il 5 no, il problema è il DNS.
 
 ## 3. Traceroute
-Mostra **ogni router** lungo il percorso incrementando il **TTL** di 1 a ogni pacchetto:
+Mostra **ogni router** lungo il percorso incrementando il TTL di 1 a ogni pacchetto:
 - Il router che azzera il TTL risponde con **ICMP Time Exceeded** (tipo 11), rivelando il proprio IP.
-- **Windows** `tracert` usa pacchetti **ICMP Echo**; **Linux/macOS/Cisco** usano di default **UDP** su porte alte.
-- Alla destinazione la risposta è un **Echo Reply** (ICMP) o **Port Unreachable** (UDP).
+- Windows `tracert` usa pacchetti **ICMP Echo**; Linux/macOS/Cisco usano di default **UDP** su porte alte.
+- Alla destinazione la risposta è un Echo Reply (ICMP) o **Port Unreachable** (UDP).
 - `* * *` = nessuna risposta da quell'hop (ACL, ICMP filtrato o guasto).
 Serve a capire **dove** si interrompe il percorso (rotta mancante, ACL, NAT).
 
@@ -68,7 +68,7 @@ tracert 8.8.8.8            (Windows)
 
 ## Common Mistakes
 - Considerare un ping fallito come "host spento": può essere un **ACL** o il firewall che filtra ICMP.
-- Dimenticare che il ping può riuscire ma il **DNS** no.
+- Dimenticare che il ping può riuscire ma il DNS no.
 - Non usare il **ping esteso** con `source`: il ping da un router usa l'IP dell'interfaccia di uscita, che può nascondere problemi di rotta di ritorno.
 - Confondere `.` (timeout) con `U` (unreachable: c'è un router che risponde che manca la rotta).
 

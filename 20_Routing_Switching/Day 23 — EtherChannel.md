@@ -4,8 +4,6 @@
 Tecnica per **aggregare più link fisici** tra due dispositivi in **un’unica interfaccia logica** (Port-Channel / LAG).  
 Risolve il “collo di bottiglia + link bloccati da STP”: **STP vede 1 link**, non N.
 
----
-
 ### How it works
 
 - Senza EtherChannel: più link tra switch ⇒ **STP blocca tutti tranne uno** (evita loop) ⇒ **banda sprecata**
@@ -25,7 +23,6 @@ Risolve il “collo di bottiglia + link bloccati da STP”: **STP vede 1 link**,
     - il Port-Channel resta su (se rimangono membri attivi)
         
 ![[Screenshot_1 4.png]]
----
 
 ### Load-balancing (flows)
 
@@ -38,9 +35,6 @@ Risolve il “collo di bottiglia + link bloccati da STP”: **STP vede 1 link**,
     - src-ip / dst-ip / src-dst-ip
         
     - talvolta L4 ports (TCP/UDP)
-        
-
----
 
 ### Negotiation modes
 
@@ -70,8 +64,6 @@ Risolve il “collo di bottiglia + link bloccati da STP”: **STP vede 1 link**,
         
 
 **Nota**: _channel-group number_ deve combaciare **solo localmente** tra member ports; **non deve** matchare l’altro switch.
-
----
 
 ### CLI Core
 
@@ -111,9 +103,6 @@ interface port-channel 1
  ip address X.X.X.X Y.Y.Y.Y
 ```
 
-
----
-
 ### Common Mistakes
 
 - Config membri con parametri **non identici** ⇒ porta esclusa/suspended  
@@ -124,9 +113,6 @@ interface port-channel 1
 - Pensare che EtherChannel “sommi banda per singolo flow”: no, **un flow usa 1 link**
     
 - Mischiare protocolli/mode (es. active + desirable, on + active) ⇒ non si forma
-    
-
----
 
 ### Synthesis
 

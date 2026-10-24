@@ -45,9 +45,6 @@
 ### Core mental model
 
 - Root Guard = “su questa porta _non voglio_ che il mio switch scelga un root esterno”.
-    
-
----
 
 ## Micro-correzioni/precisioni utili (2 righe) 🔧
 
@@ -56,9 +53,6 @@
 2. **BPDUs dopo convergenza** (se non l’hai già patchato):
     
     - root **genera** BPDUs; gli altri **inoltrano** (su designated).
-        
-
----
 
 ## Common mistakes (aggiunta rapida) ⚠️
 

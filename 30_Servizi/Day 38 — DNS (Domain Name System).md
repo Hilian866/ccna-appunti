@@ -4,8 +4,6 @@
 **DNS** risolve nomi leggibili (es. `youtube.com`) in **indirizzi IP**.  
 I dispositivi comunicano usando IP, gli esseri umani usano nomi.
 
----
-
 ### Key rules / exam points
 
 - DNS = **name → IP**
@@ -33,9 +31,6 @@ I dispositivi comunicano usando IP, gli esseri umani usano nomi.
 - I dispositivi mantengono una **DNS cache**
     
 - Un router **non deve** essere configurato per DNS solo per inoltrare traffico DNS
-    
-
----
 
 ### What does / How it works
 
@@ -53,9 +48,6 @@ Flusso base:
 - Il router intermedio **inoltra soltanto i pacchetti**
     
 - Nessuna configurazione DNS richiesta sul router per questo scenario
-    
-
----
 
 ### DNS cache e hosts file
 
@@ -74,9 +66,6 @@ Flusso base:
     - precede DNS
         
     - soluzione semplice ma **non scalabile**
-        
-
----
 
 ### DNS su Cisco router (concetto)
 
@@ -94,9 +83,6 @@ Nella pratica:
 - quasi sempre DNS server = **Windows / Linux**
     
 - ma il CCNA richiede sapere **come configurarlo**
-    
-
----
 
 ### Configurare router come DNS server
 
@@ -132,35 +118,29 @@ ip name-server 8.8.8.8
 - Record presente → risposta immediata
     
 - Record assente → router interroga DNS esterno
-    
-
----
 
 ### Configurare router come DNS client
 
-**Cosa fa**
+Cosa fa
 
 - Permette al router di **risolvere nomi nei comandi**
     
     - es. `ping google.com`
         
 
-**Come si configura**
+Come si configura
 
 - Specifica il DNS server
     
 - Abilita domain lookup (default)
     
 
-**CLI**
+CLI
 
 ```
 ip name-server 8.8.8.8
 ip domain lookup
 ```
-
-
----
 
 ### Differenza chiave (da ricordare)
 
@@ -181,9 +161,6 @@ ip domain lookup
 Esempio:
 
 - `ping PC1` → `ping PC1.jeremysitlab.com`
-    
-
----
 
 ### CLI (solo comandi)
 
@@ -223,9 +200,6 @@ ping youtube.com
 ip domain name jeremysitlab.com
 ```
 
-
----
-
 ### Common mistakes / notes
 
 - ❌ Pensare che il router debba “fare DNS” per inoltrare query → **no**
@@ -234,10 +208,6 @@ ip domain name jeremysitlab.com
     
 - ❌ Pensare che DNS usi solo UDP → usa anche TCP
     
-- ❌ Cercare record IPv6 con A invece di **AAAA**
+- ❌ Cercare record IPv6 con A invece di AAAA
     
 - ❌ Dimenticare `ip domain lookup` (anche se è default)
-    
-
----
-

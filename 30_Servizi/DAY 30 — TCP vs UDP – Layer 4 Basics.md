@@ -1,7 +1,7 @@
 
 ## What is it
 
-**TCP** e **UDP** sono protocolli di **Layer 4 (Transport)**. Per la CCNA devi saper **confrontare TCP e UDP** e capire il ruolo delle **porte** (port numbers) per identificare applicazioni e gestire sessioni multiple.
+**TCP** e **UDP** sono protocolli di Layer 4 (Transport). Per la CCNA devi saper confrontare TCP e UDP e capire il ruolo delle **porte** (port numbers) per identificare applicazioni e gestire sessioni multiple.
 
 ## How it works
 
@@ -35,7 +35,7 @@
     
 - **Registered**: `1024–49151`
     
-- **Ephemeral** (dynamic/private): `49152–65535` (tipico per **source port** random)
+- **Ephemeral** (dynamic/private): `49152–65535` (tipico per source port random)
     
 
 ### TCP (Transmission Control Protocol)
@@ -115,7 +115,7 @@ Se riesci a dire **le due definizioni** e questa frase, **hai coperto il requisi
 
 - Confondere “porta” L4 con “porta” fisica di uno switch/router.
     
-- Dimenticare che **TCP e UDP** usano entrambi **port numbers** (addressing + multiplexing).
+- Dimenticare che TCP e UDP usano entrambi **port numbers** (addressing + multiplexing).
     
 - Pensare che UDP “non funzioni”: è **best-effort** (scelta intenzionale).
     
@@ -127,8 +127,6 @@ Se riesci a dire **le due definizioni** e questa frase, **hai coperto il requisi
 ## Synthesis
 
 TCP aggiunge connessione, affidabilità, sequencing e flow control (più overhead); UDP è connectionless e best-effort (meno overhead), ma entrambi usano porte per identificare applicazioni e gestire sessioni.
-
----
 
 ## Port numbers citati (da memorizzare)
 

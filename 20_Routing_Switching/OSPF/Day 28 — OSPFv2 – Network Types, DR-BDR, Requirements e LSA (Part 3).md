@@ -2,7 +2,7 @@
 ## What is it
 
 OSPF cambia comportamento in base al tipo di interfaccia, che determina il network type del segmento.  
-Il network type influenza: **neighbor discovery**, **DR/BDR**, **chi arriva a FULL**, e **come si riduce il flooding**.
+Il network type influenza: neighbor discovery, DR/BDR, chi arriva a FULL, e come si riduce il flooding.
 
 ```
 Tipo di interfaccia
@@ -19,9 +19,6 @@ DR/BDR • adiacenze • flooding
     
 - Fornisce un IP **stabile** per **identificare** e **raggiungere** il router anche se una fisica va giù  
     (meglio di usare l’IP di una physical interface come “identità” del router)
-    
-
----
 
 ## OSPF Network Types (CCNA)
 
@@ -46,12 +43,12 @@ DR/BDR • adiacenze • flooding
     
     - **224.0.0.5** = all OSPF routers
         
-    - **224.0.0.6** = **DR/BDR**
+    - **224.0.0.6** = DR/BDR
         
 
 ### 2) Point-to-Point (default su serial PPP/HDLC)
 
-- Neighbor discovery: **Hello multicast 224.0.0.5**
+- Neighbor discovery: Hello multicast 224.0.0.5
     
 - **NO DR/BDR**
     
@@ -60,9 +57,6 @@ DR/BDR • adiacenze • flooding
 - Timers default (come broadcast): **Hello 10 / Dead 40**
     
 - Nota (FYI dal video): Non-broadcast (non richiesto CCNA) usa **30/120** e spesso richiede neighbor manuali
-    
-
----
 
 ## DR / BDR (solo su Broadcast)
 
@@ -98,11 +92,9 @@ interface g0/0
  ip ospf priority 255
 ```
 
----
-
 ## Neighbor vs Adjacency (chi arriva a FULL)
 
-- **Neighbor**: relazione fino a **2-Way**
+- **Neighbor**: relazione fino a 2-Way
     
 - **Adjacency**: relazione **FULL** (LSDB sincronizzata)
     
@@ -118,8 +110,6 @@ Su Broadcast:
     - **C = total neighbors**
 
 ![[Screenshot_2 16.png]]
-
----
 
 ## OSPF Neighbor / Adjacency Requirements (da troubleshooting)
 
@@ -142,10 +132,7 @@ Questi mismatch impediscono neighbor o impediscono OSPF “di funzionare bene”
 
 - **MTU mismatch**: i router possono restare neighbor ma bloccarsi (es. **EXSTART**) e non arrivare a FULL
     
-- **Network type mismatch**: può mostrare **FULL** ma avere **routing incompleto** (rotte mancanti)
-    
-
----
+- **Network type mismatch**: può mostrare FULL ma avere **routing incompleto** (rotte mancanti)
 
 ## Config/CLI essenziale (troubleshooting)
 
@@ -182,8 +169,6 @@ interface g0/0
  ip ospf network point-to-point   ! oppure broadcast
 ```
 
----
-
 ## LSA Types (solo quelli CCNA)
 
 - **Type 1 – Router LSA**
@@ -194,7 +179,7 @@ interface g0/0
         
 - **Type 2 – Network LSA**
     
-    - Generata **solo dal DR** su reti **multi-access** (broadcast)
+    - Generata **solo dal DR** su reti multi-access (broadcast)
         
     - Elenca i router attaccati al segmento
         
@@ -203,24 +188,18 @@ interface g0/0
     - Generata da **ASBR**
         
     - Descrive rotte **esterne** all’OSPF domain (es. default verso Internet)
-        
-
----
 
 ## Common Mistakes
 
-- Confondere **neighbor** con **FULL adjacency**
+- Confondere neighbor con FULL adjacency
     
 - Aspettarsi **preemption** cambiando priority
     
-- Ignorare **MTU mismatch** (stuck in EXSTART)
+- Ignorare MTU mismatch (stuck in EXSTART)
     
-- Fidarsi di **FULL** con **network type mismatch** (routing può essere incompleto)
-    
-
----
+- Fidarsi di FULL con network type mismatch (routing può essere incompleto)
 
 ## Synthesis
 
 Network type determina **come** i router scoprono i neighbor e **chi** forma FULL.  
-Su Broadcast, **DR/BDR** esistono per **ridurre il flooding**; i DROTHER arrivano a FULL **solo** con DR/BDR.
+Su Broadcast, DR/BDR esistono per **ridurre il flooding**; i DROTHER arrivano a FULL **solo** con DR/BDR.

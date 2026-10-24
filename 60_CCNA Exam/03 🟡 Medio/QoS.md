@@ -11,10 +11,10 @@ Dare priorità al traffico sensibile (voce, video) quando la banda è congestion
 ## 1. Metriche
 | Termine | Significato | Voce (limite) |
 |---|---|---|
-| **Bandwidth** | Capacità del link | 30–128 kbps per chiamata |
-| **Delay/Latency** | Tempo one-way | ≤ 150 ms |
-| **Jitter** | **Variazione** del delay | ≤ 30 ms |
-| **Loss** | Pacchetti persi | ≤ 1% |
+| Bandwidth | Capacità del link | 30–128 kbps per chiamata |
+| Delay/Latency | Tempo one-way | ≤ 150 ms |
+| Jitter | **Variazione** del delay | ≤ 30 ms |
+| Loss | Pacchetti persi | ≤ 1% |
 
 ## 2. Pipeline QoS
 1. **Classification** — identifica il traffico (ACL, NBAR, DSCP/CoS già presenti).
@@ -58,9 +58,9 @@ Il phone taggato usa la **voice VLAN**, il PC dietro il phone usa la data VLAN. 
 
 ## Common Mistakes
 - **Jitter ≠ delay**: è la *variazione* del delay.
-- Marking senza **trust boundary** corretto: il tag viene sovrascritto o ignorato.
+- Marking senza trust boundary corretto: il tag viene sovrascritto o ignorato.
 - Policing e shaping non sono uguali: uno scarta, l'altro ritarda.
-- La voce va in **LLQ**, non in coda normale.
+- La voce va in LLQ, non in coda normale.
 
 ## 🎯 Synthesis
 Classifico, marco (EF = voce), metto in coda con priorità e limito con shaping/policing per tenere basso delay e jitter della voce.

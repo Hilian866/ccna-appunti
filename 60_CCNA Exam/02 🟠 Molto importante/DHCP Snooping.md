@@ -8,18 +8,14 @@ stato: da-ripassare
 >
 > [01:21](http://www.youtube.com/watch?v=qYYeg2kz1yE&t=81) Funzionalità di sicurezza Layer 2 che filtra i messaggi DHCP. Crea il **DHCP Snooping Binding Table**, un database fondamentale per prevenire attacchi di spoofing e alimentare protocolli successivi come DAI e IPSG.
 
----
-
 ## Segmentazione Interfacce
 
 Il sistema divide le porte in due categorie logiche per mitigare i rischi di inserimento di nodi non autorizzati:
 
-|**Porta**|**Target Tipico**|**Comportamento DHCP**|
+|Porta|Target Tipico|Comportamento DHCP|
 |---|---|---|
-|**Trusted**|Uplink (Router/Server)|Inoltra tutto; nessuna ispezione.|
-|**Untrusted**|Porte Access (PC/Host)|Ispezione rigorosa; scarto pacchetti "Server-side".|
-
----
+|Trusted|Uplink (Router/Server)|Inoltra tutto; nessuna ispezione.|
+|Untrusted|Porte Access (PC/Host)|Ispezione rigorosa; scarto pacchetti "Server-side".|
 
 ## Ispezione e Validazione (Esame Focus)
 
@@ -31,9 +27,7 @@ Lo switch applica controlli specifici sui messaggi ricevuti su porte **Untrusted
     - **Discover / Request:** Verifica che `Source MAC` (Header L2) == `CHADDR` (Payload DHCP). Previene il **DHCP Starvation**.
     - **Release / Decline:** Verifica che `Source IP` + `Porta` corrispondano ai dati nel **Binding Table**. Previene DoS e spoofing di rilascio.
 
----
-
-## ⏳ Rate Limiting & Efficienza del Monitoraggio
+## Rate Limiting & Efficienza del Monitoraggio
 
 Protegge le risorse computazionali dello switch (CPU) da flood di pacchetti DHCP che potrebbero causare instabilità sistemica.
 
@@ -41,20 +35,18 @@ Protegge le risorse computazionali dello switch (CPU) da flood di pacchetti DHCP
 - **Violazione:** L'interfaccia viene posta in stato `err-disabled`.
 - **Ripristino [16:16](http://www.youtube.com/watch?v=qYYeg2kz1yE&t=976):** Può essere automatizzato tramite `errdisable recovery` per ridurre l'attrito operativo.
 
----
-
-## 📑 Binding Table (Source of Truth)
+## Binding Table (Source of Truth)
 
 Database dinamico popolato durante il processo DORA. Campi essenziali:
 
-- **MAC Address**, **IP Address**, **Lease Time**, **VLAN**, **Interface**.
+- MAC Address, IP Address, Lease Time, VLAN, Interface.
 
 > **Comando Verifica:** `show ip dhcp snooping binding`
 > **Comando Verifica Interfacce:** `show ip dhcp snooping `
 
 ### Come si popola la Binding Table
 1. **Stato iniziale:** appena configurato lo snooping, `show ip dhcp snooping binding` è **vuoto**: lo switch è "in ascolto" ma non ha ancora dati.
-2. **Trigger (ciclo DORA):** la tabella si riempie solo quando i client sulle porte **Untrusted** fanno una richiesta DHCP.
+2. **Trigger (ciclo DORA):** la tabella si riempie solo quando i client sulle porte Untrusted fanno una richiesta DHCP.
    - *Discover/Request*: lo switch li analizza ma non scrive nulla.
    - *Offer*: verifica che arrivi da una porta **Trusted**.
    - **ACK** (momento chiave): lo switch legge IP assegnato e MAC del client e **scrive la riga**.
@@ -75,9 +67,7 @@ MacAddress          IpAddress        Lease(sec)  Type           VLAN  Interface
 00:E0:4C:39:BA:01   192.168.10.15    86340       dhcp-snooping  10    FastEthernet0/1
 ```
 
----
-
-## ⚙️ Implementazione Operativa (CLI)
+## Implementazione Operativa (CLI)
 
 > [!NOTE] Configurazione Globale e VLAN [12:44](http://www.youtube.com/watch?v=qYYeg2kz1yE&t=764)
 >
@@ -107,14 +97,10 @@ MacAddress          IpAddress        Lease(sec)  Type           VLAN  Interface
 >  ip dhcp snooping limit rate 15
 > ```
 
----
-
 ## ⚠️ Troubleshooting: Option 82 [▶ 17:36](http://www.youtube.com/watch?v=qYYeg2kz1yE&t=1056)
 
 - **Criticità:** Lo switch inserisce l'Option 82 di default. Se riceve pacchetti con questa opzione su porte untrusted o se il server non la supporta, il traffico viene scartato, generando un'interruzione del servizio (denial of service involontario).
 - **Fix Strategico:** `no ip dhcp snooping information option` per disabilitare l'inserimento dell'opzione e garantire l'interoperabilità.
-
----
 
 ## 🎯 Synthesis
 DHCP Snooping distingue porte trusted (server) e untrusted (client) e costruisce la binding table, che si popola solo con gli ACK DHCP (host statici e client già connessi vanno gestiti a parte).

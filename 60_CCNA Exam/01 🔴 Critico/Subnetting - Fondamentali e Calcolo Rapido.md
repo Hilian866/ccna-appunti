@@ -12,41 +12,35 @@ Il subnetting consiste nel "rubare" bit alla parte Host per creare più sottoret
 - **Block Size (Magic Number):** È l'incremento tra una subnet e l'altra. Si ottiene sottraendo il valore dell'ultimo ottetto da **256**.
 - **Host utilizzabili:** $2^n - 2$ (dove $n$ è il numero di bit rimasti a 0).
 
----
-
 ## 1. Tabella di Conversione (Ottetto Critico)
 
 Questa tabella si riferisce al **quarto ottetto**. Memorizzare il legame tra bit presi, valore decimale e block size è la chiave per risolvere il subnetting in meno di 10 secondi.
 
-|**CIDR**|**Bit Presi**|**Valore Decimale**|**Block Size (Magic #)**|**Host Totali**|
+|CIDR|Bit Presi|Valore Decimale|Block Size (Magic #)|Host Totali|
 |---|---|---|---|---|
-|**/24**|0|.0|**256**|254|
-|**/25**|1|.128|**128**|126|
-|**/26**|2|.192|**64**|62|
-|**/27**|3|.224|**32**|30|
-|**/28**|4|.240|**16**|14|
-|**/29**|5|.248|**8**|6|
-|**/30**|6|.252|**4**|**2**|
+|/24|0|.0|256|254|
+|/25|1|.128|128|126|
+|/26|2|.192|64|62|
+|/27|3|.224|32|30|
+|/28|4|.240|16|14|
+|/29|5|.248|8|6|
+|/30|6|.252|4|**2**|
 
 > [!IMPORTANT]
 >
 > **Il /30 è il "Link Point-to-Point":** Usato quasi esclusivamente per i collegamenti diretti tra router, poiché offre solo 2 IP utilizzabili (evitando sprechi).
 
----
-
 ## 2. Subnet Mask "Must-Know"
 
 Questi valori devono essere riconosciuti istantaneamente nei quiz d'esame.
 
-|**CIDR**|**Subnet Mask**|**Contesto Tipico**|
+|CIDR|Subnet Mask|Contesto Tipico|
 |---|---|---|
-|**/8**|255.0.0.0|Class A Default|
-|**/16**|255.255.0.0|Class B Default|
-|**/24**|255.255.255.0|Class C Default / LAN standard|
-|**/30**|255.255.255.252|WAN / Link tra Router|
-|**/32**|255.255.255.255|**Host Singolo** (Loopback o ACL)|
-
----
+|/8|255.0.0.0|Class A Default|
+|/16|255.255.0.0|Class B Default|
+|/24|255.255.255.0|Class C Default / LAN standard|
+|/30|255.255.255.252|WAN / Link tra Router|
+|/32|255.255.255.255|**Host Singolo** (Loopback o ACL)|
 
 ## 3. Il Metodo del "Magic Number" (Algoritmo di calcolo)
 
@@ -58,15 +52,11 @@ Per trovare l'indirizzo di rete di un IP (es. `192.168.1.50 /27`):
 4. **Network ID:** `192.168.1.32`
 5. **Broadcast:** `192.168.1.63` (uno prima del blocco successivo).
 
----
-
 ## 4. Common Pitfalls (CCNA Trap)
 
 - **Dimenticare il -2:** Molti quesiti chiedono "Quanti host _utilizzabili_?". La risposta non è mai una potenza di 2 (es. per /27 è 30, non 32).
 - **Confusione /31:** In ambienti moderni esiste il /31 per i link punto-punto, ma per il CCNA standard, il limite operativo minimo per una subnet con host è il **/30**.
 - **Ottetti diversi:** Se il CIDR è inferiore a /24 (es. /20), il calcolo si sposta nel **terzo ottetto**. La logica del Magic Number resta identica, ma applicata a `255.255.X.0`.
-
----
 
 ## 5. Oltre il 4° ottetto (/17–/23 e /9–/15)
 Stessa logica, ma il "magic number" si calcola sull'ottetto **dove cade il confine**.

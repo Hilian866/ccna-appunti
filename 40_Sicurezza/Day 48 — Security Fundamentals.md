@@ -3,8 +3,6 @@
 
 Panoramica dei **fondamentali di sicurezza** richiesti dal CCNA (non è una cert “cybersecurity”): concetti base, attacchi comuni, password/MFA, **AAA**, e elementi di **security program** aziendale.
 
----
-
 ### What does / How it works
 
 #### Obiettivo “security” (CIA triad)
@@ -28,8 +26,6 @@ Panoramica dei **fondamentali di sicurezza** richiesti dal CCNA (non è una cert
     
 
 > Nota operativa: “zero rischio” non esiste; si ragiona per **riduzione** del rischio.
-
----
 
 ## Common attacks (categorie + CIA colpita)
 
@@ -127,9 +123,6 @@ Panoramica dei **fondamentali di sicurezza** richiesti dal CCNA (non è una cert
 - **Dictionary attack**
     
 - **Brute force** (tutte le combinazioni)
-    
-
----
 
 ## Passwords & MFA
 
@@ -166,9 +159,6 @@ Usa almeno **2 categorie diverse**:
 - Richiesta: **CSR** → **CA** firma e rilascia cert
     
 - Browser indica cert valido → riduce rischio di sito “clone”
-    
-
----
 
 ## AAA (framework)
 
@@ -186,9 +176,6 @@ Protocolli AAA:
 - **RADIUS**: UDP **1812/1813**
     
 - **TACACS+**: TCP **49**
-    
-
----
 
 ## Security program elements (azienda)
 
@@ -199,9 +186,6 @@ Protocolli AAA:
 - **Physical access control**: controllo accessi fisici (badge, biometria, aree ristrette)
     
     - badge: permessi revocabili centralmente
-        
-
----
 
 ## Key rules / exam points (alta priorità)
 
@@ -216,19 +200,14 @@ Protocolli AAA:
 - AAA: definizioni + esempi
     
 - RADIUS/TACACS+ + **porte** (da sapere “a memoria”)
-    
-
----
 
 ## CLI
 
 _(Nessun comando in questo video)_
 
----
-
 ## Common mistakes / notes
 
-- Confondere **vulnerability** (debolezza) con **threat** (possibilità reale di sfruttamento)
+- Confondere vulnerability (debolezza) con threat (possibilità reale di sfruttamento)
     
 - Pensare che “due fattori” = “due step”: no, devono essere **categorie diverse**
     

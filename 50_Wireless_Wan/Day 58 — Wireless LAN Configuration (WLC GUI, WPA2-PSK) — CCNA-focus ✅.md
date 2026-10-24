@@ -12,9 +12,6 @@ Devi saper **configurare WLAN tramite GUI** su **WLC**, in particolare:
 - **sicurezza: WPA2-PSK (Personal)**
     
 - concetti base di **split-MAC/CAPWAP** e ruoli VLAN (**management vs client**)
-    
-
----
 
 ## 1) Topologia logica (quello che conta)
 
@@ -41,9 +38,6 @@ Devi saper **configurare WLAN tramite GUI** su **WLC**, in particolare:
 - **AP → switch = access port (management VLAN)** ✅
     
 - **WLC → switch = trunk (porta tutte le VLAN necessarie)** ✅
-    
-
----
 
 ## 2) Switch config (solo ciò che serve ricordare)
 
@@ -82,9 +76,6 @@ Poi **Port-Channel trunk** con VLAN 10,100,200.
 - Serve per dire agli AP **l’IP del WLC** (utile quando non è nella stessa subnet).
     
 - Da ricordare come concetto.
-    
-
----
 
 ## 3) WLC initial setup (wizard via console) — essenziale
 
@@ -107,16 +98,11 @@ Imposti nel wizard:
 
 📌 Nota CCNA: il wizard esiste; non serve memoria di “tutte le schermate”.
 
----
-
 ## 4) Accesso al GUI (CCNA)
 
-- Da PC in **VLAN 10**, apri browser su **IP management del WLC**
+- Da PC in VLAN 10, apri browser su **IP management del WLC**
     
 - HTTPS può dare warning certificato (irrilevante per l’esame: basta capire che si accede via web)
-    
-
----
 
 ## 5) Concetto fondamentale: Ports vs Interfaces (WLC)
 
@@ -141,9 +127,6 @@ Imposti nel wizard:
     
     - usata in vari casi “client-facing” (DHCP relay, web auth, ecc.)  
         (conoscenza superficiale ok)
-        
-
----
 
 ## 6) Creazione Dynamic Interfaces (GUI)
 
@@ -152,9 +135,6 @@ Per ogni VLAN client crei una dynamic interface:
 - **Internal** → VLAN 100 → IP/mask/gw/DHCP
     
 - **Guest** → VLAN 200 → IP/mask/gw/DHCP
-    
-
----
 
 ## 7) Configurazione WLAN/SSID (GUI) — core CCNA ✅
 
@@ -191,8 +171,6 @@ Nel tab Security:
 
 📌 Questo è il punto “5.10” più testabile: **WPA2 PSK via GUI**.
 
----
-
 ## 8) QoS profiles (da sapere “a memoria leggera”)
 
 Sul WLC trovi 4 livelli QoS:
@@ -208,16 +186,11 @@ Sul WLC trovi 4 livelli QoS:
 
 Non serve saperli configurare in dettaglio: serve **riconoscerli**.
 
----
-
 ## 9) Monitoraggio base (GUI)
 
 - Vedere client associati (SSID, AP, IP)
     
 - Vedere AP joined
-    
-
----
 
 ## 10) ACL sul WLC (solo concetto)
 

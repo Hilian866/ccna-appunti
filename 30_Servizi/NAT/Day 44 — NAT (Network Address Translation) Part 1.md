@@ -12,8 +12,6 @@ Scopo principale:
 
 Exam topic **4.1**.
 
----
-
 ### Core CCNA — concetti fondamentali
 
 #### Private IPv4 addresses (RFC 1918)
@@ -34,9 +32,6 @@ Caratteristiche:
 - **ISP (Internet Service Provider) scarta traffico** con IP privati
     
 - usati comunemente nelle LAN
-    
-
----
 
 ### Why NAT exists
 
@@ -54,9 +49,6 @@ Con NAT:
 - comunicazione Internet possibile
     
 - traduzione fatta dal **router di confine**
-    
-
----
 
 ### Source NAT (overview)
 
@@ -70,8 +62,6 @@ Con NAT:
 Flusso base:
 
 `Inside host (private IP) → router (NAT) → Internet Internet → router (reverse NAT) → inside host`
-
----
 
 ## Static Source NAT (focus del video)
 
@@ -91,8 +81,6 @@ Ogni host interno:
 
 ![[Screenshot_1 12.png]]
 
----
-
 ### NAT terminology (OBBLIGATORIO CCNA)
 
 |Termine|Significato|
@@ -109,9 +97,6 @@ Note:
 - “inside / outside” = **posizione**
     
 - “local / global” = **prospettiva**
-    
-
----
 
 ### Static NAT — esempio concettuale
 
@@ -125,9 +110,6 @@ Limite:
 - **non conserva IP pubblici**
     
 - ogni host richiede **1 IP pubblico**
-    
-
----
 
 ### Configurazione Static NAT
 
@@ -148,9 +130,6 @@ interface g0/0
 ip nat inside source static 192.168.0.167 100.0.0.1
 ip nat inside source static 192.168.0.168 100.0.0.2
 ```
-
-
----
 
 ### Verifica e troubleshooting
 
@@ -173,11 +152,9 @@ Osservazioni:
 
 `clear ip nat translation *`
 
----
-
 ### Key rules / exam points
 
-- Static NAT = **1:1**
+- Static NAT = 1:1
     
 - Un IP pubblico **non può essere riutilizzato**
     
@@ -188,9 +165,6 @@ Osservazioni:
 - ISP blocca IP privati
     
 - Static NAT ≠ uso IP interfaccia router
-    
-
----
 
 ### Common mistakes / notes
 

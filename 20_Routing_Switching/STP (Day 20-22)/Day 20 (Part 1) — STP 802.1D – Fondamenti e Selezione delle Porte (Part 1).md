@@ -21,8 +21,6 @@ STP risolve il problema creando una **topologia logica senza loop**, pur mantene
 
 ![[Screenshot_3 1.png]]
 
----
-
 ### Concetti base
 
 - STP usa **BPDUs** (Bridge Protocol Data Units)
@@ -34,9 +32,6 @@ STP risolve il problema creando una **topologia logica senza loop**, pur mantene
     - **Forwarding** (attive)
         
     - **Blocking** (backup)
-        
-
----
 
 ### Step 1 – Root Bridge Election
 
@@ -75,16 +70,13 @@ deterministicamente** l’elezione del root bridge.
 
 ![[Screenshot_1 1.png]]
 ![[Screenshot_2 1.png]]
-👉 Per default vince lo switch con **MAC address più basso**
+👉 Per default vince lo switch con MAC address più basso
 
-**Root Bridge**
+Root Bridge
 
 - **TUTTE le sue porte sono Designated**
     
 - **TUTTE in Forwarding**
-    
-
----
 
 ### Step 2 – Root Port Selection
 
@@ -110,14 +102,12 @@ Il **root cost** = somma dei costi delle interfacce **in uscita** verso il root.
 
 1. Lowest root cost
     
-2. Neighbor con **Bridge ID più basso**
+2. Neighbor con Bridge ID più basso
     
 3. Neighbor con **Port ID più basso** (port priority + port number)
     
 
 ⚠️ Si usa il **Port ID del vicino**, non quello locale.
-
----
 
 ### Step 3 – Designated vs Non-Designated Ports
 
@@ -130,7 +120,7 @@ Criteri:
 
 1. Switch con **root cost più basso** → Designated
     
-2. Se pari → switch con **Bridge ID più basso**
+2. Se pari → switch con Bridge ID più basso
     
 3. L’altro lato diventa **Non-Designated (Blocking)**
     
@@ -142,9 +132,6 @@ Criteri:
 - Designated Port → sempre Forwarding
     
 - Non-Designated Port → Blocking
-    
-
----
 
 ### Stato finale STP
 

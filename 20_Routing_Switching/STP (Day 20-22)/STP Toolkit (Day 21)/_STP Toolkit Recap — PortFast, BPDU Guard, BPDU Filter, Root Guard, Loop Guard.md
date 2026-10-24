@@ -3,19 +3,15 @@
 > **Obiettivo**: usare il _tool giusto_ sulla _porta giusta_ per il _problema giusto_.  
 > Tutti questi meccanismi **non sostituiscono STP**, lo **rafforzano**.
 
----
-
 ## Mappa mentale rapida (prima di entrare nel dettaglio)
 
 |Tool|Dove si usa|Problema che risolve|
 |---|---|---|
-|**PortFast**|Porte verso **end host**|Ridurre tempi di convergenza|
-|**BPDU Guard**|Porte verso **end host**|Bloccare switch non autorizzati|
-|**BPDU Filter**|Casi molto specifici|Silenziare STP (rischioso)|
-|**Root Guard**|Porte verso **switch esterni**|Proteggere il root bridge|
-|**Loop Guard**|Porte che **devono ricevere BPDUs**|Prevenire loop da link unidirezionali|
-
----
+|PortFast|Porte verso **end host**|Ridurre tempi di convergenza|
+|BPDU Guard|Porte verso **end host**|Bloccare switch non autorizzati|
+|BPDU Filter|Casi molto specifici|Silenziare STP (rischioso)|
+|Root Guard|Porte verso **switch esterni**|Proteggere il root bridge|
+|Loop Guard|Porte che **devono ricevere BPDUs**|Prevenire loop da link unidirezionali|
 
 ## PortFast
 
@@ -41,9 +37,6 @@
 - **Non usare su link tra switch**.
     
 - Può essere abilitato **globalmente** (default su access).
-    
-
----
 
 ## BPDU Guard
 
@@ -75,8 +68,6 @@
 
 > “Su questa porta **non devono MAI arrivare BPDUs**.”
 
----
-
 ## BPDU Filter ⚠️
 
 ### What it does
@@ -99,9 +90,6 @@
 - **Bypass totale di STP** → loop L2 possibili.
     
 - **Mai consigliato** in produzione CCNA-level.
-    
-
----
 
 ## Root Guard
 
@@ -141,8 +129,6 @@
 
 > “Da questa porta **non accetto root esterni**.”
 
----
-
 ## Loop Guard
 
 ### What it does
@@ -161,7 +147,7 @@
 
 ### Where
 
-- Porte che **devono ricevere BPDUs**:
+- Porte che devono ricevere BPDUs:
     
     - **Root Ports**
         
@@ -182,8 +168,6 @@
 
 > “Se non sento più BPDUs dove dovrei, **mi blocco**.”
 
----
-
 ## Root Guard vs Loop Guard (confine chiave ⚠️)
 
 |Root Guard|Loop Guard|
@@ -196,8 +180,6 @@
 🚫 **Mutuamente esclusivi**:  
 non possono essere attivi sulla **stessa porta**.
 
----
-
 ## Regola d’oro da esame 🧠
 
 - **End host** → PortFast + BPDU Guard
@@ -207,9 +189,6 @@ non possono essere attivi sulla **stessa porta**.
 - **Link tra switch che ricevono BPDUs** → Loop Guard
     
 - **Silenziare STP** → BPDU Filter (quasi mai)
-    
-
----
 
 ## CLI essenziale
 
@@ -225,9 +204,6 @@ spanning-tree loopguard default
 show spanning-tree
 show spanning-tree interface <int> detail
 ```
-
-
----
 
 ## Sintesi finale
 

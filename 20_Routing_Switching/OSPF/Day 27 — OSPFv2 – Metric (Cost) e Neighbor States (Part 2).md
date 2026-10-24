@@ -49,9 +49,6 @@ interface g0/0
 - Il **process ID è localmente significativo**
     
 - Non richiede `router ospf`
-    
-
----
 
 ## Passive interface – metodo alternativo
 
@@ -80,8 +77,6 @@ router ospf 1
 3. `bandwidth` (sconsigliato: impatta altri protocolli)
     
 ![[Screenshot_4 2.png]]
-
----
 
 ## OSPF Neighbors – Stati
 

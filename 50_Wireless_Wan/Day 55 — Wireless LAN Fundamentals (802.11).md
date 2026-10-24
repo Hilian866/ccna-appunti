@@ -4,9 +4,6 @@
 - **CORE CCNA**: concetti base Wi-Fi, RF, canali, service set
     
 - **NON CORE**: dettagli fisici avanzati, RTS/CTS, channel bonding, mesh routing interno
-    
-
----
 
 ## Wireless LAN – basi
 
@@ -15,9 +12,6 @@
 - **IEEE 802.11**: standard tecnici Wi-Fi
     
 - **Wi-Fi Alliance ≠ IEEE**: certifica interoperabilità, non definisce standard
-    
-
----
 
 ## Differenze chiave vs LAN cablata
 
@@ -28,9 +22,6 @@
 - **Privacy critica**: cifratura necessaria **anche dentro la LAN**
     
 - **Collisioni**: evitate, non rilevate
-    
-
----
 
 ## CSMA
 
@@ -41,9 +32,6 @@
     - ascolta → attende → trasmette
         
 - **RTS/CTS**: opzionale → **NON CORE CCNA**
-    
-
----
 
 ## Radio Frequency (RF)
 
@@ -54,9 +42,6 @@
 - **Frequenza**: cicli al secondo (Hz)
     
 - **Periodo**: tempo di un ciclo (1/f)
-    
-
----
 
 ## Bande Wi-Fi (CORE)
 
@@ -75,9 +60,6 @@
     - più canali non sovrapposti
         
 - **6 GHz (Wi-Fi 6E)**: **NON CORE (menzione leggera)**
-    
-
----
 
 ## Canali Wi-Fi
 
@@ -89,10 +71,7 @@
         
 - **5 GHz**: canali **non sovrapposti**
     
-- **Channel bonding**: **NON CORE**
-    
-
----
+- **Channel bonding**: NON CORE
 
 ## Interferenze & propagazione
 
@@ -107,9 +86,6 @@ Effetti che degradano il segnale:
 - **Diffraction**: aggira ostacoli → blind spot
     
 - **Scattering**: dispersione (superfici irregolari)
-    
-
----
 
 ## SSID / BSSID
 
@@ -118,9 +94,6 @@ Effetti che degradano il segnale:
 - **BSSID**: MAC address della radio AP
     
 - **SSID ≠ BSSID** (confine concettuale da quiz)
-    
-
----
 
 ## Service Sets (CORE)
 
@@ -154,7 +127,7 @@ Effetti che degradano il segnale:
     
 - **Roaming** tra AP
     
-- Canali **non sovrapposti**
+- Canali non sovrapposti
     
 - Overlap BSA ~10–15%
     
@@ -168,9 +141,6 @@ Effetti che degradano il segnale:
 - **MAP**: mesh AP
     
 - **NON CORE** (concetto)
-    
-
----
 
 ## AP & rete cablata
 
@@ -183,9 +153,6 @@ Effetti che degradano il segnale:
 - AP può fornire **più SSID → più VLAN**
     
 - **Ogni SSID → BSSID distinto**
-    
-
----
 
 ## Modalità AP
 
@@ -210,9 +177,6 @@ Effetti che degradano il segnale:
     - **Point-to-Point / Point-to-Multipoint**
         
     - **NON CORE**
-        
-
----
 
 ## Standard 802.11 (MEMORIZZARE)
 
@@ -227,9 +191,6 @@ Effetti che degradano il segnale:
 - **802.11ac (Wi-Fi 5)** – 5 GHz
     
 - **802.11ax (Wi-Fi 6)** – 2.4 / 5 / 6 GHz
-    
-
----
 
 ## Domande tipiche da esame
 

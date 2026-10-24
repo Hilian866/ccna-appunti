@@ -12,16 +12,14 @@ Riepilogo dei servizi di gestione e monitoraggio dei dispositivi. Domande tipich
 
 | Servizio | Porta | Punto chiave |
 |---|---|---|
-| **NTP** | UDP 123 | Stratum: **0** = orologio atomico/GPS, il server ha stratum basso, ogni hop +1 (max 15; 16 = non sincronizzato). |
-| **SNMP** | UDP 161 (agent), **162 (trap)** | Manager ↔ Agent, **MIB** con **OID**. `get`, `set`, `trap`, `inform`. |
-| **Syslog** | UDP 514 | Livelli **0–7**. |
-| **SSH** | TCP 22 | Sostituisce Telnet (TCP 23, in chiaro). Richiede hostname + domain-name + chiavi RSA. |
-| **TFTP** | UDP 69 | Senza autenticazione, no directory, semplice. |
-| **FTP** | TCP 20 (dati) / 21 (controllo) | Autenticazione, comandi, directory. |
-| **CDP** | L2 (Cisco) | Multicast 01:00:0C:CC:CC:CC, ogni **60 s**, holdtime 180 s. |
-| **LLDP** | L2 (IEEE 802.1AB) | Multicast 01:80:C2:00:00:0E, ogni **30 s**, holdtime 120 s. Multivendor. |
-
----
+| NTP | UDP 123 | Stratum: **0** = orologio atomico/GPS, il server ha stratum basso, ogni hop +1 (max 15; 16 = non sincronizzato). |
+| SNMP | UDP 161 (agent), **162 (trap)** | Manager ↔ Agent, **MIB** con **OID**. `get`, `set`, `trap`, `inform`. |
+| Syslog | UDP 514 | Livelli **0–7**. |
+| SSH | TCP 22 | Sostituisce Telnet (TCP 23, in chiaro). Richiede hostname + domain-name + chiavi RSA. |
+| TFTP | UDP 69 | Senza autenticazione, no directory, semplice. |
+| FTP | TCP 20 (dati) / 21 (controllo) | Autenticazione, comandi, directory. |
+| CDP | L2 (Cisco) | Multicast 01:00:0C:CC:CC:CC, ogni **60 s**, holdtime 180 s. |
+| LLDP | L2 (IEEE 802.1AB) | Multicast 01:80:C2:00:00:0E, ogni **30 s**, holdtime 120 s. Multivendor. |
 
 ## Syslog — severity
 | # | Nome | | # | Nome |
@@ -83,8 +81,6 @@ lldp run
 lldp transmit / lldp receive  ! per interfaccia
 ```
 Il `detail` mostra l'**IP di management** del vicino: utile per il troubleshooting.
-
----
 
 ## Common Mistakes
 - Confondere **CDP** (Cisco) con **LLDP** (standard) e i loro timer (60/30 s).

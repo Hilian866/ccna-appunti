@@ -2,9 +2,6 @@
 ### Scope CCNA
 
 - **CORE CCNA**: trunk, 802.1Q tag, native VLAN, allowed VLANs, router-on-a-stick
-    
-
----
 
 ## Trunk port
 
@@ -20,18 +17,12 @@
 - **Access = untagged port**
     
 - Trunk serve a evitare “1 cavo per VLAN” (non scalabile)
-    
-
----
 
 ## Perché servono i trunk
 
 - VLAN distribuite su più switch → serve trasportare traffico di più VLAN tra switch e verso router
     
 - Alternativa “link per VLAN” = spreco porte / router senza abbastanza interfacce
-    
-
----
 
 ## VLAN tagging (802.1Q)
 
@@ -68,9 +59,6 @@
 📌 Quiz trap
 
 - Campo VLAN ID nella tag: **VID**, non PCP/TPID
-    
-
----
 
 ## Range VLAN
 
@@ -88,9 +76,6 @@ _(Nel tuo testo compaiono numeri errati tipo 494/495 → qui va corretto per CCN
 - **Normal VLAN**: **1–1005**
     
 - **Extended VLAN**: **1006–4094**
-    
-
----
 
 ## Native VLAN (802.1Q)
 
@@ -98,7 +83,7 @@ _(Nel tuo testo compaiono numeri errati tipo 494/495 → qui va corretto per CCN
     
 - Default: **VLAN 1**
     
-- Se ricevi un frame **untagged** su trunk → lo switch lo tratta come **native VLAN**
+- Se ricevi un frame untagged su trunk → lo switch lo tratta come native VLAN
     
 
 📌 Confini concettuali
@@ -111,9 +96,6 @@ _(Nel tuo testo compaiono numeri errati tipo 494/495 → qui va corretto per CCN
 Best practice (menzionata)
 
 - Cambiare native VLAN a **VLAN non usata** (es. 1001) per sicurezza
-    
-
----
 
 ## Config trunk (switch)
 
@@ -143,8 +125,6 @@ switchport mode trunk
 
 `show interfaces trunk`
 
----
-
 ## Allowed VLANs su trunk
 
 - Default: **tutte** le VLAN **1–4094** allowed
@@ -166,9 +146,6 @@ switchport trunk allowed vlan except 1-5,10
 - Se VLAN è “allowed” ma **non esiste sullo switch**, può non apparire in “allowed and active…”
     
     - Soluzione: **creare la VLAN** (o assegnare una porta access a quella VLAN)
-        
-
----
 
 ## Native VLAN config (switch)
 
@@ -179,9 +156,6 @@ switchport trunk allowed vlan except 1-5,10
 - `show vlan brief` mostra **porte access** per VLAN, **non** trunk
     
 - Per trunk: **`show interfaces trunk`**
-    
-
----
 
 ## Router-on-a-Stick (ROAS)
 
@@ -226,25 +200,20 @@ show ip interface brief
 show ip route
 ```
 
----
-
 ## Flusso logico (ROAS)
 
 - Frame arriva al router tagged VLAN 10 → trattato come arrivato su **g0/0.10**
     
 - Router route → esce da subinterface corretta (es. .30) **taggando VLAN 30**
-    
-
----
 
 ## Quiz pattern (dalla lezione)
 
-- “VLAN untagged su trunk” → **native VLAN**
+- “VLAN untagged su trunk” → native VLAN
     
 - Reset allowed VLANs → `switchport trunk allowed vlan all`
     
 - Errore `switchport mode trunk` → serve `switchport trunk encapsulation dot1q` (su modelli che supportano ISL+dot1q)
     
-- Campo VLAN ID nella tag → **VID**
+- Campo VLAN ID nella tag → VID
     
 - VLAN allowed ma non “active” → VLAN non creata sullo switch

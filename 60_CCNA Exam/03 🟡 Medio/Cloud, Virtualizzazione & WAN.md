@@ -9,7 +9,7 @@ stato: da-ripassare
 Architetture LAN/WAN, cloud e virtualizzazione: domande di sola teoria.
 
 ## 1. Architetture LAN
-| | **2-tier (Collapsed Core)** | **3-tier** | **Spine-Leaf** |
+| | 2-tier (Collapsed Core) | 3-tier | Spine-Leaf |
 |---|---|---|---|
 | Livelli | Access + Distribution/Core | Access, Distribution, Core | Leaf (access) + Spine |
 | Uso | Campus medio | Campus grande | **Data center** |
@@ -21,25 +21,25 @@ Architetture LAN/WAN, cloud e virtualizzazione: domande di sola teoria.
 ## 2. WAN
 | Tecnologia | Note |
 |---|---|
-| **Leased line** | Punto-punto dedicato, costoso, sicuro |
-| **MPLS VPN** | Rete del provider, QoS, L3 VPN |
-| **Metro Ethernet** | Ethernet su rete del provider |
-| **Internet + VPN** | Economico: **IPsec** site-to-site o remote access |
-| **DMVPN / GRE** | GRE incapsula multicast/routing ma **non cifra**; IPsec cifra |
+| Leased line | Punto-punto dedicato, costoso, sicuro |
+| MPLS VPN | Rete del provider, QoS, L3 VPN |
+| Metro Ethernet | Ethernet su rete del provider |
+| Internet + VPN | Economico: **IPsec** site-to-site o remote access |
+| DMVPN / GRE | GRE incapsula multicast/routing ma **non cifra**; IPsec cifra |
 
 Topologie: point-to-point, hub-and-spoke, full mesh, partial mesh. Vedi [[Day 53 — WAN Architectures & VPNs]] · Lab: [[Day 53 Lab - GRE Tunnels.pkt]].
 
 ## 3. Cloud
 | Modello | Gestisci tu | Esempio |
 |---|---|---|
-| **IaaS** | OS, app, dati | AWS EC2, Azure VM |
-| **PaaS** | App e dati | Azure App Service, Heroku |
-| **SaaS** | Solo l'uso | Microsoft 365, Gmail |
+| IaaS | OS, app, dati | AWS EC2, Azure VM |
+| PaaS | App e dati | Azure App Service, Heroku |
+| SaaS | Solo l'uso | Microsoft 365, Gmail |
 
-Deployment: **public**, **private**, **hybrid**, **community**. Caratteristiche: on-demand, elastic, pay-as-you-go, resource pooling.
+Deployment: public, private, hybrid, community. Caratteristiche: on-demand, elastic, pay-as-you-go, resource pooling.
 
 ## 4. Virtualizzazione
-| | **VM** | **Container** |
+| | VM | Container |
 |---|---|---|
 | Isolamento | Ogni VM ha il **proprio OS** (hypervisor) | Condividono il **kernel** dell'host |
 | Peso | GB, avvio lento | MB, avvio rapido |

@@ -7,17 +7,13 @@ stato: da-ripassare
 > [!ABSTRACT] Core Logic
 > L'autenticazione nelle **REST API** è il processo di validazione dell'identità di un utente o sistema per garantire l'accesso legittimo alle risorse. Oltre alla sicurezza, è fondamentale per l'**analytics** e il **billing** (es. tracciamento dei token in ChatGPT). [01:42](https://youtu.be/bmqr_xpt6sc&t=102s).
 
----
-
-## 🏗️ Fondamenti dell'Autenticazione API
+## Fondamenti dell'Autenticazione API
 Senza autenticazione, chiunque potrebbe inviare **API requests**, accedendo a dati sensibili o modificando l'applicazione. [02:16](https://youtu.be/bmqr_xpt6sc&t=136s).
 
 > [!INFO] Tracking e Billing
 > Molte API utilizzano l'autenticazione per scopi commerciali, addebitando costi in base all'utilizzo (es. modelli **OpenAI** basati su token). [03:08](https://youtu.be/bmqr_xpt6sc&t=188s).
 
----
-
-## 🔐 Metodi di Autenticazione (Authentication Schemes)
+## Metodi di Autenticazione (Authentication Schemes)
 
 ### 1. Basic Authentication
 È il metodo più semplice. Invia credenziali direttamente nell'**HTTP Header**. [05:41](https://youtu.be/bmqr_xpt6sc&t=341s).
@@ -25,7 +21,7 @@ Senza autenticazione, chiunque potrebbe inviare **API requests**, accedendo a da
 - **Codifica**: Le credenziali sono codificate in **Base64**. [07:33](https://youtu.be/bmqr_xpt6sc&t=453s).
 
 > [!WARNING] Rischio Sicurezza
-> La codifica **Base64** NON è cifratura. È facilmente decodificabile. È imperativo utilizzare **HTTPS (TLS)** per proteggere il traffico. [07:53](https://youtu.be/bmqr_xpt6sc&t=473s).
+> La codifica Base64 NON è cifratura. È facilmente decodificabile. È imperativo utilizzare **HTTPS (TLS)** per proteggere il traffico. [07:53](https://youtu.be/bmqr_xpt6sc&t=473s).
 
 ### 2. Bearer Authentication
 Utilizza un **Token** (chiamato Bearer Token) invece delle credenziali classiche. [10:04](https://youtu.be/bmqr_xpt6sc&t=604s).
@@ -46,20 +42,16 @@ Un framework avanzato per l'**Access Delegation**. Permette ad app terze di acce
 3. **Auth Server**: Il server che emette il token (es. Google Auth).
 4. **Resource Server**: Il server che ospita i dati (es. Google Calendar).
 
----
-
-## 📊 Confronto Metodi di Autenticazione
+## Confronto Metodi di Autenticazione
 
 | Metodo | Meccanismo | Sicurezza | Uso Comune |
 | :--- | :--- | :--- | :--- |
-| **Basic** | Username/Password in **Base64** | Bassa (richiede TLS) | Ambienti legacy/semplici |
-| **Bearer** | Token generato da server | Alta | Web App moderne |
-| **API Key** | Stringa univoca statica | Media | Cloud Services / Tracking |
-| **OAuth 2.0** | Framework di delega (Token) | Massima | Integrazioni terze parti |
+| Basic | Username/Password in **Base64** | Bassa (richiede TLS) | Ambienti legacy/semplici |
+| Bearer | Token generato da server | Alta | Web App moderne |
+| API Key | Stringa univoca statica | Media | Cloud Services / Tracking |
+| OAuth 2.0 | Framework di delega (Token) | Massima | Integrazioni terze parti |
 
----
-
-## ⚡ Concetti Avanzati OAuth 2.0
+## Concetti Avanzati OAuth 2.0
 
 > [!INFO] Token Refresh
 > Per evitare che l'utente debba rieseguire il login ogni volta che un **Access Token** scade, OAuth 2.0 utilizza i **Refresh Tokens** per ottenere nuove chiavi automaticamente. [20:13](https://youtu.be/bmqr_xpt6sc&t=1213s).
@@ -67,7 +59,7 @@ Un framework avanzato per l'**Access Delegation**. Permette ad app terze di acce
 ### Flusso Operativo OAuth 2.0
 1. Il Client richiede autorizzazione.
 2. Il Resource Owner concede il permesso.
-3. Il Client scambia il permesso con un **Access Token**.
+3. Il Client scambia il permesso con un Access Token.
 4. Il Client usa il Token per richiedere la risorsa. [18:32](https://youtu.be/bmqr_xpt6sc&t=1112s).
 
 ---

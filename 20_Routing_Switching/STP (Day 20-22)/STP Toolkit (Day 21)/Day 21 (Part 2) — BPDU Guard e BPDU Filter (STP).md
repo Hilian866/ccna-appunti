@@ -7,8 +7,6 @@
 
 Entrambe sono feature dello **STP toolkit**, usate tipicamente **insieme a PortFast** su porte verso end host.
 
----
-
 ## Context: PortFast behavior recap
 
 - Una porta con **PortFast**:
@@ -23,13 +21,11 @@ Entrambe sono feature dello **STP toolkit**, usate tipicamente **insieme a PortF
 Problema:  
 se un utente collega **uno switch** a una porta pensata per host, può **alterare la topologia STP** (root bridge, percorsi, link bloccati).
 
----
-
 ## BPDU Guard
 
 ### What it does
 
-- La porta **continua a inviare BPDUs**
+- La porta continua a inviare BPDUs
     
 - **Se riceve un BPDU → err-disabled**
     
@@ -39,13 +35,10 @@ se un utente collega **uno switch** a una porta pensata per host, può **alterar
 Scopo:
 
 - impedire che **switch non autorizzati** influenzino STP
-    
-
----
 
 ### Typical use
 
-- Porte **PortFast** verso:
+- Porte PortFast verso:
     
     - PC
         
@@ -54,9 +47,6 @@ Scopo:
     - router
         
 - ❌ **mai** verso altri switch legittimi
-    
-
----
 
 ### Configuration
 
@@ -78,8 +68,6 @@ Scopo:
 **Disabilitare su una porta**
 
 `interface g0/1 spanning-tree bpduguard disable`
-
----
 
 ### Err-Disable behavior
 
@@ -111,8 +99,6 @@ Scopo:
 
 > **se non risolvi la causa, la porta verrà disabilitata di nuovo**
 
----
-
 ## BPDU Filter
 
 ### What problem it solves
@@ -126,9 +112,6 @@ Scopo:
     - potenziale leakage di info STP
         
 - **BPDU Filter** impedisce l’invio dei BPDUs
-    
-
----
 
 ### Two behaviors (critico per CCNA)
 
@@ -150,9 +133,6 @@ Effetto:
 - può causare **loop permanenti**
     
 - broadcast storm
-    
-
----
 
 #### 2️⃣ Default (raccomandato)
 
@@ -171,13 +151,11 @@ Effetto:
     - la porta torna **STP normale**
         
 
-➡️ **best practice**
+→ **best practice**
 
-**Disabilitare su una porta**
+Disabilitare su una porta
 
 `interface g0/1 spanning-tree bpdufilter disable`
-
----
 
 ## BPDU Guard + BPDU Filter together
 
@@ -185,14 +163,12 @@ Dipende **da come** BPDU Filter è configurato:
 
 |Configurazione BPDU Filter|BPDU ricevuto|Risultato|
 |---|---|---|
-|**per-port**|ignorato|BPDU Guard **non scatta**|
-|**default**|processato|BPDU Guard → **err-disable**|
+|per-port|ignorato|BPDU Guard **non scatta**|
+|default|processato|BPDU Guard → **err-disable**|
 
 Conclusione:
 
 > **BPDU Filter per-port annulla BPDU Guard**
-
----
 
 ## Common Mistakes
 
@@ -203,9 +179,6 @@ Conclusione:
 - Confondere _access port_ con _PortFast-enabled port_
     
 - Riabilitare una porta err-disabled senza risolvere la causa
-    
-
----
 
 ## Synthesis
 
@@ -216,9 +189,6 @@ Conclusione:
 - **BPDU Filter default** riduce rumore **senza spegnere STP**
     
 - **BPDU Filter per-port** = rischio serio
-    
-
----
 
 ## Links
 

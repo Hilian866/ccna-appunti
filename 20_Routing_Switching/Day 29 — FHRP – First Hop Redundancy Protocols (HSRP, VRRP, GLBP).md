@@ -1,7 +1,7 @@
 ![[Screenshot_2 6.png]]
 ## What is it
 
-Un **First Hop Redundancy Protocol (FHRP)** serve a garantire un **default gateway ridondante** per una subnet: se il router “attivo” fallisce, un altro router prende il suo posto **in pochi secondi** usando un **Virtual IP (VIP)** e un **Virtual MAC (VMAC)** condivisi.
+Un **First Hop Redundancy Protocol (FHRP)** serve a garantire un default gateway ridondante per una subnet: se il router “attivo” fallisce, un altro router prende il suo posto in pochi secondi usando un **Virtual IP (VIP)** e un **Virtual MAC (VMAC)** condivisi.
 
 ## How it works
 
@@ -17,7 +17,7 @@ Un **First Hop Redundancy Protocol (FHRP)** serve a garantire un **default gatew
         
 - Quando un PC deve uscire dalla subnet:
     
-    - fa **ARP** per il VIP → l’**attivo** risponde con il **VMAC**.
+    - fa **ARP** per il VIP → l’attivo risponde con il **VMAC**.
         
     - Il frame verso il gateway usa come **dest MAC il VMAC**.
         
@@ -27,7 +27,7 @@ Un **First Hop Redundancy Protocol (FHRP)** serve a garantire un **default gatew
         
     - i PC **non devono cambiare ARP** (VIP→VMAC resta uguale).
         
-    - devono aggiornarsi gli **switch** (CAM table): il nuovo attivo invia **gratuitous ARP** (ARP reply non richieste, in broadcast) per far apprendere agli switch che il **VMAC** ora è raggiungibile tramite lui.
+    - devono aggiornarsi gli **switch** (CAM table): il nuovo attivo invia **gratuitous ARP** (ARP reply non richieste, in broadcast) per far apprendere agli switch che il VMAC ora è raggiungibile tramite lui.
         
 - Comportamento di default: **non-preemptive**
     
@@ -87,7 +87,7 @@ Un **First Hop Redundancy Protocol (FHRP)** serve a garantire un **default gatew
         
     - **AVF** (Active Virtual Forwarder, fino a 4; AVG può essere anche AVF)
         
-- Multicast IPv4: **224.0.0.102**
+- Multicast IPv4: 224.0.0.102
     
 - VMAC: `0007.b400.GGFF` (GG=group, FF=AVF)
     
@@ -112,9 +112,9 @@ Un **First Hop Redundancy Protocol (FHRP)** serve a garantire un **default gatew
 
 - Confondere il “default gateway ridondante” con “due gateway diversi sui PC”: **i PC usano un solo VIP**.
     
-- Dimenticare che il failover richiede aggiornare le tabelle MAC degli switch: avviene via **gratuitous ARP**.
+- Dimenticare che il failover richiede aggiornare le tabelle MAC degli switch: avviene via gratuitous ARP.
     
-- Pensare che il router tornato online riprenda sempre il ruolo: di default **non-preemptive** (serve **preempt**).
+- Pensare che il router tornato online riprenda sempre il ruolo: di default non-preemptive (serve **preempt**).
     
 - Usare **HSRP v1** su un router e **HSRP v2** sull’altro: **non sono compatibili**.
     
@@ -123,7 +123,4 @@ Un **First Hop Redundancy Protocol (FHRP)** serve a garantire un **default gatew
 
 ## Synthesis
 
-Un FHRP fa usare ai PC un **VIP+VMAC** come gateway; se l’attivo fallisce, lo standby diventa attivo e invia **gratuitous ARP** per aggiornare gli switch, mantenendo invariato il gateway visto dai PC.
-
----
-
+Un FHRP fa usare ai PC un **VIP+VMAC** come gateway; se l’attivo fallisce, lo standby diventa attivo e invia gratuitous ARP per aggiornare gli switch, mantenendo invariato il gateway visto dai PC.

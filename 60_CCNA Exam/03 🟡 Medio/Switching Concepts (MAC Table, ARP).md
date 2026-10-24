@@ -24,13 +24,13 @@ Il **MAC address** è di 48 bit (12 cifre hex): i primi 24 bit sono l'**OUI** de
 
 ## 2. Le 4 azioni dello switch
 
-1. **Learning** — legge il **Source MAC** del frame in arrivo e lo associa alla porta d'ingresso (e alla VLAN).
-2. **Forwarding** — cerca il **Destination MAC** nella tabella: se lo conosce, lo invia **solo** sulla porta associata (*known unicast*).
-3. **Flooding** — se il destination è **sconosciuto** (*unknown unicast*), **broadcast** o multicast, lo invia su **tutte le porte della stessa VLAN** tranne quella d'ingresso.
+1. **Learning** — legge il Source MAC del frame in arrivo e lo associa alla porta d'ingresso (e alla VLAN).
+2. **Forwarding** — cerca il Destination MAC nella tabella: se lo conosce, lo invia **solo** sulla porta associata (*known unicast*).
+3. **Flooding** — se il destination è sconosciuto (*unknown unicast*), broadcast o multicast, lo invia su **tutte le porte della stessa VLAN** tranne quella d'ingresso.
 4. **Filtering** — se il destination è sulla **stessa porta** da cui è arrivato il frame, lo scarta.
 
 > [!INFO] Aging
-> Le voci **dinamiche** scadono dopo **300 secondi** senza traffico dal MAC (`mac address-table aging-time`). La tabella è **per VLAN** ed è in memoria **CAM**.
+> Le voci dinamiche scadono dopo **300 secondi** senza traffico dal MAC (`mac address-table aging-time`). La tabella è **per VLAN** ed è in memoria CAM.
 
 ```
 show mac address-table
@@ -47,21 +47,21 @@ mac address-table static 0011.2233.4455 vlan 10 interface g0/2
 | Cut-through | Aver letto il Destination MAC | No (latenza minima) |
 | Fragment-free | Primi 64 byte | Parziale (evita i runt) |
 
-Gli switch Catalyst moderni usano di default **store-and-forward**.
+Gli switch Catalyst moderni usano di default store-and-forward.
 
 ## 4. Domini di collisione e di broadcast
 
 | Dispositivo | Domini di collisione | Domini di broadcast |
 |---|---|---|
-| **Hub** | 1 in totale | 1 |
-| **Switch** | **1 per porta** | 1 **per VLAN** |
-| **Router** | 1 per interfaccia | **1 per interfaccia** |
+| Hub | 1 in totale | 1 |
+| Switch | **1 per porta** | 1 **per VLAN** |
+| Router | 1 per interfaccia | **1 per interfaccia** |
 
 ## 5. ARP (Address Resolution Protocol)
 Risolve **IP → MAC** sulla stessa subnet (L3 → L2).
 
 1. L'host A vuole parlare con `192.168.1.20`: controlla la **ARP cache**.
-2. Se manca, invia una **ARP Request** in **broadcast** (`FFFF.FFFF.FFFF`): "Chi ha 192.168.1.20?".
+2. Se manca, invia una **ARP Request** in broadcast (`FFFF.FFFF.FFFF`): "Chi ha 192.168.1.20?".
 3. L'host B risponde con una **ARP Reply** in **unicast** con il proprio MAC.
 4. Se la destinazione è **fuori subnet**, l'host fa ARP per il **MAC del default gateway**, non per quello remoto.
 

@@ -35,8 +35,6 @@
 
 > Nota: non tutti i frame usano tutti i campi.
 
----
-
 ## 802.11 Association Process 
 
 ### Stati di connessione
@@ -64,9 +62,7 @@
 - **Association request / response**
     
 
-➡️ Solo dopo autenticazione + associazione il client può trasmettere dati.
-
----
+→ Solo dopo autenticazione + associazione il client può trasmettere dati.
 
 ## 802.11 Frame Types (DA SAPERE)
 
@@ -94,8 +90,6 @@ Gestione accesso al mezzo:
 ### Data frames
 
 Trasporto dei dati utente
-
----
 
 ## Wireless AP Architectures
 
@@ -135,10 +129,6 @@ Trasporto dei dati utente
 - Alto overhead operativo
     
 - Poco adatto a reti medio-grandi
-    
-
-
----
 
 ### Lightweight AP (Split-MAC) 
 
@@ -161,7 +151,7 @@ Trasporto dei dati utente
     - Roaming
         
 
-➡️ **Split-MAC architecture**
+→ **Split-MAC architecture**
 
 #### Comunicazione AP–WLC: CAPWAP
 
@@ -189,12 +179,9 @@ Trasporto dei dati utente
 
 #### Data path
 
-- Client → AP → **WLC** → rete wired
+- Client → AP → WLC → rete wired
     
 - Anche traffico tra client sullo stesso AP passa dal WLC
-    
-
----
 
 ### Lightweight AP Modes (CCNA)
 
@@ -204,9 +191,6 @@ Trasporto dei dati utente
 - **FlexConnect**
     ![[Screenshot_4 9.png]]
     - AP può **switchare localmente** se il WLC non è raggiungibile
-        
-
----
 
 ### Cloud-Based AP (es. Cisco Meraki)
 
@@ -220,9 +204,7 @@ Trasporto dei dati utente
 - Solo **management / control traffic** verso cloud
     
 
-➡️ Funzionalmente a metà tra autonomous e lightweight.
-
----
+→ Funzionalmente a metà tra autonomous e lightweight.
 
 ## WLC Deployment Models (DA SAPERE)
 
@@ -260,9 +242,6 @@ Trasporto dei dati utente
 - Fino a **~100 AP**
     
 - Branch office / small site
-    
-
----
 
 ## Synthesis
 

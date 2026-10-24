@@ -11,7 +11,7 @@ stato: da-ripassare
 
 ## 1. Tipi di cavo
 
-| | **Rame (UTP)** | **Fibra multimode (MMF)** | **Fibra single-mode (SMF)** |
+| | Rame (UTP) | Fibra multimode (MMF) | Fibra single-mode (SMF) |
 |---|---|---|---|
 | Sorgente luce | — (segnale elettrico) | LED / VCSEL | **Laser** |
 | Nucleo | 8 fili in 4 coppie | 50 µm (spesso) | **9 µm** (molto sottile) |
@@ -26,7 +26,7 @@ stato: da-ripassare
 
 ## 2. Tipi di collegamento Ethernet
 
-| | **Shared media** | **Point-to-point** |
+| | Shared media | Point-to-point |
 |---|---|---|
 | Esempio | Hub, rete vecchia con cavo condiviso | Link switch ↔ host / switch ↔ switch |
 | Duplex | **Half-duplex** | **Full-duplex** |
@@ -38,9 +38,9 @@ Lo switch (**PSE**) alimenta il dispositivo (**PD**: telefono IP, AP, telecamera
 
 | Standard | Nome | Potenza alla porta (PSE) |
 |---|---|---|
-| 802.3af | PoE (Type 1) | **15,4 W** |
-| 802.3at | **PoE+** (Type 2) | **30 W** |
-| 802.3bt | PoE++ (Type 3 / 4) | **60 W / 100 W** |
+| 802.3af | PoE (Type 1) | 15,4 W |
+| 802.3at | **PoE+** (Type 2) | 30 W |
+| 802.3bt | PoE++ (Type 3 / 4) | 60 W / 100 W |
 
 ```
 interface g0/1
@@ -77,8 +77,8 @@ show power inline
 | Input queue drops / overruns | Congestione o CPU sovraccarica |
 
 > [!WARNING] Duplex mismatch
-> Un lato in **full-duplex** e l'altro in **half-duplex**: il link resta *up/up* ma è lentissimo.
-> Il lato half vede **late collisions**; il lato full vede **CRC/runts**.
+> Un lato in full-duplex e l'altro in half-duplex: il link resta *up/up* ma è lentissimo.
+> Il lato half vede late collisions; il lato full vede **CRC/runts**.
 > Causa classica: un lato fissato a mano (`speed 100` + `duplex full`) e l'altro in **auto**. In auto, il lato autonegoziante rileva la velocità ma **ripiega su half-duplex** (a 10/100 Mbps).
 
 ## 6. CLI Core
@@ -101,8 +101,8 @@ clear counters g0/1
 ## Common Mistakes
 - Pensare che **up/up** significhi "tutto ok": con un duplex mismatch c'è comunque perdita di prestazioni.
 - Fissare speed/duplex solo da un lato.
-- Confondere **collisioni** (normali in half-duplex) con **late collisions** (sempre un problema).
-- Dimenticare che il rame è limitato a **100 m**.
+- Confondere **collisioni** (normali in half-duplex) con late collisions (sempre un problema).
+- Dimenticare che il rame è limitato a 100 m.
 
 ## 🎯 Synthesis
 Rame ≤ 100 m, multimode per il campus, single-mode per le lunghe distanze; up/up non basta: i contatori (CRC, late collision) svelano duplex e speed mismatch.

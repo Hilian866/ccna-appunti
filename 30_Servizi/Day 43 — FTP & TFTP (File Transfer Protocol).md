@@ -1,7 +1,7 @@
 
 ### What is it
 
-**FTP** (File Transfer Protocol) e **TFTP** (Trivial File Transfer Protocol) sono protocolli **Application layer** usati per **trasferire file su rete**.
+**FTP** (File Transfer Protocol) e **TFTP** (Trivial File Transfer Protocol) sono protocolli Application layer usati per trasferire file su rete.
 
 Uso tipico CCNA:
 
@@ -10,9 +10,6 @@ Uso tipico CCNA:
 - **backup / restore file di configurazione**
     
 - trasferimento file da/verso dispositivi Cisco
-    
-
----
 
 ### What does / How it works
 
@@ -56,9 +53,6 @@ Uso tipico CCNA:
     - **control**
         
     - **data**
-        
-
----
 
 ### Key rules / exam points
 
@@ -95,9 +89,6 @@ Uso tipico CCNA:
     - **flash:** → IOS image
         
     - **NVRAM:** → startup-config
-        
-
----
 
 ### FTP vs TFTP (sintesi rapida)
 
@@ -110,8 +101,6 @@ Uso tipico CCNA:
 |Più complesso|Molto semplice|
 |Active / Passive|N/A|
 
----
-
 ### CLI (solo comandi)
 
 **Visualizzare file system**
@@ -121,8 +110,6 @@ Uso tipico CCNA:
 **Visualizzare flash**
 
 `show flash`
-
----
 
 #### TFTP — copiare IOS in flash
 
@@ -144,8 +131,6 @@ Uso tipico CCNA:
 
 `delete flash:<old-ios-image>`
 
----
-
 #### FTP — configurazione credenziali
 
 ```
@@ -157,8 +142,6 @@ ip ftp password cisco
 **Copia file via FTP**
 
 `copy ftp: flash:`
-
----
 
 ### Common mistakes / notes
 

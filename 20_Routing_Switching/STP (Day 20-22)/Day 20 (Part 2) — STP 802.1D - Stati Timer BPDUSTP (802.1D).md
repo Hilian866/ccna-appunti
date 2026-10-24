@@ -51,9 +51,6 @@ Approfondimento operativo di **Spanning Tree Protocol (IEEE 802.1D)**: stati del
 - Porta amministrativamente shutdown
     
 - Non partecipa a STP
-    
-
----
 
 ### STP Timers (default)
 
@@ -77,9 +74,6 @@ Approfondimento operativo di **Spanning Tree Protocol (IEEE 802.1D)**: stati del
 - Learning (15s)  
     → fino a **~50s** per passare da Blocking a Forwarding
 
-
----
-
 ### Propagazione BPDU
 
 - Dopo la convergenza:
@@ -89,9 +83,6 @@ Approfondimento operativo di **Spanning Tree Protocol (IEEE 802.1D)**: stati del
     - Gli altri switch **forwardano BPDUs solo sulle Designated Ports**
         
 - Root ports e Non-designated ports **si aspettano di ricevere** BPDUs
-    
-
----
 
 ### BPDU – informazioni rilevanti
 

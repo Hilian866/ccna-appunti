@@ -3,9 +3,6 @@
 - **RSTP (802.1w)** è un’evoluzione di STP che riduce drasticamente i tempi di convergenza.
     
 - **Rapid PVST+** è l’implementazione Cisco: **RSTP + un’istanza per VLAN**.
-    
-
----
 
 ## How it works
 
@@ -18,7 +15,7 @@
 - Mantiene le stesse regole di elezione di **root bridge, root port e designated port** di STP.
     
 ![[Screenshot_1 3.png]]
----
+
 ### Port Costs (RSTP)
 
 RSTP usa costi **estesi** per supportare velocità moderne:
@@ -82,8 +79,6 @@ RSTP usa costi **estesi** per supportare velocità moderne:
 - **Shared**: collegamento a hub (half-duplex)
     ![[Screenshot_8.png]]
 
----
-
 ## CLI Core
 
 `spanning-tree mode rapid-pvst show spanning-tree`
@@ -93,9 +88,6 @@ Note output:
 - `protocol rstp`
     
 - Stato può apparire come **BLK** (equivale a _discarding_ in RSTP).
-    
-
----
 
 ## Exam Facts
 
@@ -108,9 +100,6 @@ Note output:
 - **RSTP considera il neighbor perso** dopo **3 BPDUs (~6s)**.
     
 - **Edge port RSTP = PortFast**.
-    
-
----
 
 ## Common Mistakes
 
@@ -119,18 +108,12 @@ Note output:
 - Pensare che RSTP cambi le regole di elezione del root (non le cambia).
     
 - Credere che “blocking” non esista più: esiste, ma si chiama **discarding**.
-    
-
----
 
 ## Links
 
 - [[Day 20 (Part 1) — STP 802.1D – Fondamenti e Selezione delle Porte (Part 1)]]
     
 - [[Day 21 (Part 1) — PortFast (STP)]]
-    
-
----
 
 ## Synthesis
 

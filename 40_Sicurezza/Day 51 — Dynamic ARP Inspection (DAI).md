@@ -1,10 +1,8 @@
 
 ### What is it
 
-**Dynamic ARP Inspection (DAI)** è una feature di sicurezza **Layer 2** sugli switch Cisco che **ispeziona e filtra messaggi ARP** sui **port untrusted** per prevenire **ARP poisoning / MITM**.  
+**Dynamic ARP Inspection (DAI)** è una feature di sicurezza Layer 2 sugli switch Cisco che **ispeziona e filtra messaggi ARP** sui **port untrusted** per prevenire ARP poisoning / MITM.  
 Fa parte di **exam topic 5.7**, insieme a **Port Security** e **DHCP Snooping**.
-
----
 
 ### What does / How it works
 
@@ -32,9 +30,6 @@ Fa parte di **exam topic 5.7**, insieme a **Port Security** e **DHCP Snooping**.
     - **Target IP / Target MAC**
         
 - ARP **non** usa IP header (resta in LAN)
-    
-
----
 
 ## Attacco mitigato (core CCNA)
 
@@ -45,9 +40,6 @@ Fa parte di **exam topic 5.7**, insieme a **Port Security** e **DHCP Snooping**.
 - Le vittime aggiornano le ARP table → traffico inviato all’attaccante
     
 - L’attaccante può **leggere e/o modificare** il traffico e poi inoltrarlo
-    
-
----
 
 ## Logica di funzionamento DAI (CORE)
 
@@ -64,14 +56,14 @@ Fa parte di **exam topic 5.7**, insieme a **Port Security** e **DHCP Snooping**.
 
 ### Comportamento
 
-- ARP su **trusted** → **forward**, nessuna ispezione
+- ARP su trusted → **forward**, nessuna ispezione
     
-- ARP su **untrusted** → **inspection**
+- ARP su untrusted → **inspection**
     
 
 ### Validazione principale
 
-Su **untrusted**, DAI:
+Su untrusted, DAI:
 
 - confronta **Sender IP + Sender MAC** del messaggio ARP con:
     
@@ -82,14 +74,12 @@ Su **untrusted**, DAI:
 
 Esito:
 
-- match → **forward**
+- match → forward
     
 - no match → **drop**
     
 
 ⚠️ DAI **dipende normalmente da DHCP Snooping** (per la binding table).
-
----
 
 ## DHCP Snooping binding table (richiamo)
 
@@ -107,8 +97,6 @@ DAI usa la tabella creata da DHCP Snooping:
     
 
 Se un host **non usa DHCP** → **nessuna entry** → ARP droppati (serve ARP ACL).
-
----
 
 ## ARP ACL (overkill ma concettualmente richiesto)
 
@@ -131,9 +119,6 @@ Nota esame:
 - **concetto sì**
     
 - **config dettagliata no**
-    
-
----
 
 ## DAI Rate Limiting
 
@@ -165,9 +150,6 @@ Recovery:
 - `shutdown / no shutdown`
     
 - `errdisable recovery cause arp-inspection`
-    
-
----
 
 ## Optional validation checks (DAI)
 
@@ -193,13 +175,11 @@ Vanno configurate **tutte in un solo comando**.
 
 ⚠️ Tutti i check configurati devono **passare**.
 
----
-
 ## Key rules / exam points (alta densità)
 
 - DAI = **ARP filtering su untrusted**
     
-- Tutte le porte **untrusted di default**
+- Tutte le porte untrusted di default
     
 - Trusted → nessuna ispezione
     
@@ -209,7 +189,7 @@ Vanno configurate **tutte in un solo comando**.
         
     - ARP ACL
         
-- Mitiga **ARP poisoning / MITM**
+- Mitiga ARP poisoning / MITM
     
 - Rate limiting:
     
@@ -222,9 +202,6 @@ Vanno configurate **tutte in un solo comando**.
 - Validation checks:
     
     - **un solo comando** per più opzioni
-        
-
----
 
 ## CLI (solo comandi)
 
@@ -264,8 +241,6 @@ arp access-list ARP-ACL-1
 
 `ip arp inspection filter ARP-ACL-1 vlan 1`
 
----
-
 ## Common mistakes / notes (da quiz)
 
 - Dimenticare che **tutte le porte sono untrusted** quando abiliti DAI
@@ -278,4 +253,4 @@ arp access-list ARP-ACL-1
     
     - **rate limiting DHCP vs DAI**
         
-    - **binding table** vs **ARP ACL**
+    - **binding table** vs ARP ACL

@@ -4,20 +4,18 @@ priorita: molto-importante
 stato: da-ripassare
 ---
 
-> [!abstract] **Focus Esame**
+> [!abstract] Focus Esame
 >
-> Cisco testa la tua capacità di distinguere le architetture (**Split-MAC**), i parametri fisici (**Canali/Frequenze**) e la sicurezza (**WPA2/3**). Ignora i dettagli fisici complessi (RTS/CTS), concentrati sulla **GUI del WLC**.
-
----
+> Cisco testa la tua capacità di distinguere le architetture (Split-MAC), i parametri fisici (Canali/Frequenze) e la sicurezza (WPA2/3). Ignora i dettagli fisici complessi (RTS/CTS), concentrati sulla **GUI del WLC**.
 
 ## 1. Fondamenta Fisiche & Standard (L1)
 
-|**Parametro**|**2.4 GHz**|**5 GHz**|**6 GHz (Wi-Fi 6E)**|
+|Parametro|2.4 GHz|5 GHz|6 GHz (Wi-Fi 6E)|
 |---|---|---|---|
-|**Portata / Muri**|Massima (ottima penetrazione)|Media|Minima|
-|**Interferenze**|Alte (Bluetooth, Microonde)|Basse|Quasi nulle|
-|**Canali No-Overlap**|**1, 6, 11**|Fino a 24|Moltissimi|
-|**Standard 802.11**|b, g, n, ax|a, n, ac, ax|ax|
+|Portata / Muri|Massima (ottima penetrazione)|Media|Minima|
+|Interferenze|Alte (Bluetooth, Microonde)|Basse|Quasi nulle|
+|Canali No-Overlap|**1, 6, 11**|Fino a 24|Moltissimi|
+|Standard 802.11|b, g, n, ax|a, n, ac, ax|ax|
 
 ### Propagazione del Segnale
 
@@ -25,18 +23,16 @@ stato: da-ripassare
 - **Reflection**: Rimbalza sul metallo (causa multipath).
 - **Refraction**: Cambia direzione attraversando vetro o acqua.
 
-> [!tip] **CSMA/CA**
+> [!tip] CSMA/CA
 >
 > Il Wi-Fi è **Half-Duplex**. Usa il _Collision Avoidance_: Ascolta → Attende → Trasmette. (Diverso dall'Ethernet cablato che usa _Collision Detection_).
-
----
 
 ## 2. Architetture Wireless & CAPWAP
 
 ### Modelli di Access Point
 
 1. **Autonomous AP**: Standalone, configurazione manuale "per-device". Non scalabile.
-2. **Lightweight AP (LAP)**: "Stupido", richiede un **WLC** per funzionare (**Split-MAC**) [13:26](https://youtu.be/uX1h0F6wpBY?t=806).
+2. **Lightweight AP (LAP)**: "Stupido", richiede un **WLC** per funzionare (Split-MAC) [13:26](https://youtu.be/uX1h0F6wpBY?t=806).
 3. **Cloud-Based (Meraki)**: Gestito da dashboard web; il traffico dati resta locale (non va nel cloud).
 
 ### Il Protocollo CAPWAP (DA SAPERE)
@@ -52,50 +48,45 @@ L'AP incapsula il traffico wireless dentro pacchetti UDP per spedirli al WLC.
 - **Embedded**: Integrato nello switch (max 200 AP).
 - **Mobility Express**: Un AP "master" fa da controller (max 100 AP).
 
----
-
 ## 3. Topologia Logica & Service Sets
 
 - **SSID**: Nome della rete (es. "WiFi-Aziendale").
 - **BSSID**: MAC address fisico della radio dell'AP.
 - **BSS**: 1 AP + Client associati.
-- **ESS**: Più AP con lo **stesso SSID**. Permette il **Roaming** (sovrapposizione consigliata **10-15%**).
-
----
+- **ESS**: Più AP con lo **stesso SSID**. Permette il Roaming (sovrapposizione consigliata **10-15%**).
 
 ## 4. Sicurezza Wireless (I Tre Pilastri)
 
-| **Generazione** | **Authentication** | **Encryption** | **Integrity** |
+| Generazione | Authentication | Encryption | Integrity |
 | --------------- | ------------------ | -------------- | ------------- |
-| **WPA**         | PSK o 802.1X       | TKIP (RC4)     | MIC           |
-| **WPA2**        | PSK o 802.1X       | **CCMP (AES)** | CBC-MAC       |
-| **WPA3**        | **SAE** (Personal) | **GCMP (AES)** | GMAC          |
-### ⏳ Evoluzione dei Protocolli di Cifratura
+| WPA         | PSK o 802.1X       | TKIP (RC4)     | MIC           |
+| WPA2        | PSK o 802.1X       | **CCMP (AES)** | CBC-MAC       |
+| WPA3        | **SAE** (Personal) | **GCMP (AES)** | GMAC          |
+### Evoluzione dei Protocolli di Cifratura
 
-> [!INFO] **Timeline dell'Encryption** Comprendere l'evoluzione degli algoritmi è fondamentale per identificare configurazioni obsolete o insicure.
+> [!INFO] Timeline dell'Encryption
+> Comprendere l'evoluzione degli algoritmi è fondamentale per identificare configurazioni obsolete o insicure.
 
-| **Protocollo** | **Usato in** | **Algoritmo**            | **Stato Attuale**                              |
+| Protocollo | Usato in | Algoritmo            | Stato Attuale                              |
 | -------------- | ------------ | ------------------------ | ---------------------------------------------- |
-| **WEP**        | Legacy       | RC4                      | 🔴 **Rotto** (Vulnerabile in minuti)           |
-| **TKIP**       | WPA          | RC4 (migliorato)         | ⚠️ **Deprecato** (Solo per retrocompatibilità) |
-| **CCMP**       | WPA2         | **AES**                  | ✅ **Standard Attuale** (Sicuro)                |
-| **GCMP**       | WPA3         | **AES** (più efficiente) | 🚀 **Moderno** (Massima sicurezza)             |
+| WEP        | Legacy       | RC4                      | 🔴 **Rotto** (Vulnerabile in minuti)           |
+| TKIP       | WPA          | RC4 (migliorato)         | ⚠️ **Deprecato** (Solo per retrocompatibilità) |
+| CCMP       | WPA2         | **AES**                  | ✅ **Standard Attuale** (Sicuro)                |
+| GCMP       | WPA3         | **AES** (più efficiente) | 🚀 **Moderno** (Massima sicurezza)             |
 
-Progressione: WEP ➡️ TKIP (WPA) ➡️ CCMP (WPA2) ➡️ GCMP (WPA3) [18:11](https://youtu.be/wHXKo9So5y8)
+Progressione: WEP → TKIP (WPA) → CCMP (WPA2) → GCMP (WPA3) [18:11](https://youtu.be/wHXKo9So5y8)
 
-### 🔐 802.1X (Enterprise)
+### 802.1X (Enterprise)
 
 - **Supplicant**: Client (es. Laptop).
 - **Authenticator**: WLC / AP.
 - **Authentication Server**: **RADIUS** (Database utenti).
 
-> [!important] **Metodi EAP**
+> [!important] Metodi EAP
 >
 > - **PEAP**: Certificato solo sul Server (più comune).
 > - **EAP-TLS**: Certificato su Server E Client (massima sicurezza).
 >
-
----
 
 ## 5. Configurazione Operativa (GUI WLC)
 
@@ -109,7 +100,7 @@ Progressione: WEP ➡️ TKIP (WPA) ➡️ CCMP (WPA2) ➡️ GCMP (WPA3) [18:11
 ### Workflow Creazione WLAN
 
 1. **Crea Dynamic Interface**: Assegna VLAN ID e indirizzamento IP.
-2. **Crea WLAN**: Inserisci Profile Name e **SSID**.
+2. **Crea WLAN**: Inserisci Profile Name e SSID.
 3. **Mappatura**: Collega la WLAN alla Dynamic Interface creata.
 4. **Security**: Seleziona **WPA2 + PSK** (se Personal) o 802.1X (se Enterprise).
 5. **Status**: Spunta **ENABLED** (fondamentale!).
@@ -121,16 +112,12 @@ Progressione: WEP ➡️ TKIP (WPA) ➡️ CCMP (WPA2) ➡️ GCMP (WPA3) [18:11
 - 🥈 **Silver**: Best Effort (Default)
 - 🥉 **Bronze**: Background
 
----
-
-## 📝 Check da Esame
+## Check da Esame
 
 - [ ] Canali 2.4 GHz no-overlap? **1, 6, 11**.
 - [ ] Porta CAPWAP Control? **UDP 5246**.
 - [ ] Chi fa da Authenticator in 802.1X? **Il WLC/AP**.
 - [ ] Differenza WPA2/WPA3? **CCMP vs GCMP** e introduzione di **SAE**.
-
----
 
 ## 🎯 Synthesis
 Lightweight AP + WLC comunicano via CAPWAP (split-MAC); WLAN ≠ VLAN e WPA2/3 è lo standard.

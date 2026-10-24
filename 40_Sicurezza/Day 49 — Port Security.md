@@ -10,8 +10,6 @@
 
 Se arriva un frame con MAC non autorizzato → si verifica una **port-security violation**.
 
----
-
 ### What does / How it works
 
 #### Funzione base
@@ -42,9 +40,6 @@ Quando abiliti solo `switchport port-security`:
     - porta in **err-disabled**
         
     - traffico bloccato finché non viene riabilitata
-        
-
----
 
 ### Why we use it (collegamento diretto all’esame)
 
@@ -59,11 +54,9 @@ Port Security è usata per:
     - **MAC address table flooding**
         
 
-➡️ Limita il **numero di MAC per porta**, bloccando attacchi basati su spoofing massivo.
+→ Limita il **numero di MAC per porta**, bloccando attacchi basati su spoofing massivo.
 
 ⚠️ Non impedisce MAC spoofing in assoluto (è facile), ma **riduce l’impatto**.
-
----
 
 ## Condizioni NECESSARIE (tranello d’esame)
 
@@ -81,9 +74,6 @@ Port Security funziona **solo se la porta è statica**.
 - `switchport mode access`
     
 - `switchport mode trunk`
-    
-
----
 
 ### Secure MAC addresses
 
@@ -99,9 +89,9 @@ Port Security funziona **solo se la porta è statica**.
         
 - I secure MAC address sono inseriti nella **MAC address table**:
     
-    - dynamic secure MAC → tipo **dynamic**
+    - dynamic secure MAC → tipo dynamic
         
-    - static / sticky secure MAC → tipo **static**
+    - static / sticky secure MAC → tipo static
         
 - I secure MAC address possono:
     
@@ -109,13 +99,11 @@ Port Security funziona **solo se la porta è statica**.
         
     - generare **violation** se superano limiti o non sono autorizzati
 
----
-
 ## Violation modes (CORE CCNA)
 
-### 1. shutdown (**default**)
+### 1. shutdown (default)
 
-- Porta → **err-disabled**
+- Porta → err-disabled
     
 - Traffico → bloccato
     
@@ -128,9 +116,6 @@ Port Security funziona **solo se la porta è statica**.
     - `shutdown / no shutdown` **oppure**
         
     - errdisable recovery
-        
-
----
 
 ### 2. restrict
 
@@ -141,22 +126,16 @@ Port Security funziona **solo se la porta è statica**.
 - Syslog / SNMP → **ogni violazione**
     
 - Violation counter → **incrementa**
-    
-
----
 
 ### 3. protect
 
-- Traffico non autorizzato → **scartato**
+- Traffico non autorizzato → scartato
     
-- Porta → **rimane up**
+- Porta → rimane up
     
 - Syslog / SNMP → **nessuno**
     
 - Violation counter → **non incrementa**
-    
-
----
 
 ## Re-enabling di una porta err-disabled
 
@@ -181,19 +160,14 @@ Port Security funziona **solo se la porta è statica**.
 ⚠️ Se non scolleghi il device sbagliato:
 
 - la porta tornerà **subito** in violazione
-    
-
----
 
 ## Secure MAC Aging
 
 ### Concetto base
 
-L’**aging** stabilisce **se e quando** un **secure MAC address** viene rimosso da una porta con **port-security**.
+L’aging stabilisce **se e quando** un secure MAC address viene rimosso da una porta con **port-security**.
 
 👉 **Non tutti i secure MAC fanno aging.** Dipende dal **tipo** e dalla **configurazione**.
-
----
 
 ### Default (senza configurazione di aging)
 
@@ -206,9 +180,6 @@ L’**aging** stabilisce **se e quando** un **secure MAC address** viene rimosso
     - l’interfaccia va down
         
     - il device viene riavviato
-        
-
----
 
 ### Aging time
 
@@ -218,8 +189,6 @@ L’**aging** stabilisce **se e quando** un **secure MAC address** viene rimosso
     
 
 `switchport port-security aging time <minuti>`
-
----
 
 ### Aging type
 
@@ -242,8 +211,6 @@ L’**aging** stabilisce **se e quando** un **secure MAC address** viene rimosso
     
 
 `switchport port-security aging type inactivity`
-
----
 
 ### Static / Sticky aging (punto critico)
 
@@ -270,8 +237,6 @@ L’**aging** stabilisce **se e quando** un **secure MAC address** viene rimosso
 ⚠️ **Eccezione CCNA importante**:  
 Gli **sticky MAC** sono generalmente trattati come **non-aging**, anche se `aging static` è attivo.
 
----
-
 ## Sticky Secure MAC Addresses
 
 ### Cos’è
@@ -285,8 +250,6 @@ Gli **sticky MAC** sono generalmente trattati come **non-aging**, anche se `agin
 
 `switchport port-security mac-address sticky`
 
----
-
 ### Caratteristiche
 
 - ❌ **Non fa aging** (impostazione tipica CCNA)
@@ -294,9 +257,6 @@ Gli **sticky MAC** sono generalmente trattati come **non-aging**, anche se `agin
 - Sopravvive a un reload **solo se**:
     
     `write memory`
-    
-
----
 
 ### Conversioni
 
@@ -307,29 +267,24 @@ Gli **sticky MAC** sono generalmente trattati come **non-aging**, anche se `agin
 - Disabilitando sticky:
     
     - sticky → **secure MAC dinamici**
-        
-
----
 
 ## Tabella riassuntiva (da esame CCNA)
 
 |Tipo secure MAC|Come viene creato|Aging possibile|Note|
 |---|---|---|---|
-|**Statico**|Configurato manualmente|❌ No (default) / ✅ con `aging static`|Presente nel running-config|
-|**Dinamico**|Appreso automaticamente|✅ Sì (se aging attivo)|Non salvato in config|
-|**Sticky**|Dinamico → scritto in config|❌ No (CCNA)|Diventa persistente|
-
----
+|Statico|Configurato manualmente|❌ No (default) / ✅ con `aging static`|Presente nel running-config|
+|Dinamico|Appreso automaticamente|✅ Sì (se aging attivo)|Non salvato in config|
+|Sticky|Dinamico → scritto in config|❌ No (CCNA)|Diventa persistente|
 
 ## MAC Address Table
 
-- I **secure MAC address** vengono **sempre inseriti** nella **MAC address table**
+- I secure MAC address vengono **sempre inseriti** nella MAC address table
     
 - Nella MAC table sono classificati come:
     
     - **Dynamic** → secure MAC appresi dinamicamente
         
-    - **Static** → secure MAC **statici** e **sticky**
+    - **Static** → secure MAC **statici** e sticky
         
 - Possono essere:
     
@@ -340,8 +295,6 @@ Gli **sticky MAC** sono generalmente trattati come **non-aging**, anche se `agin
     - visualizzati **solo come secure MAC** con:
         
         `show mac address-table secure`
-
----
 
 ## CLI
 
@@ -395,8 +348,6 @@ interface g0/1
 ```
 
 `write memory`
-
----
 
 ## Common mistakes / notes (da quiz)
 

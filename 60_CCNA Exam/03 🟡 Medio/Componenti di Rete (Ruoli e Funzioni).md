@@ -35,16 +35,16 @@ Dettagli sulle architetture: [[Cloud, Virtualizzazione & WAN]].
 ## 3. Confronti tipici da esame
 | Coppia | Differenza |
 |---|---|
-| **Switch L2 vs L3** | L2 = solo MAC/VLAN; L3 = instrada tra VLAN con SVI (senza router esterno). |
-| **Firewall tradizionale vs NGFW** | Il tradizionale filtra su IP/porta/stato; l'NGFW ispeziona anche **applicazioni** e minacce. |
-| **IDS vs IPS** | IDS = passivo (alert); IPS = **inline** (blocca). |
-| **AP autonomo vs lightweight** | Autonomo = configurato da solo; lightweight = richiede un WLC (**CAPWAP**, split-MAC). |
-| **WLC vs Catalyst Center** | WLC = gestisce solo il wireless; Catalyst Center = gestione e automazione di **tutta** la rete campus (intent-based). |
+| Switch L2 vs L3 | L2 = solo MAC/VLAN; L3 = instrada tra VLAN con SVI (senza router esterno). |
+| Firewall tradizionale vs NGFW | Il tradizionale filtra su IP/porta/stato; l'NGFW ispeziona anche **applicazioni** e minacce. |
+| IDS vs IPS | IDS = passivo (alert); IPS = **inline** (blocca). |
+| AP autonomo vs lightweight | Autonomo = configurato da solo; lightweight = richiede un WLC (**CAPWAP**, split-MAC). |
+| WLC vs Catalyst Center | WLC = gestisce solo il wireless; Catalyst Center = gestione e automazione di **tutta** la rete campus (intent-based). |
 
 ## Common Mistakes
 - Dire che uno switch **L2** può instradare: senza SVI/L3 no.
-- Confondere l'**IPS** (blocca) con l'**IDS** (segnala).
-- Pensare che il **controller** faccia passare il traffico dati: gestisce (control/management plane); il data plane resta sui dispositivi ([[00 Automation - Riassunto]]).
+- Confondere l'IPS (blocca) con l'**IDS** (segnala).
+- Pensare che il controller faccia passare il traffico dati: gestisce (control/management plane); il data plane resta sui dispositivi ([[00 Automation - Riassunto]]).
 
 ## 🎯 Synthesis
 Il router instrada tra reti, lo switch L2 inoltra per MAC, lo switch L3 fa entrambi; NGFW e IPS proteggono il perimetro; AP e WLC gestiscono il wireless; Catalyst Center governa tutta la rete campus.

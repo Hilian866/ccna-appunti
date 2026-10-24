@@ -1,7 +1,7 @@
 
 ## What is it
 
-**IPv6** è il successore di IPv4. Usa indirizzi **128-bit** scritti in **esadecimale**, con **prefix length** in notazione `/x` (niente subnet mask dotted-decimal). Per CCNA: configurare/verificare IPv6 addressing/prefix e confrontare i tipi di indirizzo (in video successivo).
+**IPv6** è il successore di IPv4. Usa indirizzi **128-bit** scritti in esadecimale, con prefix length in notazione `/x` (niente subnet mask dotted-decimal). Per CCNA: configurare/verificare IPv6 addressing/prefix e confrontare i tipi di indirizzo (in video successivo).
 
 ## How it works
 
@@ -88,7 +88,7 @@
     
     - 16 bit per **subnet identifier** (tra /48 e /64)
         
-    - 64 bit per **host**
+    - 64 bit per host
         
 
 ### 2001:db8::/32
@@ -119,7 +119,7 @@
     
 - Usare `::` **due volte** nello stesso indirizzo.
     
-- Rimuovere 0 che **non** sono leading 0s (cambia il network prefix).
+- Rimuovere 0 che non sono leading 0s (cambia il network prefix).
     
 - Dimenticare `ipv6 unicast-routing`: il router **non inoltra** pacchetti IPv6.
     

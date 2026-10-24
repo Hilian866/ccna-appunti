@@ -8,15 +8,13 @@ stato: da-ripassare
 
 Risolvere l'esaurimento degli indirizzi IPv4 (32-bit) introducendo uno spazio di indirizzamento a **128-bit** (esadecimale). IPv6 elimina il concetto di broadcast, semplifica l'header e introduce l'auto-configurazione nativa.
 
-> [!INFO] **Riferimenti Video**
+> [!INFO] Riferimenti Video
 >
 > **MODULO 1:** **[IPv6 Fundamentals & Addressing](https://youtu.be/ZNuXyOXae5U?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ)**
 >
 > **MODULO 2:** **[IPv6 Address Types & EUI-64](https://youtu.be/BrTMMOXFhDU?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ)**
 >
 > **MODULO 3:** **[NDP, SLAAC & Static Routing](https://youtu.be/rwkHfsWQwy8?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ)**
-
----
 
 ## Fondamentali e Formato
 
@@ -27,11 +25,9 @@ Risolvere l'esaurimento degli indirizzi IPv4 (32-bit) introducendo uno spazio di
 - **Network Prefix**: Solitamente un **/64** (50% Network, 50% Host/Interface ID).
 - **Risultato:** `2001:db8::8:800:200c:417a`
 
----
-
 ## Tipi di Indirizzo (Blueprint 1.9)
 
-| **Tipo**                                   | **Range / Prefisso** | **Scopo**                                                     |
+| Tipo                                   | Range / Prefisso | Scopo                                                     |
 | ------------------------------------------ | -------------------- | ------------------------------------------------------------- |
 | **Global Unicast**                         | `2000::/3`           | Indirizzi pubblici, instradabili su Internet.                 |
 | **Unique Local**                           | `fc00::/7`           | Indirizzi privati (RFC 4193). Instradabili solo internamente. |
@@ -40,9 +36,7 @@ Risolvere l'esaurimento degli indirizzi IPv4 (32-bit) introducendo uno spazio di
 | **Anycast**                                | Qualsiasi Unicast    | "One to one-of-many" (consegna al nodo più vicino).           |
 | **Loopback**                               | `::1/128`            | Equivalente a 127.0.0.1.                                      |
 
----
-
-## ⚙️ Meccanismi Chiave
+## Meccanismi Chiave
 
 ### 1. EUI-64 (Modified) [▶ video](https://youtu.be/BrTMMOXFhDU?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ&t=113)
 
@@ -60,11 +54,9 @@ Sostituisce ARP. Utilizza messaggi ICMPv6 e il **Solicited-Node Multicast** [[So
 - **NA (Neighbor Advertisement)**: "Ecco il mio MAC" (Tipo 136).
 - **RS/RA (Router Sol./Adv.)**: Scoperta del router e del prefisso per **SLAAC** [[Screenshot_14.png|*]]
 
----
+## CLI & Routing
 
-## 💻 CLI & Routing
-
-> [!CAUTION] **Prerequisito Critico**
+> [!CAUTION] Prerequisito Critico
 >
 > Un router Cisco non inoltra pacchetti IPv6 di default.
 >
@@ -97,11 +89,9 @@ ipv6 route 2001:db8:3::/64 2001:db8:1::2
 ipv6 route 2001:db8:4::/64 g0/0 fe80::2
 ```
 
----
-
 ## ⚠️ Common Mistakes (Anatomy Check)
 
-> [!DANGER] **Trappole d'Esame**
+> [!DANGER] Trappole d'Esame
 >
 > 1. **Zero Esagerati**: Mai rimuovere gli zeri finali di un quartetto (es. `ab00` non diventa `ab`).
 > 2. **Double Colon**: L'uso di `::` due volte rende l'indirizzo invalido (ambiguità).
@@ -110,8 +100,6 @@ ipv6 route 2001:db8:4::/64 g0/0 fe80::2
 > 5. **IPv6 Broadcast**: Se una domanda d'esame menziona "broadcast" in ambito IPv6, la risposta è quasi certamente falsa. Si usa **Multicast `ff02::1`** (All nodes).
 >
 
----
-
 ## 🎯 Synthesis
 
-IPv6 semplifica l'header eliminando campi come il Checksum (affidato ai livelli superiori). La gestione degli indirizzi è più flessibile grazie a **SLAAC** e **NDP**, ma richiede precisione nella gestione dei prefissi e nell'abilitazione del routing unicast globale sul router.
+IPv6 semplifica l'header eliminando campi come il Checksum (affidato ai livelli superiori). La gestione degli indirizzi è più flessibile grazie a SLAAC e **NDP**, ma richiede precisione nella gestione dei prefissi e nell'abilitazione del routing unicast globale sul router.

@@ -1,19 +1,17 @@
-# 📡 CCNA Wireless: Dashboard Strategica
+# CCNA Wireless: Dashboard Strategica
 
-> [!abstract] **Focus Esame**
+> [!abstract] Focus Esame
 > 
-> Cisco testa la tua capacità di distinguere le architetture (**Split-MAC**), i parametri fisici (**Canali/Frequenze**) e la sicurezza (**WPA2/3**). Ignora i dettagli fisici complessi (RTS/CTS), concentrati sulla **GUI del WLC**.
-
----
+> Cisco testa la tua capacità di distinguere le architetture (Split-MAC), i parametri fisici (Canali/Frequenze) e la sicurezza (WPA2/3). Ignora i dettagli fisici complessi (RTS/CTS), concentrati sulla **GUI del WLC**.
 
 ## 1. Fondamenta Fisiche & Standard (L1)
 
-|**Parametro**|**2.4 GHz**|**5 GHz**|**6 GHz (Wi-Fi 6E)**|
+|Parametro|2.4 GHz|5 GHz|6 GHz (Wi-Fi 6E)|
 |---|---|---|---|
-|**Portata / Muri**|Massima (ottima penetrazione)|Media|Minima|
-|**Interferenze**|Alte (Bluetooth, Microonde)|Basse|Quasi nulle|
-|**Canali No-Overlap**|**1, 6, 11**|Fino a 24|Moltissimi|
-|**Standard 802.11**|b, g, n, ax|a, n, ac, ax|ax|
+|Portata / Muri|Massima (ottima penetrazione)|Media|Minima|
+|Interferenze|Alte (Bluetooth, Microonde)|Basse|Quasi nulle|
+|Canali No-Overlap|**1, 6, 11**|Fino a 24|Moltissimi|
+|Standard 802.11|b, g, n, ax|a, n, ac, ax|ax|
 
 ### Propagazione del Segnale
 
@@ -24,11 +22,9 @@
 - **Refraction**: Cambia direzione attraversando vetro o acqua.
     
 
-> [!tip] **CSMA/CA**
+> [!tip] CSMA/CA
 > 
 > Il Wi-Fi è **Half-Duplex**. Usa il _Collision Avoidance_: Ascolta → Attende → Trasmette. (Diverso dall'Ethernet cablato che usa _Collision Detection_).
-
----
 
 ## 2. Architetture Wireless & CAPWAP
 
@@ -36,7 +32,7 @@
 
 1. **Autonomous AP**: Standalone, configurazione manuale "per-device". Non scalabile.
     
-2. **Lightweight AP (LAP)**: "Stupido", richiede un **WLC** per funzionare (**Split-MAC**).
+2. **Lightweight AP (LAP)**: "Stupido", richiede un **WLC** per funzionare (Split-MAC).
     
 3. **Cloud-Based (Meraki)**: Gestito da dashboard web; il traffico dati resta locale (non va nel cloud).
     
@@ -57,9 +53,6 @@ L'AP incapsula il traffico wireless dentro pacchetti UDP per spedirli al WLC.
 - **Embedded**: Integrato nello switch (max 200 AP).
     
 - **Mobility Express**: Un AP "master" fa da controller (max 100 AP).
-    
-
----
 
 ## 3. Topologia Logica & Service Sets
 
@@ -69,20 +62,17 @@ L'AP incapsula il traffico wireless dentro pacchetti UDP per spedirli al WLC.
     
 - **BSS**: 1 AP + Client associati.
     
-- **ESS**: Più AP con lo **stesso SSID**. Permette il **Roaming** (sovrapposizione consigliata **10-15%**).
-    
-
----
+- **ESS**: Più AP con lo **stesso SSID**. Permette il Roaming (sovrapposizione consigliata **10-15%**).
 
 ## 4. Sicurezza Wireless (I Tre Pilastri)
 
-|**Generazione**|**Authentication**|**Encryption**|**Integrity**|
+|Generazione|Authentication|Encryption|Integrity|
 |---|---|---|---|
-|**WPA**|PSK o 802.1X|TKIP (RC4)|MIC|
-|**WPA2**|PSK o 802.1X|**CCMP (AES)**|CBC-MAC|
-|**WPA3**|**SAE** (Personal)|**GCMP (AES)**|GMAC|
+|WPA|PSK o 802.1X|TKIP (RC4)|MIC|
+|WPA2|PSK o 802.1X|**CCMP (AES)**|CBC-MAC|
+|WPA3|**SAE** (Personal)|**GCMP (AES)**|GMAC|
 
-### 🔐 802.1X (Enterprise)
+### 802.1X (Enterprise)
 
 - **Supplicant**: Client (es. Laptop).
     
@@ -91,14 +81,12 @@ L'AP incapsula il traffico wireless dentro pacchetti UDP per spedirli al WLC.
 - **Authentication Server**: **RADIUS** (Database utenti).
     
 
-> [!important] **Metodi EAP**
+> [!important] Metodi EAP
 > 
 > - **PEAP**: Certificato solo sul Server (più comune).
 >     
 > - **EAP-TLS**: Certificato su Server E Client (massima sicurezza).
 >     
-
----
 
 ## 5. Configurazione Operativa (GUI WLC)
 
@@ -117,7 +105,7 @@ L'AP incapsula il traffico wireless dentro pacchetti UDP per spedirli al WLC.
 
 1. **Crea Dynamic Interface**: Assegna VLAN ID e indirizzamento IP.
     
-2. **Crea WLAN**: Inserisci Profile Name e **SSID**.
+2. **Crea WLAN**: Inserisci Profile Name e SSID.
     
 3. **Mappatura**: Collega la WLAN alla Dynamic Interface creata.
     
@@ -135,11 +123,8 @@ L'AP incapsula il traffico wireless dentro pacchetti UDP per spedirli al WLC.
 - 🥈 **Silver**: Best Effort (Default)
     
 - 🥉 **Bronze**: Background
-    
 
----
-
-## 📝 Check da Esame
+## Check da Esame
 
 - [ ] Canali 2.4 GHz no-overlap? **1, 6, 11**.
     
@@ -148,7 +133,3 @@ L'AP incapsula il traffico wireless dentro pacchetti UDP per spedirli al WLC.
 - [ ] Chi fa da Authenticator in 802.1X? **Il WLC/AP**.
     
 - [ ] Differenza WPA2/WPA3? **CCMP vs GCMP** e introduzione di **SAE**.
-    
-
----
-

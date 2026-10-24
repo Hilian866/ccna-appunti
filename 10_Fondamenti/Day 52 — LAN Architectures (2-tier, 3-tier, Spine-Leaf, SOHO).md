@@ -4,8 +4,6 @@
 **LAN architectures** = modi standard per collegare **switch/router/host/server** in una LAN (campus o data center).  
 Exam topics: **1.2.a, b, c, e** (2-tier, 3-tier, spine-leaf, SOHO).
 
----
-
 ### What does / How it works
 
 #### Definizioni atomiche (termini ricorrenti)
@@ -16,8 +14,6 @@ Exam topics: **1.2.a, b, c, e** (2-tier, 3-tier, spine-leaf, SOHO).
     ![[Screenshot_3 12.png]]
 - **Partial mesh**: alcuni device sono collegati tra loro, **non tutti**.
     ![[Screenshot_2 15.png]]
-
----
 
 ## Campus LAN design (enterprise)
 
@@ -64,9 +60,6 @@ Alias: **collapsed core** / **core-distribution**.
 - Loop L2 tra access↔distribution → **STP** blocca link
     
 - Distribution può fare routing (OSPF ecc.) + switching L2
-    
-
----
 
 ### 3-tier
 
@@ -109,8 +102,6 @@ Soluzione: aggiungere **Core layer**.
 
 ![[Screenshot_8 4.png]]
 
----
-
 ## Data Center: Spine-Leaf (Clos)
 
 ### Definizioni atomiche
@@ -148,10 +139,7 @@ Nel data center moderno aumenta l’**east–west** (app distribuite/virtualizza
 
 ### Scalabilità
 
-- Aggiungi server → aggiungi **leaf** e lo colleghi a tutti gli spine
-    
-
----
+- Aggiungi server → aggiungi leaf e lo colleghi a tutti gli spine
 
 ## SOHO (Small Office / Home Office)
 
@@ -173,9 +161,6 @@ Un solo device spesso fa:
 - **Wireless AP**
     
 - a volte **modem** (oppure modem separato)
-    
-
----
 
 ## Key rules / exam points (checklist rapida)
 
@@ -187,14 +172,11 @@ Un solo device spesso fa:
     
 - Distribution: aggregation + boundary L2/L3 + SVI gateway + FHRP
     
-- Core: speed, L3 only, **no STP**
+- Core: speed, L3 only, no STP
     
 - Spine-leaf: leaf↔all spines, no leaf↔leaf, no spine↔spine, host solo su leaf
     
 - SOHO: “wireless router” = device multipurpose
-    
-
----
 
 ## Common mistakes / notes
 

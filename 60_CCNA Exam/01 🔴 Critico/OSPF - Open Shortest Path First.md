@@ -13,7 +13,7 @@ Costruire una mappa topologica completa e identica (LSDB) tra tutti i router di 
 
 OSPF non usa indirizzi IP per "chiamare" i vicini, ma un'identità fissa.
 
-> [!INFO] **Selezione Router ID (RID)**
+> [!INFO] Selezione Router ID (RID)
 >
 > Il RID è un numero a 32 bit fondamentale per l'elezione del DR. L'ordine di priorità è:
 >
@@ -22,7 +22,7 @@ OSPF non usa indirizzi IP per "chiamare" i vicini, ma un'identità fissa.
 > 3. **Interfaccia Fisica**: L'IP più alto su un'interfaccia attiva.
 >
 
-### 🤝 Requisiti di Vicinato (Hello Packet)
+### Requisiti di Vicinato (Hello Packet)
 
 I router inviano Hello al multicast **224.0.0.5**. L'adiacenza **NON** si forma se questi parametri non coincidono:
 
@@ -31,9 +31,7 @@ I router inviano Hello al multicast **224.0.0.5**. L'adiacenza **NON** si forma 
 - **Password** di autenticazione.
 - **Stub Area Flag** (Tipo di area).
 
----
-
-## 🎭 2. Ruoli e Stati di Adiacenza
+## 2. Ruoli e Stati di Adiacenza
 
 In reti broadcast (Ethernet), OSPF elegge dei leader per evitare che ogni router parli con tutti (evitando un numero eccessivo di adiacenze).
 
@@ -43,25 +41,23 @@ In reti broadcast (Ethernet), OSPF elegge dei leader per evitare che ogni router
 - **Tie-breaker**: Router ID più alto.
 - **Nota**: L'elezione è **Non-Preemptive**. Se aggiungi un router "più forte" a rete già formata, questo non diventerà DR fino al restart del processo.
 
-### 📈 Tabella degli Stati
+### Tabella degli Stati
 
-| **Stato**    | **Descrizione Strategica**                         | **Output Operativo / Troubleshooting**              |
+| Stato    | Descrizione Strategica                         | Output Operativo / Troubleshooting              |
 | ------------ | -------------------------------------------------- | --------------------------------------------------- |
-| **Down**     | Nessun Hello ricevuto. Il nodo è silente.          | Controlla cavo, interfaccia o ACL sul multicast.    |
-| **Init**     | Hello ricevuto, ma manca il mio RID nel pacchetto. | Comunicazione unidirezionale (problema di ritorno). |
-| **2-Way**    | **I vicini si vedono (Bi-direzionale).**           | **Elezione DR/BDR.** Stato finale tra due DROTHER.  |
-| **ExStart**  | Determinazione dei ruoli Master/Slave.             | Viene deciso chi inizia a inviare i dati.           |
-| **Exchange** | Scambio dei descrittori (DBD).                     | Il router dichiara: "Ecco l'elenco di ciò che so".  |
-| **Loading**  | Richiesta dettagli (LSR) e invio (LSU).            | Scaricamento delle rotte mancanti.                  |
-| **Full**     | Database sincronizzati.                            | Adiacenza completa. Stato finale con DR e BDR.      |
-
----
+| Down     | Nessun Hello ricevuto. Il nodo è silente.          | Controlla cavo, interfaccia o ACL sul multicast.    |
+| Init     | Hello ricevuto, ma manca il mio RID nel pacchetto. | Comunicazione unidirezionale (problema di ritorno). |
+| 2-Way    | **I vicini si vedono (Bi-direzionale).**           | **Elezione DR/BDR.** Stato finale tra due DROTHER.  |
+| ExStart  | Determinazione dei ruoli Master/Slave.             | Viene deciso chi inizia a inviare i dati.           |
+| Exchange | Scambio dei descrittori (DBD).                     | Il router dichiara: "Ecco l'elenco di ciò che so".  |
+| Loading  | Richiesta dettagli (LSR) e invio (LSU).            | Scaricamento delle rotte mancanti.                  |
+| Full     | Database sincronizzati.                            | Adiacenza completa. Stato finale con DR e BDR.      |
 
 ## 3. I "Mattoni" della Mappa: LSA Types
 
 Gli LSA (Link State Advertisements) sono i messaggi che compongono la topologia. *Per il CCNA (single-area) contano soprattutto Tipo 1 e 2; i tipi 3-5 servono solo come cultura multi-area.*
 
-> [!TIP] **LSA Quick Reference**
+> [!TIP] LSA Quick Reference
 >
 > - **Tipo 1 (Router)**: "Io esisto e questi sono i miei link". (Inviato da tutti).
 > - **Tipo 2 (Network)**: "Questi router sono collegati a questo segmento". (Inviato solo dal **DR**).
@@ -70,15 +66,13 @@ Gli LSA (Link State Advertisements) sono i messaggi che compongono la topologia.
 > - **Tipo 5 (External)**: "Ecco le rotte che vengono da fuori OSPF (Internet/Statiche)". (Inviato dall'**ASBR**).
 >
 
----
-
-## ⚖️ 4. Metrica: Il Costo
+## 4. Metrica: Il Costo
 
 OSPF calcola il percorso basandosi sulla velocità dell'interfaccia.
 
 $$Cost = \frac{Reference Bandwidth}{Interface Bandwidth}$$
 
-> [!DANGER] **CCNA Alert: Reference Bandwidth**
+> [!DANGER] CCNA Alert: Reference Bandwidth
 >
 > Il valore di default è **100 Mbps**.
 >
@@ -87,9 +81,7 @@ $$Cost = \frac{Reference Bandwidth}{Interface Bandwidth}$$
 > - **Soluzione**: Impostare `auto-cost reference-bandwidth 100000` su **tutti** i router.
 >
 
----
-
-## 💻 5. CLI & Troubleshooting
+## 5. CLI & Troubleshooting
 
 ```
 router ospf 1
@@ -102,7 +94,7 @@ router ospf 1
  ip ospf 1 area 0
 ```
 
-### 🔍 Comandi di Verifica
+### Comandi di Verifica
 
 - `show ip ospf neighbor`: Il comando più importante. Controlla se sei in **FULL**.
 - `show ip ospf database`: Per vedere la topologia (LSA).
@@ -110,7 +102,7 @@ router ospf 1
 - `show ip ospf interface brief`: Area, costo, stato (DR/BDR/P2P) e numero di vicini per interfaccia.
 - `show ip protocols`: Router ID, network annunciate, passive interface.
 
-### 🧩 Altri comandi utili
+### Altri comandi utili
 ```
 interface g0/0
  ! non partecipa all'elezione DR/BDR
@@ -131,22 +123,19 @@ router ospf 1
 ! necessario per applicare il nuovo router-id
 clear ip ospf process
 ```
-> [!INFO] **Multicast OSPF**: `224.0.0.5` = tutti i router OSPF · `224.0.0.6` = solo **DR/BDR**.
-> **DR/BDR** solo su reti *broadcast* e NBMA; su point-to-point non c'è elezione (timer 10/40 s, P2P e broadcast); su NBMA 30/120 s.
-
----
+> [!INFO] Multicast OSPF
+> `224.0.0.5` = tutti i router OSPF · `224.0.0.6` = solo **DR/BDR**.
+> DR/BDR solo su reti *broadcast* e NBMA; su point-to-point non c'è elezione (timer 10/40 s, P2P e broadcast); su NBMA 30/120 s.
 
 ## ⚠️ 6. Common Mistakes (Anatomy Check)
 
-> [!CAUTION] **Perché l'adiacenza è bloccata?**
+> [!CAUTION] Perché l'adiacenza è bloccata?
 >
 > - **Stato ExStart/Exchange**: Quasi sempre causato da un **MTU Mismatch** (le interfacce hanno dimensioni MTU diverse).
 > - **Nessun vicino / Init**: timer, Area ID, subnet mask, autenticazione o ACL sul multicast. Se un lato vede il vicino e l'altro no → **Init** (traffico unidirezionale).
 > - **FULL ma no rotte**: `network` statement sbagliato, `passive-interface` sull'interfaccia sbagliata, o rotte filtrate. Vicini bloccati in **2-Way** su Ethernet sono normali tra due DROTHER.
 > - **Router ID duplicato**: adiacenze instabili o LSDB incoerente.
 >
-
----
 
 ## 🎯 Synthesis
 OSPF: vicini con Hello identici, sincronizzano il LSDB fino a FULL, poi SPF sceglie il costo minimo (100 Mbps di reference: ricordati di cambiarlo).

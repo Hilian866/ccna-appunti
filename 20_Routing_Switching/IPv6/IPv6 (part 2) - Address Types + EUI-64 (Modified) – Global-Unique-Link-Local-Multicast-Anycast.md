@@ -1,13 +1,13 @@
 
 ## What is it
 
-Panoramica dei **tipi di indirizzi IPv6** richiesti per CCNA (topic **1.9**) e metodo **EUI-64 (modified EUI-64)** per generare automaticamente la parte host (interface identifier) in un indirizzo IPv6 **/64**.
+Panoramica dei tipi di indirizzi IPv6 richiesti per CCNA (topic 1.9) e metodo **EUI-64 (modified EUI-64)** per generare automaticamente la parte host (interface identifier) in un indirizzo IPv6 /64.
 
 ## How it works
 
 ### Modified EUI-64 (EUI-64)
 
-- Scopo: convertire un **MAC 48-bit** in un **Interface Identifier 64-bit**, usabile come host portion in un IPv6 **/64**.
+- Scopo: convertire un **MAC 48-bit** in un **Interface Identifier 64-bit**, usabile come host portion in un IPv6 /64.
     
 - Passi (manuali, ma su router è automatico):
     

@@ -2,8 +2,6 @@
 
 PortFast è una feature di Spanning Tree che consente a una porta **collegata a un end host** di entrare **immediatamente nello stato Forwarding**, bypassando gli stati Listening e Learning.
 
----
-
 ### Why it exists (problem)
 
 - Una porta STP normale impiega **30 secondi** prima di inoltrare traffico:
@@ -15,9 +13,6 @@ PortFast è una feature di Spanning Tree che consente a una porta **collegata a 
 - Su una porta collegata a un PC **non esiste rischio di loop Layer 2**.
     
 - Il ritardo causa una **pessima user experience** (“la rete non funziona”).
-    
-
----
 
 ### How it works
 
@@ -28,9 +23,6 @@ PortFast è una feature di Spanning Tree che consente a una porta **collegata a 
     - porta la porta **direttamente in Forwarding**
         
 - È sicuro **solo** su porte che **non possono creare loop** (end host, router).
-    
-
----
 
 ### Where it can be used
 
@@ -43,9 +35,6 @@ PortFast è una feature di Spanning Tree che consente a una porta **collegata a 
     - server di virtualizzazione (VM su più VLAN)
         
 - ❌ **Mai** su porte verso altri switch (rischio loop)
-    
-
----
 
 ### STP behavior comparison
 
@@ -53,8 +42,6 @@ PortFast è una feature di Spanning Tree che consente a una porta **collegata a 
 |---|---|---|
 |Default STP|dopo 30s|sì|
 |PortFast|immediato|sì|
-
----
 
 ### CLI Core
 
@@ -74,8 +61,6 @@ PortFast è una feature di Spanning Tree che consente a una porta **collegata a 
 
 `interface g0/0 spanning-tree portfast trunk`
 
----
-
 ### Verification
 
 `show spanning-tree interface g0/1 detail`
@@ -85,9 +70,6 @@ Output rilevante:
 - `portfast edge mode`
     
 - `portfast edge trunk mode`
-    
-
----
 
 ### PortFast Edge (nota d’esame)
 
@@ -102,9 +84,6 @@ Output rilevante:
     - `spanning-tree portfast edge`
         
 - Packet Tracer **non supporta EDGE keyword** → comportamento comunque valido
-    
-
----
 
 ### Common Mistakes
 
@@ -113,9 +92,6 @@ Output rilevante:
 - Credere che `portfast default` agisca anche sui trunk
     
 - Dimenticare che **access ≠ trunk**
-    
-
----
 
 ### Synthesis
 

@@ -11,8 +11,6 @@ Introduce:
 
 Completa l’argomento **NAT per CCNA 200-301 (exam topic 4.1)**.
 
----
-
 ### What does / How it works
 
 #### Ripasso rapido — Static NAT (punto mancante)
@@ -22,9 +20,6 @@ Completa l’argomento **NAT per CCNA 200-301 (exam topic 4.1)**.
 - Host esterni possono raggiungere host interni tramite **inside global IP**
     
 - Mapping **1:1 permanente**
-    
-
----
 
 ### Dynamic NAT
 
@@ -55,9 +50,6 @@ Completa l’argomento **NAT per CCNA 200-301 (exam topic 4.1)**.
 - Timeout automatico delle entry
     
 - `clear ip nat translation *` → rimuove entry dinamiche
-    
-
----
 
 ### Dynamic PAT (NAT Overload)
 
@@ -77,9 +69,6 @@ Completa l’argomento **NAT per CCNA 200-301 (exam topic 4.1)**.
 - più efficiente
     
 - fondamentale per Internet domestico/aziendale
-    
-
----
 
 ### Key rules / exam points
 
@@ -108,9 +97,6 @@ Completa l’argomento **NAT per CCNA 200-301 (exam topic 4.1)**.
 - `show ip nat translations`
     
 - `show ip nat statistics`
-    
-
----
 
 ### CLI (solo comandi)
 
@@ -138,8 +124,6 @@ clear ip nat translation *
 
 ![[Screenshot_2 11.png]]
 (modo migliore con nat overload)
-
----
 
 ### Common mistakes / notes
 

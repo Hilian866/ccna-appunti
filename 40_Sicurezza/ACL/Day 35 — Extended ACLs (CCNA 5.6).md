@@ -14,9 +14,6 @@ Le **Extended ACL** sono liste di regole (ACE) che **permettono o negano** traff
     - **Destination IP**
         
     - (opzionale) **Source/Destination port** (solo se protocollo TCP/UDP)
-        
-
----
 
 ## How it works (logica)
 
@@ -42,9 +39,6 @@ Le **Extended ACL** sono liste di regole (ACE) che **permettono o negano** traff
 - **Standard ACL** → vicino alla **destinazione**
     
 - **Extended ACL** → vicino alla **sorgente** (per bloccare presto traffico “spazzatura”)
-    
-
----
 
 ## Numbered vs Named + “named mode” per numbered (IOS moderno)
 
@@ -57,9 +51,6 @@ Puoi configurare una ACL **numerata** anche in modalità “named config mode”
     2. puoi **inserire** ACE in mezzo: scegliendo il **sequence number**
         
 - Se configuri una numbered in named-mode, nel `running-config` potrebbe apparire comunque in formato “classico”.
-    
-
----
 
 ## Resequencing (riordinare i numeri)
 
@@ -75,16 +66,11 @@ Serve quando i sequence number sono “stretti” (1,2,3,4…) e non puoi inseri
 
 Risultato: prima ACE = 10, poi 20, 30, 40…
 
----
-
 # Extended ACL: range numeri (CCNA)
 
 - **Extended numbered**: `100–199` e `2000–2699`
     
 - (ripasso) **Standard numbered**: `1–99` e `1300–1999`
-    
-
----
 
 ## CLI Core (configurazione estesa)
 
@@ -114,11 +100,9 @@ Esempio:
 
 `deny udp 10.0.0.0 0.0.255.255 host 192.168.1.1`
 
-
----
 ## Standard vs Extended Named ACL
 
-|Aspetto|**Standard Named ACL**|**Extended Named ACL**|
+|Aspetto|Standard Named ACL|Extended Named ACL|
 |---|---|---|
 |Modalità di ingresso|`ip access-list standard <NAME>`|`ip access-list extended <NAME>`|
 |Cosa può filtrare|**Solo IP sorgente**|**Protocollo + IP sorgente + IP destinazione + porte**|
@@ -134,7 +118,7 @@ Esempio:
 
 ---
 
-| **Standard Named ACL**                        | **Extended Named ACL**                                 |
+| Standard Named ACL                        | Extended Named ACL                                 |
 | --------------------------------------------- | ------------------------------------------------------ |
 | `ip access-list standard ACL_STD`             | `ip access-list extended ACL_EXT`                      |
 | `10 permit 192.168.1.0 0.0.0.255`             | `10 permit ip 192.168.1.0 0.0.0.255 any`               |
@@ -145,9 +129,6 @@ Esempio:
 | _(nessun protocollo)_                         | `tcp                                                   |
 | _(nessuna porta)_                             | `eq                                                    |
 | `interface g0/1` `ip access-group ACL_STD in` | `interface g0/1` `ip access-group ACL_EXT in`          |
-
-
----
 
 ## Matching porte TCP/UDP
 
@@ -172,15 +153,11 @@ Esempio: blocca HTTP verso 1.1.1.1
 
 ✅ Nota operativa: un pacchetto deve matchare **tutti** i criteri della ACE (protocollo + src/dst + porte se presenti).
 
----
-
 ## Apply to interface (come si “attiva”)
 
 Da interface config:
 
 `ip access-group <ACL-ID> in ip access-group <ACL-ID> out`
-
----
 
 ## Show / Verify
 
@@ -191,8 +168,6 @@ Verifica ACL e contenuto:
 Verifica quale ACL è applicata a una interfaccia:
 
 `show ip interface g0/0`
-
----
 
 ## Esempi “CCNA-style” (quelli del video)
 
@@ -212,11 +187,9 @@ Verifica quale ACL è applicata a una interfaccia:
 
 `permit tcp 10.0.0.0 0.0.255.255 host 2.2.2.2 eq 443`
 
----
-
 ## Pitfalls (errori tipici)
 
-- Dimenticare `permit ip any any` → per **implicit deny** blocchi tutto il resto.
+- Dimenticare `permit ip any any` → per implicit deny blocchi tutto il resto.
     
 - Applicare in direzione sbagliata (in/out) → “non funziona” ma la config è corretta.
     
@@ -225,9 +198,6 @@ Verifica quale ACL è applicata a una interfaccia:
 - Usare ACL numerata “classic” e provare a cancellare una singola riga → cancelli **tutta** l’ACL.
     
 - Sequenze tipo 1,2,3 → impossibile inserire regole in mezzo → serve `resequencing`.
-    
-
----
 
 ## Mini-quiz (ripasso attivo)
 
@@ -237,6 +207,6 @@ Verifica quale ACL è applicata a una interfaccia:
     
 3. Range numeri extended ACL?
     
-4. `deny tcp any host 1.1.1.1 eq 80` sta matchando la porta **source** o **destination**?
+4. `deny tcp any host 1.1.1.1 eq 80` sta matchando la porta source o destination?
     
 5. Per cancellare solo la ACE 30 in named-mode, che comando usi?

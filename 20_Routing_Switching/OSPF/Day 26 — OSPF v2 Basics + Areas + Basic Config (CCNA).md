@@ -1,9 +1,7 @@
 
 ### 1) Cos’è OSPF (in 1 riga)
 
-**OSPF (Open Shortest Path First)** è un **routing protocol link-state**: ogni router costruisce una **mappa completa** della rete e calcola i best path con **SPF / Dijkstra**.
-
----
+**OSPF (Open Shortest Path First)** è un **routing protocol link-state**: ogni router costruisce una mappa completa della rete e calcola i best path con **SPF / Dijkstra**.
 
 ## 2) Link-state: il “flow” mentale (3 step CCNA)
 
@@ -31,18 +29,12 @@
 - **LSDB** = collezione di LSAs = “mappa della rete”.
     
 - **Flooding** = inoltro delle LSAs a tutti i neighbor dell’area.
-    
-
----
 
 ## 3) Versioni OSPF (da non confondere)
 
 - **OSPFv2** → IPv4 (**quello del CCNA**)
     
 - **OSPFv3** → IPv6 (può anche IPv4 ma non è il focus CCNA)
-    
-
----
 
 ## 4) OSPF Areas (concetto + regole minime CCNA)
 
@@ -50,7 +42,7 @@
 
 Un’**area** è un set di router e link che condividono la **stessa LSDB**.
 
-### Backbone area = **Area 0**
+### Backbone area = Area 0
 
 - È l’area “spina dorsale”.
     
@@ -84,9 +76,6 @@ Un’**area** è un set di router e link che condividono la **stessa LSDB**.
 2. Aree **contigue** (non spezzate in due)
     
 3. Interfacce nello **stesso subnet** devono stare nella **stessa area** (altrimenti niente neighbor)
-    
-
----
 
 ## 5) Config base OSPF (single-area) 🔧
 
@@ -106,8 +95,6 @@ network 10.0.13.0 0.0.0.63 area 0
 
 **Nota chiave:** il `network` **non “annuncia una rete”**, ma **seleziona le interfacce** i cui IP matchano quel range e abilita OSPF lì, nell’area indicata.
 
----
-
 ## 6) Passive-interface (stesso concetto di RIP/EIGRP) 🤫
 
 ```
@@ -121,8 +108,6 @@ passive-interface g2/0
     
 
 **Best practice CCNA:** passive su interfacce verso **LAN con host**, non verso router.
-
----
 
 ## 7) Default route in OSPF (e ASBR) 🌐
 
@@ -144,9 +129,6 @@ Effetto:
 - gli altri router installano **O*E2 0.0.0.0/0** (tipicamente)
     
 - il router che origina diventa **ASBR** (perché introduce info verso esterno)
-    
-
----
 
 ## 8) Router ID (RID) ✅
 
@@ -175,8 +157,6 @@ Per farlo prendere:
 
 ⚠️ In produzione è disruptive (reset OSPF).
 
----
-
 ## 9) Comandi show utili (Day 26 level)
 
 ```
@@ -198,9 +178,6 @@ show ip ospf neighbor
 - neighbor list
     
 - AD (default **110**)
-    
-
----
 
 ## 10) Mini “error traps” da evitare 🧨
 

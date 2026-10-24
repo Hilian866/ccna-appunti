@@ -1,9 +1,7 @@
  >[!ABSTRACT]  Core Logic
 Il video introduce i concetti fondamentali di **Quality of Service (QoS)**, **Power over Ethernet (PoE)** e **Voice VLAN**. L'obiettivo è comprendere come gestire reti convergenti dove traffico voce, video e dati devono coesistere sullo stesso medium fisico senza degradazione delle performance.
 
----
-
-### 📞 IP Phones & Voice VLAN
+### IP Phones & Voice VLAN
 I telefoni IP moderni non richiedono una porta dedicata sullo switch grazie a un design a **switch interno a 3 porte** [03:09](https://youtu.be/H6FKJMiiL6E&t=189s).
 
 *   **Porta 1:** Uplink verso lo switch fisico.
@@ -22,15 +20,13 @@ interface gigabitethernet0/0
  switchport voice vlan 11      ! VLAN per la Voce (Tagged via CDP)
 ```
 
----
-
-### ⚡ Power over Ethernet (PoE)
+### Power over Ethernet (PoE)
 Il protocollo **PoE** permette allo switch di alimentare i dispositivi finali (PD) tramite il cavo Ethernet, eliminando la necessità di alimentatori esterni [08:07](https://youtu.be/H6FKJMiiL6E&t=487s).
 
 | Ruolo | Acronimo | Descrizione |
 | :--- | :--- | :--- |
-| **Power Sourcing Equipment** | **PSE** | Il dispositivo che fornisce energia (solitamente lo Switch). |
-| **Powered Device** | **PD** | Il dispositivo che riceve energia (IP Phone, AP, Camera). |
+| Power Sourcing Equipment | PSE | Il dispositivo che fornisce energia (solitamente lo Switch). |
+| Powered Device | PD | Il dispositivo che riceve energia (IP Phone, AP, Camera). |
 
 #### Tabella Standard PoE [12:27](https://youtu.be/H6FKJMiiL6E&t=747s)
 | Nome | Standard | Potenza Max (Watt) | Coppie di fili usate |
@@ -43,9 +39,7 @@ Il protocollo **PoE** permette allo switch di alimentare i dispositivi finali (P
 > [!CAUTION] Power Policing
 > Se un dispositivo (PD) assorbe più energia di quella negoziata, lo switch può mettere la porta in stato **err-disabled** per proteggere i circuiti interni [10:04](https://youtu.be/H6FKJMiiL6E&t=604s).
 
----
-
-### 📊 Fondamenti di Quality of Service (QoS)
+### Fondamenti di Quality of Service (QoS)
 Nelle **Converged Networks**, diverse tipologie di traffico competono per la stessa **Bandwidth** [15:34](https://youtu.be/H6FKJMiiL6E&t=934s). La QoS gestisce quattro caratteristiche chiave [16:40](https://youtu.be/H6FKJMiiL6E&t=1000s):
 
 1.  **Bandwidth:** Capacità totale del link (bps).
@@ -59,9 +53,7 @@ Per garantire una chiamata fluida, la rete deve rispettare questi parametri:
 *   **Jitter:** ≤ 30 ms
 *   **Packet Loss:** ≤ 1%
 
----
-
-### 🧪 Gestione delle Code (Queuing)
+### Gestione delle Code (Queuing)
 Quando uno switch riceve pacchetti più velocemente di quanto possa trasmetterli, li inserisce in una **Queue**.
 
 *   **FIFO (First-In, First-Out):** I pacchetti sono inviati nell'ordine di arrivo. Nessuna priorità [20:01](https://youtu.be/H6FKJMiiL6E&t=1201s).

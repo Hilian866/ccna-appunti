@@ -18,8 +18,6 @@
 Usato soprattutto per **end host** (PC, telefoni).  
 Router, server → di solito **statici**.
 
----
-
 ### Key rules / exam points
 
 - DHCP usa **UDP**
@@ -35,9 +33,6 @@ Router, server → di solito **statici**.
 - I broadcast DHCP **non attraversano i router**
     
 - Per subnet remote serve **DHCP relay**
-    
-
----
 
 ### DHCP message flow (DORA)
 
@@ -74,8 +69,6 @@ Extra:
     
 ![[Screenshot_1 10.png]]
 
----
-
 ### DHCP lease
 
 - IP assegnato **non è permanente**
@@ -87,9 +80,6 @@ Extra:
     - oppure rilascia l’IP
         
 - Serve a **riutilizzare indirizzi** (WiFi pubblici, reti grandi)
-    
-
----
 
 ### DHCP Relay (fondamentale)
 
@@ -102,7 +92,7 @@ Problema:
 
 Soluzione:
 
-- router configurato come **DHCP relay**
+- router configurato come DHCP relay
     
 - trasforma broadcast → **unicast** verso server remoto
     
@@ -112,9 +102,6 @@ Comportamento:
 - client ↔ router (broadcast)
     
 - router ↔ server (unicast)
-    
-
----
 
 ### Configurare router come DHCP server
 
@@ -143,8 +130,6 @@ Verifica:
 
 ![[Screenshot_2 10.png]]
 
----
-
 ### Configurare router come DHCP relay
 
 **Quando**
@@ -157,7 +142,7 @@ Verifica:
 - sull’interfaccia **verso i client**
     
 
-**CLI**
+CLI
 
 ```
 interface g0/1
@@ -171,9 +156,6 @@ Verifica:
 
 ![[Screenshot_3 9.png]]
 
-
----
-
 ### Configurare router come DHCP client
 
 **Uso**
@@ -181,7 +163,7 @@ Verifica:
 - raro, ma richiesto per CCNA
     
 
-**CLI**
+CLI
 
 ```
 interface g0/1
@@ -193,8 +175,6 @@ Verifica:
 
 `show ip interface g0/1`
 
----
-
 ### Windows (verifica client)
 
 ```
@@ -202,9 +182,6 @@ ipconfig /all
 ipconfig /release
 ipconfig /renew
 ```
-
-
----
 
 ### Common mistakes / notes
 
@@ -217,9 +194,6 @@ ipconfig /renew
 - ❌ Pensare che DHCP assegni solo IP
     
 - ❌ Lease infinite in reti dinamiche
-    
-
----
 
 ### Mappa mentale rapida
 

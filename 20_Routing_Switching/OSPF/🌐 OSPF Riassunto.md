@@ -2,9 +2,7 @@
 
 ## 1. Il Cuore di OSPF (Definizione)
 
-**OSPF (Open Shortest Path First)** è un protocollo **Link-State**. Ogni router non si fida ciecamente dei vicini, ma costruisce una **mappa completa** (LSDB) della rete e calcola i percorsi migliori usando l'algoritmo **SPF / Dijkstra**.
-
----
+**OSPF (Open Shortest Path First)** è un protocollo **Link-State**. Ogni router non si fida ciecamente dei vicini, ma costruisce una mappa completa (LSDB) della rete e calcola i percorsi migliori usando l'algoritmo **SPF / Dijkstra**.
 
 ## 2. La Nascita della Rete (Timeline di Configurazione)
 
@@ -79,16 +77,13 @@ Non tutti i router si scambiano tutte le informazioni.
     
 - **Adjacency (Stato FULL):** Sincronizzazione completa del database (LSDB).
     
-    - Ogni **DROTHER** arriva a **FULL** solo con il **DR** e il **BDR**.
+    - Ogni DROTHER arriva a **FULL** solo con il **DR** e il **BDR**.
         
-    - **DR** e **BDR** sono in **FULL** tra di loro.
-        
-
----
+    - **DR** e BDR sono in FULL tra di loro.
 
 ### 4. La Costruzione della Mappa (LSA & LSDB)
 
-Una volta in stato **FULL**, i router si scambiano gli **LSA** (Link State Advertisements) per costruire la topologia della rete.
+Una volta in stato FULL, i router si scambiano gli **LSA** (Link State Advertisements) per costruire la topologia della rete.
 
 - **LSA Type 1 (Router LSA):** Generato da **ogni router**. Dice: "Io esisto e questi sono i miei link diretti".
     
@@ -96,14 +91,12 @@ Una volta in stato **FULL**, i router si scambiano gli **LSA** (Link State Adver
     
 - **LSA Type 3 (Summary LSA):** Generato dall'**ABR**. Annuncia le reti di un'area alle altre aree (Inter-Area).
     
-- **LSA Type 4 (ASBR Summary LSA):** Generato dall'**ABR**. Spiega agli altri router come raggiungere l'ASBR.
+- **LSA Type 4 (ASBR Summary LSA):** Generato dall'ABR. Spiega agli altri router come raggiungere l'ASBR.
     
 - **LSA Type 5 (AS-External LSA):** Generato dall'**ASBR**. Contiene le rotte esterne al dominio OSPF, come rotte statiche o Internet.
     
 
 **Risultato:** Grazie a questi messaggi, tutti i router della stessa area hanno una **LSDB (Link State Database) identica** , che usano come "mappa" per calcolare il cammino più breve con l'algoritmo di **Dijkstra**.
-
----
 
 ## 5. La Scelta del Percorso (Metric: Cost)
 
@@ -115,12 +108,12 @@ $$Cost = \frac{Reference Bandwidth (Default 100 Mbps)}{Interface Bandwidth}$$
 
 
 
-| **Tipo Interfaccia** | **Velocità Reale (BW)** | **Formula (Default 100M)** | **Costo Default**    | **Formula (Ref 10000M)** | **Nuovo Costo** |
+| Tipo Interfaccia | Velocità Reale (BW) | Formula (Default 100M) | Costo Default    | Formula (Ref 10000M) | Nuovo Costo |
 | -------------------- | ----------------------- | -------------------------- | -------------------- | ------------------------ | --------------- |
-| **Ethernet**         | 10 Mbps                 | 100 / 10                   | **10**               | 10000 / 10               | **1000**        |
-| **FastEthernet**     | 100 Mbps                | 100 / 100                  | **1**                | 10000 / 100              | **100**         |
-| **Gigabit**          | 1.000 Mbps              | 100 / 1000                 | **1** (arrotondato*) | 10000 / 1000             | **10**          |
-| **10 Gigabit**       | 10.000 Mbps             | 100 / 10000                | **1** (arrotondato*) | 10000 / 10000            | **1**           |
+| Ethernet         | 10 Mbps                 | 100 / 10                   | **10**               | 10000 / 10               | 1000        |
+| FastEthernet     | 100 Mbps                | 100 / 100                  | **1**                | 10000 / 100              | 100         |
+| Gigabit          | 1.000 Mbps              | 100 / 1000                 | **1** (arrotondato*) | 10000 / 1000             | 10          |
+| 10 Gigabit       | 10.000 Mbps             | 100 / 10000                | **1** (arrotondato*) | 10000 / 10000            | 1           |
 
 
 In alternativa, puoi forzare il costo manualmente su una specifica interfaccia (sovrascrive il calcolo automatico):
@@ -129,8 +122,6 @@ In alternativa, puoi forzare il costo manualmente su una specifica interfaccia (
 interface g0/0
  ip ospf cost 50
 ```
-
----
 
 ## 6. Comandi Operativi (Cheat Sheet)
 
@@ -156,7 +147,7 @@ interface g0/0
 
 ### Verifica e Troubleshooting
 
-- `show ip ospf neighbor`: La colonna **State** deve essere **FULL** (o **2-WAY** tra DROthers).
+- `show ip ospf neighbor`: La colonna **State** deve essere FULL (o **2-WAY** tra DROthers).
     
 - `show ip ospf interface brief`: Per vedere ruolo (**DR/BDR/POINT**), numero di adiacenze e stato.
     
@@ -168,4 +159,4 @@ interface g0/0
     
 - **MTU Mismatch**: Stato **EXSTART/EXCHANGE** = i router non riescono a scambiarsi i pacchetti DBD per via della dimensione diversa.
     
-- **Network Type Mismatch**: Stato **FULL** ma **niente rotte** in tabella = il database è sincronizzato ma l'algoritmo SPF fallisce perché i tipi di rete non coincidono.
+- **Network Type Mismatch**: Stato FULL ma **niente rotte** in tabella = il database è sincronizzato ma l'algoritmo SPF fallisce perché i tipi di rete non coincidono.

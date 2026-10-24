@@ -7,25 +7,21 @@ stato: da-ripassare
 > [!ABSTRACT] Core Logic
 > Transizione dal networking tradizionale (distribuito e manuale) al **Software-Defined Networking (SDN)**. L'obiettivo è la centralizzazione del controllo, l'astrazione dell'hardware e l'automazione tramite API e strumenti di Configuration Management.
 
----
-
-## 🏗️ 1. Architettura SDN & Logic Planes
+## 1. Architettura SDN & Logic Planes
 
 Il networking moderno separa le funzioni logiche per abilitare la centralizzazione tramite un **Controller**.
 
 | Piano | Funzione Primaria | Driver Tradizionale |
 | :--- | :--- | :--- |
-| **Data Plane** | Inoltro pacchetti (Forwarding). | Basato su **ASIC** e **TCAM** per wire speed. |
-| **Control Plane** | Decision making (Routing, STP). | Tradizionalmente distribuito su ogni nodo. |
-| **Management Plane** | Accesso e monitoraggio (SSH, SNMP). | Configurazione individuale del dispositivo. |
+| Data Plane | Inoltro pacchetti (Forwarding). | Basato su **ASIC** e **TCAM** per wire speed. |
+| Control Plane | Decision making (Routing, STP). | Tradizionalmente distribuito su ogni nodo. |
+| Management Plane | Accesso e monitoraggio (SSH, SNMP). | Configurazione individuale del dispositivo. |
 
 > [!INFO] Northbound vs Southbound
 > - **Northbound Interface (NBI):** API (solitamente **REST**) che permettono ad applicazioni/script di comunicare con il controller.
-> - **Southbound Interface (SBI):** Protocolli usati dal controller per gestire i dispositivi fisici (es. **OpenFlow**, **NETCONF**, **RESTCONF**).
+> - **Southbound Interface (SBI):** Protocolli usati dal controller per gestire i dispositivi fisici (es. OpenFlow, NETCONF, RESTCONF).
 
----
-
-## 🤖 2. AI & Machine Learning nel Networking
+## 2. AI & Machine Learning nel Networking
 
 Definizioni chiave per il nuovo curriculum Cisco:
 
@@ -37,27 +33,23 @@ Definizioni chiave per il nuovo curriculum Cisco:
     *   **AI Network Analytics:** Stabilisce **Baselines** per trovare anomalie.
     *   **MRE (Machine Reasoning Engine):** Automazione della **Root-cause analysis**.
 
----
-
-## 📄 3. Data Serialization (JSON, XML, YAML)
+## 3. Data Serialization (JSON, XML, YAML)
 
 Formati standard per la comunicazione tra macchine (Machine-to-Machine).
 
-| Feature | **JSON** | **XML** | **YAML** |
+| Feature | JSON | XML | YAML |
 | :--- | :--- | :--- | :--- |
-| **Readability** | Alta | Media | **Eccellente** |
-| **Sintassi** | `{ } , [ ] :` | `<tag> </tag>` | `Indentation, -` |
-| **Whitespace** | Irrilevante | Irrilevante | **Significativo** |
-| **Uso Principale**| API REST | Legacy/REST | Ansible/Config |
+| Readability | Alta | Media | **Eccellente** |
+| Sintassi | `{ } , [ ] :` | `<tag> </tag>` | `Indentation, -` |
+| Whitespace | Irrilevante | Irrilevante | **Significativo** |
+| Uso Principale| API REST | Legacy/REST | Ansible/Config |
 
 > [!WARNING] YAML Alert
 > In **YAML**, l'indentazione non è estetica: definisce la gerarchia dei dati. Un errore di spaziatura rompe il file.
 
----
+## 4. REST APIs & HTTP
 
-## ⚡ 4. REST APIs & HTTP
-
-Il protocollo **REST** è lo standard de facto per la programmabilità.
+Il protocollo REST è lo standard de facto per la programmabilità.
 
 ### CRUD & Verbi HTTP
 *   **Create:** `POST`
@@ -71,18 +63,14 @@ Il protocollo **REST** è lo standard de facto per la programmabilità.
 - **4xx (Client Error):** `401 Unauthorized`, `403 Forbidden`, `404 Not Found`.
 - **5xx (Server Error):** `500 Internal Server Error`.
 
----
-
-## 🔑 5. API Authentication
+## 5. API Authentication
 
 1.  **[[Basic Auth.png|Basic Auth]]:** `username:password` codificati in **Base64** (Non sicuro senza HTTPS).
 2.  **[[Bearer.png|Bearer Token]]:** Token generato per la sessione.
 3.  **[[API Key.png|API Key]]:** Stringa statica univoca.
 4.  **[[OAuth 2.0.png|OAuth 2.0]]:** Framework avanzato per "Access Delegation" (es. Login con Google).
 
----
-
-## 🏛️ 6. Cisco SD-Access (SDA) & Fabric
+## 6. Cisco SD-Access (SDA) & Fabric
 
 SDA automatizza le LAN campus utilizzando un'architettura **Fabric**.
 
@@ -91,24 +79,20 @@ SDA automatizza le LAN campus utilizzando un'architettura **Fabric**.
 *   **Control Plane:** Usa **LISP** per mappare Endpoint IDs (EID) a Routing Locators (RLOC).
 *   **Security:** Usa **Cisco TrustSec (SGT)** invece delle ACL basate su IP.
 
----
+## 7. Strumenti di Configuration Management
 
-## 🛠️ 7. Strumenti di Configuration Management
-
-| Feature | **Ansible** | **Puppet** | **Chef** |
+| Feature | Ansible | Puppet | Chef |
 | :--- | :--- | :--- | :--- |
-| **Linguaggio** | Python | Ruby | Ruby |
-| **Modello** | **Push** | Pull | Pull |
-| **Setup** | **Agentless (SSH)** | Agent-based | Agent-based |
-| **Formato** | YAML (Playbooks) | Manifests | Recipes |
+| Linguaggio | Python | Ruby | Ruby |
+| Modello | **Push** | Pull | Pull |
+| Setup | **Agentless (SSH)** | Agent-based | Agent-based |
+| Formato | YAML (Playbooks) | Manifests | Recipes |
 
-### 🔄 Terraform vs Ansible
+### Terraform vs Ansible
 *   **Ansible:** Focalizzato sulla **Configurazione** di sistemi esistenti. È **Mutable** (aggiorna in loco) e **Procedurale** (descrive *come* fare).
-*   **Terraform:** Focalizzato sul **Provisioning** dell'infrastruttura. È **Immutable** (distrugge e ricrea), usa **HCL** ed è **Declarative** (descrive lo *stato finale* desiderato).
+*   **Terraform:** Focalizzato sul **Provisioning** dell'infrastruttura. È **Immutable** (distrugge e ricrea), usa HCL ed è **Declarative** (descrive lo *stato finale* desiderato).
 
----
-
-## 📚 Note complete (cartella `Day 59-63 - Note complete`)
+## Note complete (cartella `Day 59-63 - Note complete`)
 Sono il materiale di studio principale: questo riassunto ne è la sintesi.
 
 - SDN e piani logici → [[Day 59 (part 1) Intro to Network Automation]] · [[Day 62 Software-Defined Networking (SD-Access & DNA Center)]]
@@ -117,8 +101,6 @@ Sono il materiale di studio principale: questo riassunto ne è la sintesi.
 - REST e autenticazione → [[Day 61 (part 1) - REST APIs & Network Automation]] · [[Day 61 (part 2) REST API Authentication]]
 - Config management e IaC → [[Day 63 (part 1) Ansible, Puppet, & Chef]] · [[Day 63 (part 2) Terraform Basics & Infrastructure as Code (IaC)]]
 - Lettura continua di tutto: [[01 Automation - Tutte le note (lettura continua)]]
-
----
 
 ## 🎯 Synthesis
 Automation = controller (SDN) + API REST/JSON + config management (Ansible/Puppet/Chef/Terraform) al posto della CLI a mano.

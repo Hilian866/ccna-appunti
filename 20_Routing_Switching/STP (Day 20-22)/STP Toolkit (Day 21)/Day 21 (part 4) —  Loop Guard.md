@@ -48,7 +48,7 @@
 
 ### Verify
 
-- `show spanning-tree` → stato **BKN** + motivo **LOOP_Inc**
+- `show spanning-tree` → stato **BKN** + motivo LOOP_Inc
     
 - `show spanning-tree interface <int> detail` → conferma loop guard (anche “by default” se globale)
     
@@ -59,7 +59,7 @@
     
     - Root Guard: evita che una **designated** diventi **root port** (blocca su **superior BPDUs**).
         
-    - Loop Guard: evita che una **root/non-designated** diventi **designated** (blocca quando **mancano BPDUs**).
+    - Loop Guard: evita che una **root/non-designated** diventi designated (blocca quando **mancano BPDUs**).
         
 - Configurare uno **rimpiazza** l’altro sulla porta.
     
@@ -67,10 +67,7 @@
 ### Core mental model
 
 - Loop Guard = “se questa porta dovrebbe _sentire_ BPDUs e non li sente, **non fidarti**: blocca.”
-    
-
----
 
 ## Mini-aggiunta “Common Mistakes” (1 riga) 🧷
 
-- Confondere **LOOP_Inc** (mancano BPDUs) con **ROOT_Inc** (arrivano superior BPDUs).
+- Confondere LOOP_Inc (mancano BPDUs) con **ROOT_Inc** (arrivano superior BPDUs).

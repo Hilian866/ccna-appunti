@@ -5,8 +5,6 @@
 Exam topics: **1.2.d (WAN)** e **5.5 (VPN site-to-site e remote-access)**.  
 Livello **descrittivo**, **niente configurazioni** richieste.
 
----
-
 ### What does / How it works
 
 #### Definizioni atomiche (termini chiave)
@@ -36,9 +34,6 @@ Livello **descrittivo**, **niente configurazioni** richieste.
 - **GRE**: tunneling non cifrato che supporta multicast/broadcast.
     
 - **DMVPN**: soluzione Cisco per creare **mesh dinamiche IPsec**.
-    
-
----
 
 ## WAN private
 
@@ -72,13 +67,11 @@ Livello **descrittivo**, **niente configurazioni** richieste.
 
 ⚠️ Non memorizzare tabelle complete: **concetto > numeri**
 
----
-
 ### MPLS VPN
 
 - Infrastruttura **condivisa** del provider
     
-- Isolamento clienti tramite **label**
+- Isolamento clienti tramite label
     
 - MPLS = spesso chiamato **Layer 2.5**
     
@@ -113,14 +106,11 @@ Livello **descrittivo**, **niente configurazioni** richieste.
 
 📌 Esame:
 
-- CE **non** eseguono MPLS
+- CE non eseguono MPLS
     
 - L2 MPLS → CE peer direttamente
     
 - L3 MPLS → CE peer con PE
-    
-
----
 
 ## Internet come WAN
 
@@ -144,9 +134,6 @@ Livello **descrittivo**, **niente configurazioni** richieste.
     - separato
         
     - integrato nel router
-        
-
----
 
 ### Ridondanza Internet (termini d’esame)
 
@@ -157,9 +144,6 @@ Livello **descrittivo**, **niente configurazioni** richieste.
 - **Multihomed**: 1 link per ciascuno di 2 ISP
     
 - **Dual-multihomed**: 2 link per ciascuno di 2 ISP (max resilienza)
-    
-
----
 
 ## Internet VPNs
 
@@ -181,9 +165,6 @@ Livello **descrittivo**, **niente configurazioni** richieste.
 - No multicast/broadcast
     
 - Routing dinamico problematico
-    
-
----
 
 ### GRE over IPsec
 
@@ -199,8 +180,6 @@ Livello **descrittivo**, **niente configurazioni** richieste.
         
 
 📌 Serve solo sapere **perché esiste**, non come si configura.
-
----
 
 ### DMVPN
 
@@ -219,9 +198,6 @@ Livello **descrittivo**, **niente configurazioni** richieste.
 - Vantaggi:
     
     - semplicità + efficienza
-        
-
----
 
 ### Remote-access VPN (TLS)
 
@@ -239,9 +215,6 @@ Livello **descrittivo**, **niente configurazioni** richieste.
 - Site-to-site → **rete ↔ rete**
     
 - Remote-access → **host ↔ rete**
-    
-
----
 
 ## Key rules / exam points (checklist)
 
@@ -253,7 +226,7 @@ Livello **descrittivo**, **niente configurazioni** richieste.
     
 - MPLS:
     
-    - forwarding via **label**
+    - forwarding via label
         
     - CE non eseguono MPLS
         
@@ -268,13 +241,10 @@ Livello **descrittivo**, **niente configurazioni** richieste.
 - GRE aggiunge multicast, IPsec aggiunge sicurezza
     
 - DMVPN = mesh IPsec dinamica
-    
-
----
 
 ## Common mistakes / notes
 
-- Confondere **WAN** con **Internet**
+- Confondere WAN con **Internet**
     
 - Pensare che CE debbano eseguire MPLS
     

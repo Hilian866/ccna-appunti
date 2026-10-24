@@ -1,10 +1,8 @@
 
 ### What is it
 
-**DHCP Snooping** è una feature di sicurezza **Layer 2** sugli switch Cisco che **filtra messaggi DHCP** sui **port untrusted** per mitigare attacchi DHCP-based (es. starvation, rogue DHCP/poisoning).  
+**DHCP Snooping** è una feature di sicurezza Layer 2 sugli switch Cisco che **filtra messaggi DHCP** sui **port untrusted** per mitigare attacchi DHCP-based (es. starvation, rogue DHCP/poisoning).  
 È in **exam topic 5.7** (con port security e DAI).
-
----
 
 ### What does / How it works
 
@@ -36,12 +34,9 @@
 
 #### Comportamento per porta
 
-- Messaggio DHCP su **trusted** → **forward** senza inspection
+- Messaggio DHCP su trusted → **forward** senza inspection
     
 - Messaggio DHCP su **untrusted** → **inspection** + decisione (forward/drop)
-    
-
----
 
 ## Attacchi mitigati (focus CCNA)
 
@@ -64,9 +59,6 @@ Nota da sottotitoli:
 - Il client tende ad accettare il **primo OFFER** ricevuto
     
 - Risultato: traffico verso reti esterne passa dall’attaccante → **eavesdrop/modify** (MITM)
-    
-
----
 
 ## DHCP message types (core per quiz)
 
@@ -88,9 +80,6 @@ Nota da sottotitoli:
 - **RELEASE**
     
 - **DECLINE**
-    
-
----
 
 ## DHCP Snooping: logica di filtro (core CCNA)
 
@@ -124,9 +113,6 @@ Nota da sottotitoli:
         
     - mismatch → drop  
         (impedisce RELEASE/DECLINE “per conto di altri”)
-        
-
----
 
 ## DHCP Snooping binding table (cosa contiene)
 
@@ -151,9 +137,6 @@ Non contiene:
 Comando:
 
 - `show ip dhcp snooping binding`
-    
-
----
 
 ## Rate limiting (funzione d’esame)
 
@@ -172,9 +155,6 @@ Use-case:
 
 - anche se l’attaccante spoof MAC+CHADDR per bypassare check Discover/Request,  
     il flood può far scattare il **rate limit** → difesa contro starvation.
-    
-
----
 
 ## Option 82 (DHCP relay agent information option)
 
@@ -198,28 +178,23 @@ Mitigazione (quando necessario nei lab/topologia):
 
 ⚠️ Esame: probabilmente non va troppo in profondità, ma in pratica di lab è un “gotcha” reale.
 
----
-
 ## Key rules / exam points (checklist rapida)
 
 - DHCP snooping: **global + per VLAN** + definire **trusted ports**
     
-- Su **untrusted**:
+- Su untrusted:
     
     - server messages (OFFER/ACK/NAK) → **drop**
         
     - Discover/Request → check **source MAC vs CHADDR**
         
-    - Release/Decline → check **binding table** (IP + interface)
+    - Release/Decline → check binding table (IP + interface)
         
-- Binding table contiene **IP/MAC/VLAN/interface/lease**, **non** default gateway
+- Binding table contiene **IP/MAC/VLAN/interface/lease**, non default gateway
     
-- Rate limit può mandare porta in **err-disabled**
+- Rate limit può mandare porta in err-disabled
     
 - Option 82 può rompere i lab → `no ip dhcp snooping information option`
-    
-
----
 
 ## CLI (solo comandi)
 
@@ -234,8 +209,6 @@ Mitigazione (quando necessario nei lab/topologia):
 `errdisable recovery cause dhcp-rate-limit show errdisable recovery`
 
 `interface g0/1  shutdown  no shutdown`
-
----
 
 ## Common mistakes / notes
 

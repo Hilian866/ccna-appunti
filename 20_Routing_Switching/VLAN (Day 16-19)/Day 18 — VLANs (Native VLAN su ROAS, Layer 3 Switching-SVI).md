@@ -30,13 +30,9 @@ interface g0/0
 
 📌 Confine concettuale
 
-- Frame **untagged** ricevuti su trunk → trattati come **native VLAN**
+- Frame untagged ricevuti su trunk → trattati come native VLAN
     
-- Frame della native VLAN inviati → **untagged**
-    
-
----
-
+- Frame della native VLAN inviati → untagged
 
 ## Layer 3 switch / Multilayer switch
 
@@ -54,9 +50,6 @@ interface g0/0
 - L2 switch: no routing, solo MAC
     
 - L3 switch: routing interno, **routing table propria**
-    
-
----
 
 ## Inter-VLAN routing: confronto secco
 
@@ -65,9 +58,6 @@ interface g0/0
 - **ROAS**: 1 trunk router↔switch, ma traffico “hairpin” → possibile congestione
     
 - **L3 switch + SVI**: inter-VLAN routing **nel switch** (preferito in reti grandi)
-    
-
----
 
 ## Architettura con L3 switch (pattern)
 
@@ -85,9 +75,6 @@ Esempio:
     - R1 G0/0 = `.194`
         
 - SW2 default route → R1
-    
-
----
 
 ## Config: passaggio da ROAS a L3 switching
 
@@ -134,15 +121,12 @@ show interfaces status
 ```
 
 - In `show interfaces status` una routed port appare come **ROUTED** nella colonna VLAN
-    
-
----
 
 ## SVI (Switch Virtual Interface)
 
 - **SVI**: interfaccia virtuale `interface vlan X` con IP = gateway della VLAN
     
-- Gateway dei PC = **SVI**, non router
+- Gateway dei PC = SVI, non router
     
 
 Config (pattern):
@@ -157,8 +141,6 @@ _(ripeti per vlan 20, 30)_
 
 📌 Quiz trap: SVI sono **shutdown di default** → serve `no shutdown`
 
----
-
 ## Condizioni per SVI UP/UP (CORE)
 
 Un SVI va **UP/UP** solo se:
@@ -167,13 +149,13 @@ Un SVI va **UP/UP** solo se:
     
 2. Esiste almeno **una** di queste condizioni ✅
     
-    - un **access port** in quella VLAN è **up/up**, **oppure**
+    - un **access port** in quella VLAN è up/up, **oppure**
         
-    - un **trunk port** che **permette** quella VLAN è **up/up**
+    - un **trunk port** che **permette** quella VLAN è up/up
         
 3. La VLAN non è **shutdown** (la VLAN stessa, non l’SVI)
     
-4. L’SVI non è **shutdown** (`no shutdown`)
+4. L’SVI non è shutdown (`no shutdown`)
     
 
 📌 Confine concettuale importante
@@ -181,9 +163,6 @@ Un SVI va **UP/UP** solo se:
 - **SVI per VLAN inesistente NON crea la VLAN automaticamente**
     
     - (diverso da access port → può creare VLAN automaticamente)
-        
-
----
 
 ## Quiz pattern (dalla lezione)
 

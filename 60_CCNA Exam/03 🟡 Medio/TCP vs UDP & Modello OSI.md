@@ -23,7 +23,7 @@ Mnemonico (7→1): **A**ll **P**eople **S**eem **T**o **N**eed **D**ata **P**roc
 **Incapsulamento**: Data → Segment → Packet → Frame → Bits. Il *de-incapsulamento* è l'inverso.
 
 ## 2. TCP vs UDP
-| | **TCP** | **UDP** |
+| | TCP | UDP |
 |---|---|---|
 | Connessione | **Connection-oriented** (3-way handshake) | Connectionless |
 | Affidabilità | ACK, ritrasmissione, ordinamento | Nessuna |
@@ -59,7 +59,7 @@ Intervalli: **well-known** 0–1023, **registered** 1024–49151, **dynamic/ephe
 ## Common Mistakes
 - **DNS usa anche TCP** (non solo UDP).
 - UDP non significa "inaffidabile e inutile": DNS, DHCP e VoIP lo usano perché la velocità conta più della consegna garantita.
-- PDU: **frame** = L2, **packet** = L3, **segment** = L4.
+- PDU: frame = L2, packet = L3, segment = L4.
 
 ## 🎯 Synthesis
 TCP garantisce (handshake, ACK, window), UDP corre (8 byte, nessuna garanzia); ogni livello OSI incapsula il PDU del livello superiore.
