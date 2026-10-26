@@ -4,75 +4,135 @@ priorita: molto-importante
 stato: da-ripassare
 ---
 
-## Obiettivo
+> [!ABSTRACT] Cosa serve per l'esame
+> Blueprint **4.3** (il ruolo di DHCP e DNS) e **4.6** (configurare e verificare un router come client DHCP e come relay).
+> Devi conoscere i quattro messaggi DORA e chi li manda a chi, sapere perché serve il relay e dove si configura, e saper configurare un router come server, relay e client DHCP. Il DNS è in [[DNS - Domain Name System]].
 
-Automatizzare la distribuzione dei parametri IP (Indirizzo, Maschera, Gateway, DNS) per eliminare l'errore umano e prevenire conflitti di indirizzamento in reti con alta densità di nodi dinamici.
+## 1. A cosa serve
 
-## I 4 Pilastri: Il Processo DORA
+Il DHCP assegna in automatico a un host **indirizzo IP, maschera, default gateway, server DNS** e altri parametri. Si usa per i dispositivi finali (PC, telefoni); router e server di solito hanno indirizzi statici.
 
-Il client e il server interagiscono attraverso una sequenza specifica di quattro messaggi.
+- Usa **UDP**: porta **67** sul server, **68** sul client.
+- L'indirizzo è dato in **lease** (in prestito, a tempo): alla scadenza il client lo rinnova o lo libera. Così gli indirizzi si riutilizzano.
 
-|Fase|Messaggio|Tipo|Scopo Strategico|
-|---|---|---|---|
-|1|**D**iscover|Broadcast|Il client cerca un server DHCP attivo.|
-|2|**O**ffer|Unicast/Broadcast|Il server propone un IP e i parametri di rete.|
-|3|**R**equest|**Broadcast**|Il client accetta l'offerta e avvisa gli altri server.|
-|4|**A**cknowledgment|Unicast/Broadcast|Il server conferma la locazione (Lease).|
+## 2. DORA
 
-> [!IMPORTANT] Focus Esame: Perché la Request è Broadcast?
->
-> Serve a notificare formalmente a tutti gli altri server DHCP presenti sul link che il client ha scelto un'offerta specifica, permettendo loro di rimettere nel pool gli indirizzi che avevano temporaneamente riservato.
+| Passo | Messaggio | Da → a | IP sorgente → destinazione |
+| :--- | :--- | :--- | :--- |
+| 1 | **Discover** | client → tutti | `0.0.0.0` → `255.255.255.255` (broadcast) |
+| 2 | **Offer** | server → client | unicast o broadcast (lo decide un flag del client) |
+| 3 | **Request** | client → tutti | broadcast |
+| 4 | **Ack** | server → client | unicast o broadcast |
 
-## DHCP Relay: Superare i Confini L3
+- La **Request** è broadcast anche se il client ha già scelto un server: così anche gli altri server che avevano fatto un'offerta sanno di essere stati scartati, e rimettono l'indirizzo nel loro pool.
+- Con **Release** (unicast, dal client al server) il client restituisce l'indirizzo prima della scadenza.
 
-I router non inoltrano i broadcast. Senza un Relay Agent, il DHCP funzionerebbe solo all'interno della singola subnet/VLAN.
+## 3. Il relay
 
-### Il comando `ip helper-address`
+I router **non inoltrano i broadcast**, quindi un Discover non esce dalla sua subnet. Se il server DHCP sta in un'altra rete serve un **relay agent**:
 
-- **Funzionamento**: Converte il pacchetto _Discover_ (Broadcast) in un pacchetto **Unicast** indirizzato all'IP del server.
-- **Posizionamento**: Va configurato sull'interfaccia del router **più vicina al client** (Gateway).
-- **Meccanica Giaddr**: Il router inserisce il proprio IP nel campo _Giaddr_ del pacchetto; il server legge questo campo per capire da quale **pool** specifico deve pescare l'indirizzo IP.
+- si configura con `ip helper-address <IP del server>` sull'interfaccia del router **verso i client** (il loro gateway);
+- il router riceve il broadcast e lo inoltra in **unicast** al server;
+- nel pacchetto mette il proprio IP di quell'interfaccia (campo **giaddr**). Il server lo usa per scegliere il **pool** della subnet giusta.
 
-## Protocollo di Configurazione Cisco IOS
+## 4. I tre ruoli di un router
 
-> [!DANGER] Regola d'Oro: Escludi prima di creare
->
-> Configura sempre gli IP statici (Gateway, Server) come esclusioni **prima** di attivare il pool, per prevenire conflitti immediati.
+### Server
 
+```ios
+! Indirizzi da non assegnare (gateway, server): prima di creare il pool
+R1(config)# ip dhcp excluded-address 192.168.1.1 192.168.1.10
+
+R1(config)# ip dhcp pool LAN1
+R1(dhcp-config)# network 192.168.1.0 255.255.255.0
+R1(dhcp-config)# default-router 192.168.1.1
+R1(dhcp-config)# dns-server 8.8.8.8
+R1(dhcp-config)# domain-name lab.local
+
+! Durata del lease: giorni ore minuti
+R1(dhcp-config)# lease 0 8 0
 ```
-! 1. Esclusioni (IP per infrastruttura)
-ip dhcp excluded-address 192.168.1.1 192.168.1.10
 
-! 2. Creazione Pool
-ip dhcp pool VLAN10_POOL
- network 192.168.1.0 255.255.255.0
- default-router 192.168.1.1      ! Indirizzo del Gateway
- dns-server 8.8.8.8
- domain-name lab.com
- lease 0 8 0                     ! Giorni Ore Minuti
+### Relay
+
+```ios
+! Sull'interfaccia (o SVI) dove stanno i client
+R1(config)# interface g0/1
+R1(config-if)# ip helper-address 192.168.10.10
 ```
-[21:35](https://youtu.be/hzkleGAC2_Y?t=1295)
 
-## ⚠️ Common Mistakes (Anatomy Check)
+### Client
 
-> [!CAUTION] Errori Fatali
->
-> - **Lease Timeout:** In reti ad alta rotazione (es. Guest Wi-Fi), lease troppo lunghe portano all'**esaurimento del pool**.
-> - **Helper-address mancante:** Se il server è centralizzato (es. in una VLAN "Management"), dimenticare l'helper sulle SVI delle VLAN utenti blocca l'accesso a tutta la rete.
-> - **Porte UDP:** Server = **67**, Client = **68**. Essenziale per le regole ACL o Firewall.
->
+```ios
+! L'interfaccia prende l'indirizzo dal DHCP (es. dall'ISP)
+R1(config)# interface g0/0
+R1(config-if)# ip address dhcp
+```
 
-## Audit & Troubleshooting
+## 5. Verifica
 
-- `show ip dhcp binding`: Mostra le associazioni **IP <-> MAC**. È la tabella principale per verificare chi è online.
-- `show ip dhcp pool`: Indica quanti IP sono rimasti liberi.
-- `show ip dhcp conflict`: Se vedi entry qui, qualcuno ha configurato un IP statico che appartiene al pool DHCP.
+```ios
+! Indirizzi assegnati: IP, MAC del client, scadenza del lease
+R1# show ip dhcp binding
+
+! Pool: indirizzi totali, usati, liberi
+R1# show ip dhcp pool
+
+! Indirizzi del pool già usati da qualcuno con IP statico
+R1# show ip dhcp conflict
+
+! Su relay e client: helper address configurato, indirizzo ricevuto
+R1# show ip interface g0/1
+```
+
+Su un PC Windows:
+
+```text
+ipconfig /all        indirizzo, gateway, DNS, server DHCP e lease
+ipconfig /release    restituisce l'indirizzo
+ipconfig /renew      ne chiede uno nuovo (rifà DORA)
+```
+
+Un client che non riceve risposta si assegna da solo un indirizzo **APIPA** `169.254.x.x`: è il segno che il DHCP non ha risposto (vedi [[Verifica IP Client & Troubleshooting (ping, traceroute)]]).
+
+Gli AP lightweight possono ricevere dal DHCP anche l'indirizzo del WLC, con la **option 43** (vedi [[Wireless - AP Modes & Management Access]]).
+
+## ⚠️ Trappole d'esame
+
+> [!WARNING] Gli errori più frequenti
+> 1. **Helper-address sull'interfaccia sbagliata**: va su quella **verso i client**, non verso il server.
+> 2. **Server in un'altra subnet senza relay**: i Discover non arrivano.
+> 3. **Esclusioni dimenticate**: il DHCP assegna l'indirizzo del gateway a un PC, e nasce un conflitto.
+> 4. **Request "unicast"**: è broadcast.
+> 5. **Porte invertite**: il server ascolta sulla 67, il client sulla 68.
+> 6. **Lease troppo lunghi** dove i client cambiano spesso (Wi-Fi ospiti): il pool si esaurisce.
+
+## Esercizi
+
+> [!QUESTION]- Che IP sorgente e destinazione ha un DHCP Discover?
+> `0.0.0.0` → `255.255.255.255`.
+
+> [!QUESTION]- I PC della VLAN 20 (gateway: SVI `interface vlan 20` su SW1) devono ricevere l'indirizzo dal server 10.0.0.5, in un'altra rete. Cosa configuri, e dove?
+> `ip helper-address 10.0.0.5` sotto `interface vlan 20` su SW1.
+
+> [!QUESTION]- Un PC mostra 169.254.20.7. Cosa è successo?
+> Non ha ricevuto risposta dal DHCP e si è dato un indirizzo APIPA. Controlla il server, il relay e la connessione.
+
+> [!QUESTION]- Perché un client manda la Request in broadcast, se conosce già il server scelto?
+> Per avvisare anche gli altri server DHCP che la loro offerta è stata rifiutata.
+
+## Check da esame
+
+- [ ] I quattro messaggi in ordine? **Discover, Offer, Request, Ack**.
+- [ ] Porte UDP di server e client? **67 e 68**.
+- [ ] Comando del relay? **`ip helper-address <server>`**.
+- [ ] Router come client DHCP? **`ip address dhcp`**.
+- [ ] Comando per vedere gli indirizzi assegnati? **`show ip dhcp binding`**.
+- [ ] A cosa serve `excluded-address`? **A riservare indirizzi statici fuori dal pool**.
 
 ## 🎯 Synthesis
 
-Il DHCP trasforma la gestione della rete da un'attività manuale a un servizio sistemico. La comprensione del processo **DORA** e l'uso corretto dell'**Helper-Address** sono i due nodi centrali per garantire la connettività nelle architetture Enterprise.
+Il client trova il server con DORA (Discover e Request in broadcast) e riceve indirizzo, gateway e DNS in lease. I broadcast non attraversano i router: con il server in un'altra rete serve `ip helper-address` sull'interfaccia verso i client. Un router può fare da server (pool), relay e client (`ip address dhcp`).
 
----
-
-> [!EXAMPLE] Laboratori Pratici
+> [!EXAMPLE] Laboratori pratici
 > - [[Day 39 Lab - DHCP.pkt]]

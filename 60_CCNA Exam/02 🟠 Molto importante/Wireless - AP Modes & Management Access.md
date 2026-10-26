@@ -6,64 +6,112 @@ blueprint: 2.6, 2.7, 2.8
 stato: da-ripassare
 ---
 
-> [!ABSTRACT] Obiettivo
-> Completa [[Wireless]] con tre punti del blueprint: **modalità degli AP** (2.6), **collegamenti fisici** di AP e WLC (2.7) e **accesso di gestione ai dispositivi** (2.8).
+> [!ABSTRACT] Cosa serve per l'esame
+> Blueprint **2.6** (architetture wireless e modalità degli AP), **2.7** (collegamenti fisici di AP, WLC e switch: porte access, trunk, LAG) e **2.8** (accesso di gestione: Telnet, SSH, HTTP, HTTPS, console, TACACS+/RADIUS, cloud).
+> Devi saper dire cosa fa ogni modalità di un AP, a che tipo di porta si collegano AP e WLC, e quali metodi di gestione sono sicuri. Le basi del wireless sono in [[Wireless]].
 
-## 1. Modalità degli AP (Lightweight, gestiti da WLC)
+## 1. Modalità degli AP lightweight
 
-| Modalità | Cosa fa | Note |
-|---|---|---|
-| Local | Serve i client, tunnel **CAPWAP** verso il WLC, tutto il traffico passa dal WLC | **Default**. Nei tempi morti scansiona gli altri canali (RRM/rogue detection) |
-| FlexConnect | Serve i client e può **commutare il traffico localmente** (*local switching*) | Filiali remote; **resta operativo se il link WAN verso il WLC cade**. Richiede porta **trunk** |
-| Monitor | **Non serve i client**: solo ascolto (rogue AP, IDS, localizzazione) | Solo ricezione |
-| Sniffer | Cattura il traffico 802.11 e lo invia a un analizzatore (es. Wireshark) | Solo diagnostica |
-| Rogue Detector | Ascolta ARP sulla rete cablata per scoprire AP non autorizzati | Non usa la radio per servire client |
-| Bridge / Mesh | Collegamento wireless punto-punto o punto-multipunto tra edifici | Root AP + Mesh AP |
-| SE-Connect | Analisi dello spettro (interferenze) | Diagnostica RF |
+| Modalità | Cosa fa | Serve i client? |
+| :--- | :--- | :--- |
+| **Local** | il default: tutto il traffico va al WLC nel tunnel CAPWAP. Nei tempi morti controlla gli altri canali (gestione RF, AP non autorizzati) | sì |
+| **FlexConnect** | può commutare il traffico **in locale** (local switching) e continua a funzionare se il link verso il WLC cade. Per le filiali | sì |
+| Monitor | solo ascolto: AP non autorizzati, rilevamento intrusioni, localizzazione | no |
+| Sniffer | cattura il traffico 802.11 e lo manda a un analizzatore (es. Wireshark) | no |
+| Rogue detector | ascolta gli ARP sulla rete **cablata** per scoprire AP non autorizzati | no |
+| SE-Connect | analisi dello spettro, per trovare interferenze | no |
+| Bridge / Mesh | collega edifici via radio (root AP più mesh AP) | dipende |
 
-Architetture: **Autonomous** (AP standalone), **Lightweight** (AP + WLC, CAPWAP, *split-MAC*), **Cloud-based** (Meraki: gestione da dashboard cloud, dati in locale). Dettagli in [[Wireless]].
+Architetture: **autonomous** (AP indipendenti), **lightweight** (AP più WLC con CAPWAP, split-MAC), **cloud-based** (Meraki: gestione dal cloud, dati in locale). Dettagli in [[Wireless]], sezione 6.
 
-## 2. Collegamenti fisici (WLAN)
+## 2. Collegamenti fisici
 
-| Componente | Porta dello switch | Perché |
-|---|---|---|
-| AP Local | **Access** (VLAN di management dell'AP) | Il traffico utenti viaggia dentro il tunnel CAPWAP |
-| AP FlexConnect | **Trunk** (con native VLAN = VLAN di management) | Deve inserire il traffico delle WLAN direttamente nelle VLAN locali |
-| WLC | **Trunk** verso lo switch di distribuzione | Trasporta tutte le VLAN delle WLAN (interfacce dinamiche) |
-| WLC con più porte | **LAG** (EtherChannel) | Aggrega le porte per banda e ridondanza |
+| Dispositivo | Porta dello switch | Perché |
+| :--- | :--- | :--- |
+| AP in **Local** | **access** (VLAN di management degli AP) | il traffico dei client viaggia dentro il tunnel CAPWAP |
+| AP in **FlexConnect** | **trunk** (native = VLAN di management) | deve mettere il traffico di ogni WLAN direttamente nella sua VLAN |
+| AP autonomo | **trunk** | ogni SSID ha la sua VLAN, più quella di management |
+| **WLC** | **trunk** verso lo switch | trasporta le VLAN di tutte le WLAN |
+| WLC con più porte | **LAG** (EtherChannel) | banda e ridondanza |
 
-> [!WARNING] LAG sul WLC
-> Il WLC supporta solo **LAG statico** (`channel-group X mode on`): **non** negozia PAgP né LACP. Lo switch deve avere `mode on` sulle porte corrispondenti.
+> [!WARNING] Il LAG del WLC è solo statico
+> Il WLC **non** negozia né PAgP né LACP. Sullo switch le porte vanno in `channel-group X mode on`.
 
-Alimentazione dell'AP: **PoE** dallo switch (vedi [[Interfacce, Cablaggio & Troubleshooting]]). L'AP ottiene l'IP via **DHCP** e scopre il WLC con **DHCP option 43**, DNS o broadcast.
+- **Alimentazione**: l'AP riceve corrente dallo switch con **PoE** (vedi [[Interfacce, Cablaggio & Troubleshooting]]).
+- **Indirizzo e WLC**: l'AP prende l'IP via **DHCP** e trova il WLC con la **option 43** del DHCP, con il DNS o con un broadcast nella subnet.
 
-## 3. Accesso di gestione ai dispositivi
+```ios
+! Switch: due porte verso il WLC in LAG statico, poi trunk
+SW1(config)# interface range g1/0/1 - 2
+SW1(config-if-range)# channel-group 1 mode on
 
-| Metodo | Tipo | Porta | Sicuro? | Note |
-|---|---|---|---|---|
-| Console | Out-of-band | Seriale/USB | Sì (accesso fisico) | Prima configurazione, recovery |
-| Telnet | In-band | TCP **23** | **No** (testo in chiaro) | Da disattivare |
-| SSH | In-band | TCP **22** | **Sì** (cifrato) | Standard consigliato |
-| HTTP | In-band | TCP **80** | No | GUI del WLC/switch |
-| HTTPS | In-band | TCP **443** | Sì (TLS) | GUI sicura |
-| Cloud managed | In-band | HTTPS verso il cloud | Sì | Meraki dashboard, Catalyst Center |
-
-- **Out-of-band** = canale separato dalla rete dati (console, AUX): funziona anche se la rete è guasta. **In-band** = passa dalla rete stessa.
-- L'**autenticazione centralizzata** avviene con **TACACS+** o **RADIUS** (AAA): vedi [[Security Fundamentals (AAA, VPN, Threats, WPA3)]].
-
-```
-line vty 0 15
- transport input ssh        ! blocca Telnet
- login local
-ip http secure-server       ! attiva HTTPS
-no ip http server           ! disattiva HTTP
+SW1(config)# interface port-channel 1
+SW1(config-if)# switchport mode trunk
+SW1(config-if)# switchport trunk allowed vlan 10,100,200
 ```
 
-## Common Mistakes
-- AP **FlexConnect** collegato a una porta access: non può fare local switching.
-- Configurare LACP/PAgP sul LAG del WLC: usa **`on`**.
-- Dimenticare che l'AP **Monitor** e **Sniffer** non servono i client.
-- Considerare la console "in-band": è out-of-band.
+## 3. Accesso di gestione
+
+| Metodo | Tipo | Porta | Sicuro? | Uso |
+| :--- | :--- | :--- | :--- | :--- |
+| Console | out-of-band | seriale/USB | sì (serve accesso fisico) | prima configurazione, ripristino |
+| Telnet | in-band | TCP 23 | **no**, testo in chiaro | da disattivare |
+| **SSH** | in-band | TCP 22 | **sì**, cifrato | lo standard |
+| HTTP | in-band | TCP 80 | no | GUI di WLC e switch |
+| **HTTPS** | in-band | TCP 443 | **sì**, TLS | GUI sicura |
+| Cloud | in-band | HTTPS verso il cloud | sì | dashboard Meraki, Catalyst Center |
+
+- **Out-of-band**: un canale separato dalla rete dati (console, AUX), che funziona anche se la rete è guasta.
+- **In-band**: passa dalla rete stessa.
+- L'autenticazione centralizzata degli amministratori si fa con **TACACS+** o **RADIUS** (AAA): vedi [[Security Fundamentals (AAA, VPN, Threats, WPA3)]].
+
+```ios
+! Solo SSH sulle linee virtuali, con utenti locali
+R1(config)# line vty 0 15
+R1(config-line)# transport input ssh
+R1(config-line)# login local
+
+! GUI solo in HTTPS
+R1(config)# ip http secure-server
+R1(config)# no ip http server
+```
+
+La configurazione completa di SSH è in [[IP Services (NTP, SNMP, Syslog, SSH, CDP-LLDP, FTP-TFTP)]].
+
+## ⚠️ Trappole d'esame
+
+> [!WARNING] Gli errori più frequenti
+> 1. **AP FlexConnect su una porta access**: non può fare local switching. Serve un trunk.
+> 2. **AP Local su un trunk**: non serve, basta una porta access.
+> 3. **LACP o PAgP verso il WLC**: il WLC accetta solo LAG statico (`mode on`).
+> 4. **Monitor e Sniffer** non servono client.
+> 5. **Console "in-band"**: è out-of-band.
+> 6. **Telnet e HTTP** non sono sicuri: viaggiano in chiaro.
+
+## Esercizi
+
+> [!QUESTION]- Una filiale deve continuare a far navigare i client anche se il link WAN verso il WLC centrale cade. Che modalità AP usi, e su che porta lo colleghi?
+> FlexConnect, su una porta trunk.
+
+> [!QUESTION]- Vuoi un AP che cerchi soltanto AP non autorizzati via radio, senza servire client. Che modalità?
+> Monitor.
+
+> [!QUESTION]- Lo switch ha `channel-group 1 mode active` verso il WLC e il LAG non sale. Perché?
+> `active` è LACP, che il WLC non negozia. Serve `mode on`.
+
+## Check da esame
+
+- [ ] Modalità AP di default? **Local**.
+- [ ] Modalità che commuta in locale e sopravvive alla perdita del WLC? **FlexConnect**.
+- [ ] Porta per un AP Local? E per il WLC? **Access; trunk**.
+- [ ] Che LAG supporta il WLC? **Solo statico (`mode on`)**.
+- [ ] Come trova il WLC un AP in un'altra subnet? **DHCP option 43 (o DNS)**.
+- [ ] Porte di SSH e Telnet? **22 e 23**.
+- [ ] Cos'è la gestione out-of-band? **Un canale separato dalla rete dati, come la console**.
 
 ## 🎯 Synthesis
-Local è il default (tutto via CAPWAP), FlexConnect commuta in locale e vuole un trunk; il WLC usa un LAG statico; si gestisce con SSH/HTTPS (mai Telnet/HTTP) e AAA centralizzato.
+
+Local è il default (tutto via CAPWAP, porta access); FlexConnect commuta in locale e vuole un trunk. Il WLC va su un trunk, con LAG solo statico. I dispositivi si gestiscono con SSH e HTTPS (mai Telnet e HTTP), con autenticazione centralizzata TACACS+ o RADIUS.
+
+> [!EXAMPLE] Laboratori pratici
+> - [[Day 58 Lab - Wireless LANs.pkt]]

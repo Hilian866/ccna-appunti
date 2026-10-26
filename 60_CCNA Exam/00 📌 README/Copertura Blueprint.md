@@ -4,7 +4,7 @@ tipo: mappa
 ---
 
 > [!ABSTRACT] A cosa serve
-> Mappa gli obiettivi ufficiali del **CCNA 200-301 v1.1** (blueprint ufficiale Cisco) sulle note di ripasso. ✅ = coperto · ⚠️ = coperto in parte.
+> Mappa gli obiettivi ufficiali del **CCNA 200-301 v1.1** (blueprint ufficiale Cisco) sulle note di ripasso. ✅ = coperto.
 
 ## 1.0 Network Fundamentals (20%)
 | Obiettivo | Nota |
@@ -14,7 +14,7 @@ tipo: mappa
 | 1.3 Cablaggio e connessioni · 1.4 Problemi di interfaccia | ✅ [[Interfacce, Cablaggio & Troubleshooting]] |
 | 1.5 TCP vs UDP | ✅ [[TCP vs UDP & Modello OSI]] |
 | 1.6 IPv4 e subnetting | ✅ [[Subnetting - Fondamentali e Calcolo Rapido]] |
-| 1.7 IPv4 privato | ⚠️ [[NAT - Network Address Translation]] (RFC 1918), APIPA in [[Verifica IP Client & Troubleshooting (ping, traceroute)]] |
+| 1.7 IPv4 privato | ✅ [[Subnetting - Fondamentali e Calcolo Rapido]] (classi, RFC 1918, APIPA), uso con il NAT in [[NAT - Network Address Translation]] |
 | 1.8 · 1.9 IPv6 (indirizzi, tipi, EUI-64) | ✅ [[IPv6]] |
 | 1.10 Verifica IP sul client | ✅ [[Verifica IP Client & Troubleshooting (ping, traceroute)]] |
 | 1.11 Principi wireless | ✅ [[Wireless]] |
@@ -34,7 +34,7 @@ tipo: mappa
 ## 3.0 IP Connectivity (25%)
 | Obiettivo | Nota |
 |---|---|
-| 3.1 Componenti della routing table | ⚠️ [[Static Routing & Floating Routes]] (codici, AD, metrica, gateway of last resort) |
+| 3.1 Componenti della routing table | ✅ [[Static Routing & Floating Routes]] (`show ip route` riga per riga: codici, prefisso, AD, metrica, next hop, gateway of last resort) |
 | 3.2 Decisione di forwarding | ✅ [[Static Routing & Floating Routes]] |
 | 3.3 Routing statico IPv4/IPv6 (default, network, host, floating) | ✅ [[Static Routing & Floating Routes]] · [[IPv6]] |
 | 3.4 OSPFv2 single area | ✅ [[OSPF - Open Shortest Path First]] |
@@ -62,4 +62,4 @@ tipo: mappa
 | 6.1–6.7 Automazione, controller-based/SDN, AI/ML, REST, Ansible/Terraform, JSON | ✅ [[00 Automation - Riassunto]] (dettagli in `Day 59-63 - Note complete`) |
 
 > [!INFO] Verifica
-> Punti ⚠️ da rafforzare: componenti della routing table (3.1) e indirizzamento IPv4 privato (1.7). Le note nuove sono scritte dalla conoscenza generale e dal blueprint: confrontale con i tuoi appunti dei video.
+> Ogni nota d'esame si apre con i punti del blueprint che copre e contiene configurazioni, esempi svolti, trappole ed esercizi. I fatti sono stati confrontati con il blueprint e con le note dei video (Day NN).

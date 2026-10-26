@@ -4,86 +4,168 @@ priorita: medio
 stato: da-ripassare
 ---
 
-> [!ABSTRACT] Core Logic
-> L'**EtherChannel** permette di raggruppare più interfacce fisiche in un'unica interfaccia logica (**Port-Channel**). L'obiettivo primario è aumentare la bandwidth totale e fornire ridondanza, evitando che lo Spanning Tree Protocol (STP) blocchi i link ridondanti. [00:23](https://youtu.be/xuo69Joy_Nc&t=23s)
+> [!ABSTRACT] Cosa serve per l'esame
+> Blueprint **2.4**: configurare e verificare EtherChannel Layer 2 e Layer 3 con LACP.
+> Devi sapere perché serve, quali combinazioni di modalità formano il canale (LACP, PAgP, statico), cosa deve coincidere tra le porte, come si bilancia il traffico e come si legge `show etherchannel summary`. Le basi di STP sono in [[STP (802.1D) & Rapid-PVST+ (802.1w)]].
 
-## ⚠️ Il Problema: Spanning Tree e Oversubscription
-In un design di rete standard, collegare due switch con link multipli fisici causa **Layer 2 Loops**. Lo **Spanning Tree (STP)** interviene disattivando tutti i link tranne uno per prevenire **Broadcast Storms** [04:48](https://youtu.be/xuo69Joy_Nc&t=288s).
-- **Risultato:** Spreco di larghezza di banda e congestione (Oversubscription).
-- **Soluzione EtherChannel:** STP vede il gruppo di link come un'unica connessione logica, mantenendo tutte le interfacce fisiche in stato di **forwarding** [05:46](https://youtu.be/xuo69Joy_Nc&t=346s).
+## 1. Il problema
 
-## Algoritmi di Load-Balancing
-L'EtherChannel non invia pacchetti in modo casuale, ma utilizza dei **Flows** (flussi) per decidere quale interfaccia fisica usare. [09:01](https://youtu.be/xuo69Joy_Nc&t=541s)
+Tra due switch colleghi più cavi per avere più banda. Ma più link paralleli formano un loop, e STP li blocca tutti **tranne uno**: la banda in più resta inutilizzata.
 
-> [!INFO] Definizione di Flow
-> Un flusso è una comunicazione tra due nodi della rete. I frame dello stesso flusso vengono inviati sulla stessa interfaccia fisica per evitare il riordinamento dei frame (**out-of-order delivery**). [09:09](https://youtu.be/xuo69Joy_Nc&t=549s)
+Un **EtherChannel** raggruppa fino a **8** porte fisiche in un'unica interfaccia logica, il **port-channel**. STP vede un solo link e non blocca niente:
 
-**Metodi di calcolo supportati:**
-- **Source MAC** o **Destination MAC**.
-- **Source IP** o **Destination IP**.
-- Combinazioni (Source AND Destination IP/MAC). [11:32](https://youtu.be/xuo69Joy_Nc&t=692s)
+- la banda si somma (4 link da 1 Gbit/s = 4 Gbit/s complessivi);
+- se un cavo si rompe il canale resta su, con un link in meno, senza attendere STP.
 
-```ios
-! Comando per cambiare il metodo di load-balancing
-SW(config)# port-channel load-balance src-dst-mac
-! Verifica delle impostazioni correnti
-SW# show etherchannel load-balance
-```
-[13:13](https://youtu.be/xuo69Joy_Nc&t=793s)
+## 2. Bilanciamento del carico
 
-## Protocolli di Negoziazione
-Esistono tre metodi per formare un EtherChannel: **PAgP**, **LACP** e **Statico**. [15:31](https://youtu.be/xuo69Joy_Nc&t=931s)
+Il traffico non viene diviso frame per frame: lo switch calcola un hash su indirizzi del frame e manda sempre **lo stesso flusso sullo stesso link**, così i frame non arrivano in disordine.
 
-| Protocollo  | Proprietario    | Modalità Attiva | Modalità Passiva |
-| :---------- | :-------------- | :-------------- | :--------------- |
-| PAgP    | Cisco           | Desirable   | Auto         |
-| LACP    | IEEE (Standard) | Active      | Passive      |
-| Statico | N/A             | On          | On           |
+Gli input possibili: MAC sorgente, MAC destinazione, entrambi; IP sorgente, IP destinazione, entrambi.
 
-> [!CAUTION] Limitazioni Tecniche
-> Affinché un EtherChannel si formi, i parametri su entrambi i lati devono corrispondere: Speed, Duplex, VLAN (Access o Trunk) e Allowed VLAN List. Se i parametri non matchano, l'interfaccia viene esclusa dal bundle. [14:18](https://youtu.be/xuo69Joy_Nc&t=858s)
-
-## Configurazione Layer 2 (LACP)
-Il metodo standard per configurare un bundle su interfacce di switch. [17:57](https://youtu.be/xuo69Joy_Nc&t=1077s)
+Conseguenza: un singolo flusso non va mai più veloce di un link. Se tutto il traffico va verso lo stesso MAC (il router) e l'hash usa solo `dst-mac`, un link solo fa tutto il lavoro: meglio `src-dst-ip` o `src-dst-mac`.
 
 ```ios
-SW(config)# interface range g0/0 - 3
+! Metodo di bilanciamento: globale, vale per tutti i port-channel
+SW1(config)# port-channel load-balance src-dst-ip
 
-! Abilita LACP Unconditionally
-SW(config-if-range)# channel-group 1 mode active
-SW(config)# interface port-channel 1
-
-! Configura l'interfaccia logica
-SW(config-if)# switchport mode trunk
+! Metodo in uso
+SW1# show etherchannel load-balance
 ```
 
-## Layer 3 EtherChannel
-Utilizzato nel **Core** della rete per collegare switch **Multilayer** senza usare lo Spanning Tree. [17:30](https://youtu.be/xuo69Joy_Nc&t=1050s)
+## 3. Protocolli e modalità
 
-1. Disabilitare le funzioni di switchport fisica con `no switchport`.
-2. Creare il Port-Channel.
-3. Assegnare l'indirizzo IP direttamente all'interfaccia logica. [19:05](https://youtu.be/xuo69Joy_Nc&t=1145s)
+| Metodo | Standard | Modalità |
+| :--- | :--- | :--- |
+| **LACP** | **IEEE 802.3ad** (802.1AX), multivendor | **active** (avvia la negoziazione), **passive** (risponde) |
+| PAgP | Cisco | **desirable** (avvia), **auto** (risponde) |
+| Statico | nessun protocollo | **on** |
+
+Quali combinazioni formano il canale:
+
+| Lato A | Lato B | Si forma? |
+| :--- | :--- | :--- |
+| active | active o passive | **sì** |
+| passive | passive | **no**: nessuno avvia |
+| desirable | desirable o auto | sì |
+| auto | auto | no |
+| on | on | sì |
+| on | active o desirable | **no**: un lato non negozia |
+| LACP | PAgP | no |
+
+La regola: almeno un lato deve **avviare**, ed entrambi devono usare lo stesso protocollo. `on` va solo con `on`.
+
+LACP è il più usato perché è standard. La modalità statica è rischiosa: se un lato è configurato male non c'è negoziazione che se ne accorga, e si può creare un loop.
+
+## 4. Cosa deve coincidere
+
+Tutte le porte del gruppo, su entrambi i lati, devono avere la **stessa configurazione**:
+
+- **velocità e duplex**;
+- modalità **access o trunk**;
+- VLAN di accesso (se access); **VLAN permesse e native VLAN** (se trunk);
+- tipo di porta: tutte switchport (Layer 2) o tutte routed (Layer 3).
+
+Una porta diversa dalle altre viene esclusa dal canale (stato suspended). Per evitarlo, dopo aver creato il canale si configura **l'interfaccia port-channel**: le impostazioni vengono copiate sulle porte membro.
+
+## 5. Configurazione
+
+### Layer 2 (tra switch, come trunk)
 
 ```ios
-SW(config)# interface range g0/0 - 3
+! Porte membro: stesso gruppo, LACP active
+SW1(config)# interface range g0/1 - 4
+SW1(config-if-range)# channel-group 1 mode active
 
-! Trasforma in Routed Ports
-SW(config-if-range)# no switchport
-SW(config-if-range)# channel-group 1 mode active
-SW(config)# interface port-channel 1
-SW(config-if)# ip address 10.0.0.1 255.255.255.252
+! Il port-channel si crea da solo: qui si configura il trunk
+SW1(config)# interface port-channel 1
+SW1(config-if)# switchport mode trunk
+SW1(config-if)# switchport trunk allowed vlan 10,20,30
 ```
 
-## Comandi di Verifica Cruciali
-- `show etherchannel summary`: Mostra lo stato del Port-Channel e le interfacce membri. [14:53](https://youtu.be/xuo69Joy_Nc&t=893s)
-- `show etherchannel port-channel`: Dettagli approfonditi sull'interfaccia logica. [16:26](https://youtu.be/xuo69Joy_Nc&t=986s)
-- `show spanning-tree`: Conferma che STP tratti il Port-Channel come un singolo link. [17:01](https://youtu.be/xuo69Joy_Nc&t=1021s)
+Sullo switch di fronte la stessa cosa, con `mode active` o `mode passive`. Il numero del gruppo è locale: non deve coincidere tra i due switch (anche se per chiarezza si usa lo stesso).
 
-> [!INFO] Flag del summary
-> - **(SU)**: Layer 2, In Use (Operativo).
-> - **(RU)**: Layer 3, In Use (Operativo).
-> - **(P)**: Bundled in Port-Channel (Interfaccia fisica ok).
-> - **(D)**: Down (Problema fisico o configurazione errata).
+### Layer 3 (tra switch multilayer, con IP)
+
+```ios
+! Prima si rendono routed le porte, poi si crea il gruppo
+SW1(config)# interface range g0/1 - 2
+SW1(config-if-range)# no switchport
+SW1(config-if-range)# channel-group 1 mode active
+
+! L'indirizzo va sul port-channel, non sulle porte fisiche
+SW1(config)# interface port-channel 1
+SW1(config-if)# ip address 10.0.0.1 255.255.255.252
+```
+
+Un EtherChannel Layer 3 non partecipa a STP: è un link routed. Si usa nel core, tra switch multilayer che fanno routing (es. con OSPF sul port-channel).
+
+## 6. Verifica
+
+```ios
+SW1# show etherchannel summary
+Flags:  D - down        P - bundled in port-channel
+        I - stand-alone s - suspended
+        R - Layer3      S - Layer2
+        U - in use      ...
+
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+---------------------------
+1      Po1(SU)         LACP      Gi0/1(P)    Gi0/2(P)    Gi0/3(P)    Gi0/4(s)
+```
+
+- **Po1(SU)**: port-channel Layer 2 (S) e in uso (U). Uno Layer 3 sarebbe **RU**.
+- **(P)**: la porta fa parte del canale.
+- **(s)** suspended: la porta ha una configurazione diversa dalle altre. **(I)** stand-alone: non ha negoziato (l'altro lato non risponde o usa un altro protocollo). **(D)** down.
+- **SD** sul port-channel: canale giù.
+
+```ios
+! Dettagli del port-channel e delle porte membro
+SW1# show etherchannel port-channel
+
+! Vicini LACP e loro modalità
+SW1# show lacp neighbor
+
+! STP deve mostrare Po1, non le singole porte
+SW1# show spanning-tree
+```
+
+## ⚠️ Trappole d'esame
+
+> [!WARNING] Gli errori più frequenti
+> 1. **passive + passive** e **auto + auto**: nessuno avvia, il canale non si forma.
+> 2. **on + active**: non si forma: `on` non negozia.
+> 3. **LACP e PAgP**: LACP è standard (active/passive), PAgP è Cisco (desirable/auto).
+> 4. **Configurazioni diverse** tra le porte: le porte non uguali vanno in suspended.
+> 5. **Layer 3**: `no switchport` prima di `channel-group`, e l'IP sul port-channel.
+> 6. **Bilanciamento**: un singolo flusso usa un solo link, non la somma della banda.
+
+## Esercizi
+
+> [!QUESTION]- SW1 ha `channel-group 1 mode passive`, SW2 `channel-group 1 mode passive`. Si forma il canale?
+> No: entrambi aspettano che l'altro avvii la negoziazione LACP.
+
+> [!QUESTION]- In `show etherchannel summary` vedi `Po1(SU)` con Gi0/3(s). Cosa significa per Gi0/3?
+> È sospesa: la sua configurazione (es. VLAN permesse o velocità) non coincide con quella delle altre porte.
+
+> [!QUESTION]- Uno switch multivendor deve fare EtherChannel con un Cisco. Che protocollo e che modalità sul Cisco?
+> LACP, in modalità active (o passive se l'altro lato è active).
+
+> [!QUESTION]- Un port-channel Layer 3 deve avere l'indirizzo 10.1.1.1/30. Su quale interfaccia lo configuri?
+> Su `interface port-channel <n>`, dopo aver messo `no switchport` sulle porte fisiche.
+
+## Check da esame
+
+- [ ] Quante porte al massimo in un EtherChannel? **8 attive**.
+- [ ] Modalità LACP? **Active e passive**. PAgP? **Desirable e auto**.
+- [ ] Combinazione `on` valida? **Solo on + on**.
+- [ ] Flag di un port-channel Layer 2 attivo? **SU**. Layer 3? **RU**.
+- [ ] Il bilanciamento divide un flusso sui link? **No: un flusso, un link**.
+- [ ] Comando per vedere il canale? **`show etherchannel summary`**.
 
 ## 🎯 Synthesis
-EtherChannel unisce più link in uno logico: LACP (active/passive), PAgP (desirable/auto), static (on); i parametri devono combaciare.
+
+EtherChannel unisce fino a 8 porte in un port-channel: STP vede un solo link, la banda si somma e un guasto non ferma il canale. LACP (standard, active/passive) o PAgP (Cisco, desirable/auto) negoziano: serve almeno un lato che avvii; `on` va solo con `on`. Le porte devono avere la stessa configurazione. Ogni flusso viaggia su un solo link scelto con un hash. In Layer 3: `no switchport` e IP sul port-channel.
+
+> [!EXAMPLE] Laboratori pratici
+> - [[Day 23 Lab - EtherChannel.pkt]]
