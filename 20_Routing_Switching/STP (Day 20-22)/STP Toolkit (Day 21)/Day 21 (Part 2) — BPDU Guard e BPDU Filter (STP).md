@@ -194,5 +194,5 @@ Conclusione:
 
 - [[Day 21 (Part 1) — PortFast (STP)]]
     
-- <!-- [[Root Guard]] -->
-- <!-- [[Loop Guard]] -->
+- [[Day 21 (Part 3) — Root Guard]]
+- [[Day 21 (part 4) —  Loop Guard]]

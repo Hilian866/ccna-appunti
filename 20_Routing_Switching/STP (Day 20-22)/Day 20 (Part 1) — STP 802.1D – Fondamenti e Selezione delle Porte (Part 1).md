@@ -169,4 +169,4 @@ STP elimina i loop Layer 2 eleggendo un root bridge e lasciando una sola path at
 
 ## Links
 
-- [[STP 802.1D – Stati, Timer e BPDU (Part 2)]]
+- [[Day 20 (Part 2) — STP 802.1D - Stati Timer BPDUSTP (802.1D)|Day 20 (Part 2) — STP 802.1D: stati, timer e BPDU]]

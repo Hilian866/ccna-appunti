@@ -137,4 +137,4 @@ STP 802.1D previene loop Layer 2 usando stati transitori e timer conservativi, s
 
 ## Links
 
-- [[STP 802.1D – Fondamenti e Selezione delle Porte]]
+- [[Day 20 (Part 1) — STP 802.1D – Fondamenti e Selezione delle Porte (Part 1)]]
